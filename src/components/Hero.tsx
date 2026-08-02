@@ -8,24 +8,29 @@ import PondVeil from "./PondVeil";
 import WordRing from "./WordRing";
 
 /**
- * Hero: o sapao NO LAGO, nao em cima de um fundo de lago.
+ * Hero montado a partir do rascunho a mao da Ingrid:
  *
- * A diferenca que faz tudo funcionar e a ordem das camadas. O sapao nao mora
- * numa coluna da grade: ele e uma CAMADA por cima dela, centrado. Assim o
- * titulo corre POR TRAS dele, e e a sobreposicao que o olho le como
- * profundidade. Texto ao lado do bicho parece adesivo; texto sumindo atras
- * do bicho parece cena.
+ *   +------------------------------------------+
+ *   |  S T A N D I N G   S T I L L             |  <- faixa gigante, largura toda
+ *   |  is the                                  |
+ *   |  only          ( SAPO )                  |  <- bloco menor a esquerda
+ *   |  real risk.                              |     e o sapao no meio
+ *   +------------------------------------------+
  *
- * Ordem, do fundo pra frente:
- *   0  lago em video, tela inteira, com massa escura la atras
- *   1  frases boiando em varias distancias
- *   10 copy (titulo e argumento)
- *   20 o sapao, a vitoria-regia e o anel de palavras
+ * A primeira linha atravessa o topo de ponta a ponta e o sapao passa POR
+ * CIMA dela. O resto da frase desce menor, do lado esquerdo.
  *
- * No celular a sobreposicao e desligada: o sapao volta a ser bloco no fluxo,
- * senao ele cobre a copy inteira numa tela estreita.
+ * Ordem das camadas, do fundo pra frente:
+ *   0   lago em video
+ *   1   frases boiando em varias distancias
+ *   2   o titulo
+ *   3   a NEVOA, que passa por cima do titulo e e o que o joga pro fundo
+ *   10  argumento e botoes
+ *   20  o sapao
  */
 export default function Hero() {
+  const [faixa, ...resto] = hero.headline;
+
   return (
     <section
       id="top"
@@ -34,37 +39,56 @@ export default function Hero() {
       <Pond />
       <DistantWords />
 
+      {/* ---------- O TITULO, z 2, ATRAS DA NEVOA ----------
+          As TRES linhas atravessam a largura toda e o sapao corta elas no
+          meio, que e o segundo rascunho da Ingrid. Cada linha ganha um
+          tamanho proprio calculado pelo numero de letras, senao a linha
+          curta sobra e a longa estoura: quem tem menos letra precisa de
+          letra maior pra chegar na mesma borda. */}
+      <div className="pointer-events-none absolute inset-x-0 top-[16%] z-[2] px-5 md:px-10">
+        <h1 className="far-title mx-auto max-w-[1500px] text-white">
+          {hero.headline.map((line, i) => {
+            // 158 e a constante que faz "Standing still" (14 letras) bater
+            // na borda; as outras seguem a mesma regra sozinhas.
+            const vw = 158 / line.length;
+            return (
+              <span key={line} className="line-mask">
+                <span
+                  className={`block whitespace-nowrap font-black leading-[0.86] tracking-[-0.05em] ${
+                    i === hero.headline.length - 1 ? "text-bf-green" : ""
+                  }`}
+                  style={{
+                    fontSize: `clamp(2.1rem, ${vw.toFixed(1)}vw, 13rem)`,
+                    animationDelay: `${0.15 + i * 0.12}s`,
+                  }}
+                >
+                  {line}
+                </span>
+              </span>
+            );
+          })}
+        </h1>
+      </div>
+
+      {/* A NEVOA passa por cima do titulo (z 2) e das frases (z 1). */}
+      <PondVeil />
+
+      {/* ---------- PALCO ---------- */}
       <div className="relative mx-auto w-full max-w-[1500px] px-5 pb-12 pt-32 md:px-10 md:pb-16 md:pt-28">
-        {/* ---------- A COPY, POR BAIXO ---------- */}
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-24">
-          <div className="drift on-water relative z-[2]">
+        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto] lg:gap-24">
+          {/* espaco reservado: o titulo mora na camada de tras, mas a
+              coluna precisa existir pra a copy da direita nao subir */}
+          <div aria-hidden className="hidden lg:block lg:h-[30rem]" />
+
+          <div className="drift-2 on-water relative z-10 lg:justify-self-end lg:max-w-[22rem]">
             <p
-              className="eyebrow flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
+              className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 0.85s both" }}
             >
               <span className="inline-block h-px w-8 bg-bf-green/60" />
               {hero.eyebrow}
             </p>
 
-            {/* Sem trava de largura no desktop: as linhas avancam pro centro
-                de proposito, pra o sapao comer o fim delas. */}
-            <h1 className="far-title display mt-7 max-w-[15ch] text-[clamp(2.9rem,7vw,5.4rem)] text-white lg:max-w-none">
-              {hero.headline.map((line, i) => (
-                <span key={line} className="line-mask">
-                  <span
-                    style={{ animationDelay: `${0.15 + i * 0.13}s` }}
-                    className={
-                      i === hero.headline.length - 1 ? "text-bf-green" : ""
-                    }
-                  >
-                    {line}
-                  </span>
-                </span>
-              ))}
-            </h1>
-          </div>
-
-          <div className="drift-2 on-water relative z-10 lg:justify-self-end lg:max-w-[22rem]">
             <p
               className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 1s both" }}
@@ -92,15 +116,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* O VEU: nevoa passando POR CIMA do titulo (z 2) e das frases
-            (z 1), e POR BAIXO da copy da direita (z 10) e do sapao (z 20). */}
-        <PondVeil />
-
-        {/* ---------- O SAPAO, POR CIMA ----------
-            pointer-events desligado no desktop pra ele nao roubar o clique
-            dos botoes que ficam por baixo. */}
+        {/* ---------- O SAPAO, POR CIMA DE TUDO ----------
+            No desktop ele nao captura clique, pra nao roubar os botoes. */}
         <div
-          className="relative mx-auto mt-12 w-[76%] max-w-[480px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[70%] lg:z-20 lg:mt-0 lg:w-[25%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[30%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
           <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[152%] -translate-x-1/2 -translate-y-1/2">
