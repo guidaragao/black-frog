@@ -95,7 +95,7 @@ export default function Hero() {
             pointer-events desligado no desktop pra ele nao roubar o clique
             dos botoes que ficam por baixo. */}
         <div
-          className="relative mx-auto mt-12 w-[76%] max-w-[480px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[62%] lg:z-20 lg:mt-0 lg:w-[29%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+          className="relative mx-auto mt-12 w-[76%] max-w-[480px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[70%] lg:z-20 lg:mt-0 lg:w-[25%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
           <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[152%] -translate-x-1/2 -translate-y-1/2">
