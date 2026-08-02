@@ -42,34 +42,86 @@ export default function Hero() {
       <DistantWords />
 
       {/* ---------- O TITULO, z 2, ATRAS DA NEVOA ----------
-          As TRES linhas atravessam a largura toda e o sapao corta elas no
-          meio, que e o segundo rascunho da Ingrid. Cada linha ganha um
-          tamanho proprio calculado pelo numero de letras, senao a linha
-          curta sobra e a longa estoura: quem tem menos letra precisa de
-          letra maior pra chegar na mesma borda. */}
-      <div className="pointer-events-none absolute inset-x-0 top-[16%] z-[2] px-5 md:px-10">
-        <h1 className="far-title mr-auto max-w-[1500px] text-white lg:max-w-[47%]">
-          {hero.headline.map((line, i) => {
-            // 158 e a constante que faz "Standing still" (14 letras) bater
-            // na borda; as outras seguem a mesma regra sozinhas.
-            const vw = 78 / line.length;
-            return (
+          O rascunho 1 da Ingrid ao pe da letra: "STANDING ..... STILL" de
+          ponta a ponta, com o sapao sentado no VAO entre as duas palavras.
+          Nenhuma palavra e comida, porque o sapao mora no espaco entre
+          elas, nao em cima delas. O resto desce menor, na esquerda. */}
+      <div className="pointer-events-none absolute inset-x-0 top-[13%] z-[2] px-5 md:px-10">
+        <div className="mx-auto max-w-[1500px]">
+          <h1 className="far-title text-white">
+            <span
+              className="flex w-full items-baseline justify-between font-black leading-[0.86] tracking-[-0.05em]"
+              style={{ fontSize: "clamp(2.6rem, 9.2vw, 10rem)" }}
+            >
+              {faixa.split(" ").map((palavra, i) => (
+                <span key={palavra} className="line-mask">
+                  <span
+                    className="block"
+                    style={{ animationDelay: `${0.15 + i * 0.1}s` }}
+                  >
+                    {palavra}
+                  </span>
+                </span>
+              ))}
+            </span>
+
+            {resto.map((line, i) => (
               <span key={line} className="line-mask">
                 <span
-                  className={`block whitespace-nowrap font-black leading-[0.86] tracking-[-0.05em] ${
-                    i === hero.headline.length - 1 ? "text-bf-green" : ""
+                  className={`block font-black leading-[0.96] tracking-[-0.035em] ${
+                    i === resto.length - 1 ? "text-bf-green" : ""
                   }`}
                   style={{
-                    fontSize: `clamp(2.1rem, ${vw.toFixed(1)}vw, 8rem)`,
-                    animationDelay: `${0.15 + i * 0.12}s`,
+                    fontSize: "clamp(1.9rem, 4.6vw, 4.4rem)",
+                    animationDelay: `${0.35 + i * 0.12}s`,
                   }}
                 >
                   {line}
                 </span>
               </span>
-            );
-          })}
-        </h1>
+            ))}
+          </h1>
+
+          {/* O REFLEXO do titulo na agua: o mesmo bloco de cabeca pra
+              baixo, apagando conforme desce. Espelhar o bloco INTEIRO poe
+              o "real risk." refletido colado no original, que e como
+              espelho d'agua funciona. E isso que faz o titulo fazer parte
+              do lago em vez de flutuar sobre ele. */}
+          <div
+            aria-hidden
+            className="select-none"
+            style={{
+              opacity: 0.28,
+              filter: "blur(2px)",
+              maskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 58%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 58%)",
+            }}
+          >
+            <div className="water-shimmer-soft" style={{ transform: "scaleY(-1)" }}>
+              <span
+                className="flex w-full items-baseline justify-between font-black leading-[0.86] tracking-[-0.05em]"
+                style={{ fontSize: "clamp(2.6rem, 9.2vw, 10rem)" }}
+              >
+                {faixa.split(" ").map((palavra) => (
+                  <span key={palavra}>{palavra}</span>
+                ))}
+              </span>
+              {resto.map((line, i) => (
+                <span
+                  key={line}
+                  className={`block font-black leading-[0.96] tracking-[-0.035em] ${
+                    i === resto.length - 1 ? "text-bf-green" : ""
+                  }`}
+                  style={{ fontSize: "clamp(1.9rem, 4.6vw, 4.4rem)" }}
+                >
+                  {line}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* A NEVOA passa por cima do titulo (z 2) e das frases (z 1). */}
@@ -82,7 +134,7 @@ export default function Hero() {
               coluna precisa existir pra a copy da direita nao subir */}
           <div aria-hidden className="hidden lg:block lg:h-[30rem]" />
 
-          <div className="drift-2 on-water relative z-10 lg:justify-self-end lg:max-w-[22rem]">
+          <div className="drift-2 on-water relative z-10 lg:absolute lg:right-10 lg:top-[34%] lg:max-w-[22rem]">
             <p
               className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 0.85s both" }}
@@ -121,10 +173,10 @@ export default function Hero() {
         {/* ---------- O SAPAO, POR CIMA DE TUDO ----------
             No desktop ele nao captura clique, pra nao roubar os botoes. */}
         <div
-          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-[52%] lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[34%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[34%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
-          <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[152%] -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2">
             <WordRing />
           </div>
 

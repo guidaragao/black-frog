@@ -26,12 +26,14 @@ type Frase = {
 // de copy. Frase distante passando por tras de texto legivel vira sujeira,
 // nao profundidade.
 const FRASES: Frase[] = [
+  // A coluna da direita (copy + botoes) vive entre x 70-96 e y 14-74.
+  // NENHUMA frase pode morar la, senao vira palavra em cima de palavra.
   { texto: units[0].line, d: 0.2, x: 6, y: 74 },
-  { texto: units[3].line, d: 0.34, x: 94, y: 80 },
+  { texto: units[3].line, d: 0.34, x: 94, y: 84 },
   { texto: units[1].line, d: 0.54, x: 10, y: 63 },
-  { texto: units[4].line, d: 0.64, x: 90, y: 66 },
+  { texto: units[4].line, d: 0.64, x: 76, y: 90 },
   { texto: units[2].line, d: 0.82, x: 14, y: 55 },
-  { texto: units[5].line, d: 0.92, x: 86, y: 53 },
+  { texto: units[5].line, d: 0.92, x: 8, y: 47 },
 ];
 
 export default function DistantWords() {

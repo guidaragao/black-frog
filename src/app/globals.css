@@ -525,3 +525,18 @@ html.bug-cursor * {
 @media (prefers-reduced-motion: reduce) {
   .firefly { animation: none; opacity: 0.6; }
 }
+
+/* Balanco do reflexo do titulo na agua. Bem sutil: reflexo parado
+   parece adesivo, reflexo balancando demais parece defeito. */
+@keyframes bfReflexo {
+  0%, 100% { transform: scaleY(-1) skewX(0deg); }
+  50%      { transform: scaleY(-1) skewX(0.6deg) scaleY(-1.02); }
+}
+
+.water-shimmer-soft {
+  animation: bfReflexo 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .water-shimmer-soft { animation: none; }
+}
