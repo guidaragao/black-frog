@@ -47,7 +47,7 @@ export default function Hero() {
 
             {/* Sem trava de largura no desktop: as linhas avancam pro centro
                 de proposito, pra o sapao comer o fim delas. */}
-            <h1 className="display mt-7 max-w-[15ch] text-[clamp(2.9rem,7vw,5.4rem)] text-white lg:max-w-none">
+            <h1 className="far-title display mt-7 max-w-[15ch] text-[clamp(2.9rem,7vw,5.4rem)] text-white lg:max-w-none">
               {hero.headline.map((line, i) => (
                 <span key={line} className="line-mask">
                   <span

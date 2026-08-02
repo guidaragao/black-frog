@@ -137,7 +137,11 @@ body {
 .line-mask {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  /* Folga pra a DESCIDA das letras (g, y, p, q, j). O overflow:hidden que
+     faz a mascara de revelacao cortava o rabo delas. A margem negativa
+     devolve o espaco, entao o entrelinha nao muda. */
+  padding-bottom: 0.26em;
+  margin-bottom: -0.26em;
 }
 
 .line-mask > span {
@@ -501,4 +505,27 @@ html.bug-cursor * {
 
 @media (prefers-reduced-motion: reduce) {
   .pond-wave, .drift, .drift-2 { animation: none; }
+}
+
+
+/* O titulo LA ATRAS. Ele nao e um rotulo por cima da cena, e uma coisa
+   grande e distante dentro dela: perde contraste, ganha um fio de desfoque
+   e recebe o mesmo veu esverdeado da agua. E perspectiva atmosferica, o
+   mesmo motivo pelo qual montanha longe fica azulada. */
+.far-title {
+  position: relative;
+  opacity: 0.62;
+  filter: blur(0.7px);
+}
+
+.far-title::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 20, 14, 0.5),
+    rgba(12, 20, 14, 0.28)
+  );
 }
