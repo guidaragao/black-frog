@@ -26,12 +26,12 @@ type Frase = {
 // de copy. Frase distante passando por tras de texto legivel vira sujeira,
 // nao profundidade.
 const FRASES: Frase[] = [
-  { texto: units[0].line, d: 0.2, x: 20, y: 72 },
-  { texto: units[3].line, d: 0.34, x: 74, y: 76 },
-  { texto: units[1].line, d: 0.54, x: 30, y: 62 },
-  { texto: units[4].line, d: 0.64, x: 70, y: 60 },
-  { texto: units[2].line, d: 0.82, x: 40, y: 53 },
-  { texto: units[5].line, d: 0.92, x: 60, y: 50 },
+  { texto: units[0].line, d: 0.2, x: 6, y: 74 },
+  { texto: units[3].line, d: 0.34, x: 94, y: 80 },
+  { texto: units[1].line, d: 0.54, x: 10, y: 63 },
+  { texto: units[4].line, d: 0.64, x: 90, y: 66 },
+  { texto: units[2].line, d: 0.82, x: 14, y: 55 },
+  { texto: units[5].line, d: 0.92, x: 86, y: 53 },
 ];
 
 export default function DistantWords() {
@@ -43,21 +43,24 @@ export default function DistantWords() {
         // Borrar muito some com a palavra; o pedido era ela ficar la atras
         // e ainda assim aparecer bem.
         const escala = 1 - f.d * 0.5;
-        const opacidade = 0.46 - f.d * 0.12;
-        const desfoque = f.d * 0.7;
+        const opacidade = 0.6 - f.d * 0.14;
 
         return (
           <span
             key={f.texto}
             className="drift absolute whitespace-nowrap font-black uppercase text-white"
             style={{
-              left: `${f.x}%`,
+              // Frase da metade esquerda ancora pela ESQUERDA e a da direita
+              // pela DIREITA. Centralizar todas fazia as longas saírem da tela.
+              ...(f.x < 50
+                ? { left: `${f.x}%` }
+                : { right: `${100 - f.x}%` }),
               top: `${f.y}%`,
-              transform: `translate(-50%, -50%) scale(${escala})`,
+              transform: `translateY(-50%) scale(${escala})`,
+              transformOrigin: f.x < 50 ? "left center" : "right center",
               fontSize: "clamp(0.7rem, 1.5vw, 1.15rem)",
               letterSpacing: "0.16em",
               opacity: opacidade,
-              filter: `blur(${desfoque}px)`,
               // atraso diferente por frase, senao boiam em bloco
               animationDelay: `${-i * 1.7}s`,
               animationDuration: `${8 + i}s`,

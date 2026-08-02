@@ -482,47 +482,6 @@ export default function HeroFrog() {
         </div>
       </div>
 
-      {/* A AGUA. Reflexo e so o sapao espelhado, borrado e apagado, com
-          mascara pra sumir conforme desce. Nao e imagem nova, e o mesmo
-          arquivo virado. */}
-      <div
-        aria-hidden
-        className="pointer-events-none relative -mt-[6%] h-[26%] w-full overflow-hidden"
-        style={{ minHeight: 150 }}
-      >
-        <div
-          className="absolute inset-x-0 top-0 h-full"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(18,30,14,0.85) 0%, rgba(11,18,9,0.55) 45%, rgba(13,13,13,0) 100%)",
-          }}
-        />
-
-        <div
-          className="water-shimmer absolute left-1/2 top-0 w-[126%] max-w-none -translate-x-1/2 opacity-[0.16]"
-          style={{
-            transform: "translateX(-50%) scaleY(-1)",
-            filter: "blur(3px)",
-            maskImage:
-              "linear-gradient(to top, transparent 4%, #000 78%)",
-            WebkitMaskImage:
-              "linear-gradient(to top, transparent 4%, #000 78%)",
-          }}
-        >
-          <Image
-            src="/brand/lily-pad.webp"
-            alt=""
-            width={1200}
-            height={554}
-            className="h-auto w-full"
-          />
-        </div>
-
-        {/* ondas concentricas saindo de onde ele pousa */}
-        <span className="ripple ripple-1" />
-        <span className="ripple ripple-2" />
-        <span className="ripple ripple-3" />
-      </div>
     </div>
   );
 }

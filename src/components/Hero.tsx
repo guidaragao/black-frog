@@ -4,6 +4,7 @@ import { hero, proof } from "@/content/site";
 import DistantWords from "./DistantWords";
 import HeroFrog from "./HeroFrog";
 import Pond from "./Pond";
+import PondDepth from "./PondDepth";
 import PondVeil from "./PondVeil";
 import WordRing from "./WordRing";
 
@@ -37,6 +38,7 @@ export default function Hero() {
       className="vignette relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
       <Pond />
+      <PondDepth />
       <DistantWords />
 
       {/* ---------- O TITULO, z 2, ATRAS DA NEVOA ----------
@@ -46,11 +48,11 @@ export default function Hero() {
           curta sobra e a longa estoura: quem tem menos letra precisa de
           letra maior pra chegar na mesma borda. */}
       <div className="pointer-events-none absolute inset-x-0 top-[16%] z-[2] px-5 md:px-10">
-        <h1 className="far-title mx-auto max-w-[1500px] text-white">
+        <h1 className="far-title mr-auto max-w-[1500px] text-white lg:max-w-[47%]">
           {hero.headline.map((line, i) => {
             // 158 e a constante que faz "Standing still" (14 letras) bater
             // na borda; as outras seguem a mesma regra sozinhas.
-            const vw = 158 / line.length;
+            const vw = 78 / line.length;
             return (
               <span key={line} className="line-mask">
                 <span
@@ -58,7 +60,7 @@ export default function Hero() {
                     i === hero.headline.length - 1 ? "text-bf-green" : ""
                   }`}
                   style={{
-                    fontSize: `clamp(2.1rem, ${vw.toFixed(1)}vw, 13rem)`,
+                    fontSize: `clamp(2.1rem, ${vw.toFixed(1)}vw, 8rem)`,
                     animationDelay: `${0.15 + i * 0.12}s`,
                   }}
                 >
@@ -119,7 +121,7 @@ export default function Hero() {
         {/* ---------- O SAPAO, POR CIMA DE TUDO ----------
             No desktop ele nao captura clique, pra nao roubar os botoes. */}
         <div
-          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[30%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-[52%] lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[34%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
           <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[152%] -translate-x-1/2 -translate-y-1/2">

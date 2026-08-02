@@ -488,20 +488,8 @@ html.bug-cursor * {
 /* Reflexo do bloco na agua: o proprio conteudo espelhado e apagado. */
 .on-water { position: relative; }
 
-.on-water::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: 100%;
-  height: 42%;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(166, 255, 0, 0.05),
-    transparent 70%
-  );
-  filter: blur(6px);
-}
+/* O reflexo falso saiu: com o lago em video de verdade por tras, esse
+   gradiente virava um RETANGULO visivel por cima da agua. */
 
 @media (prefers-reduced-motion: reduce) {
   .pond-wave, .drift, .drift-2 { animation: none; }
@@ -514,10 +502,26 @@ html.bug-cursor * {
    mesmo motivo pelo qual montanha longe fica azulada. */
 .far-title {
   position: relative;
-  /* Leve, so. Quem manda o titulo pro fundo agora e o VEU passando por
-     cima dele (PondVeil), nao um apagamento fingido. */
-  opacity: 0.88;
-  filter: blur(0.35px);
+  /* Sem desfoque e sem apagamento. Tentei mandar o titulo pro fundo
+     lavando ele, e o resultado foi palavra ilegivel. Quem cria a
+     profundidade agora e so a SOBREPOSICAO: o sapao passa na frente. */
+  opacity: 1;
 }
 
 
+
+/* Vaga-lumes no fundo do lago: acendem e apagam fora de compasso. */
+@keyframes bfFirefly {
+  0%, 100% { opacity: 0; transform: translate(0, 0); }
+  25%      { opacity: 0.9; }
+  50%      { opacity: 0.35; transform: translate(6px, -8px); }
+  75%      { opacity: 0.8; }
+}
+
+.firefly {
+  animation: bfFirefly 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firefly { animation: none; opacity: 0.6; }
+}
