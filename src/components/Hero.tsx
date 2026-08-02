@@ -2,6 +2,7 @@
 
 import { hero, proof } from "@/content/site";
 import HeroFrog from "./HeroFrog";
+import DistantWords from "./DistantWords";
 import Pond from "./Pond";
 import WordRing from "./WordRing";
 
@@ -22,8 +23,9 @@ export default function Hero() {
       id="top"
       className="vignette relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
-      {/* O lago em perspectiva, atras de tudo. */}
+      {/* O lago em video, atras de tudo, e as frases boiando no fundo dele. */}
       <Pond />
+      <DistantWords />
 
       {/* Brilho verde respirando atras do sapao, no centro. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
@@ -67,7 +69,7 @@ export default function Hero() {
         >
           {/* O anel de palavras gira em volta dele, um pouco maior que a
               cena, e fica atras. */}
-          <div className="pointer-events-none absolute left-1/2 top-[42%] aspect-square w-[132%] -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[152%] -translate-x-1/2 -translate-y-1/2">
             <WordRing />
           </div>
 

@@ -18,11 +18,9 @@ const R = 44;
 const CIRC = 2 * Math.PI * R;
 
 export default function WordRing() {
-  const palavras = units.map((u) => u.name);
-  // Duas voltas da lista, pra o anel ter densidade em vez de palavras soltas
-  const texto = [...palavras, ...palavras]
-    .map((p) => `${p}  ·  `)
-    .join("");
+  // UMA volta so da lista. Duas voltas obrigavam letra pequena pra caber,
+  // e o pedido era palavra em PROPORCAO com o sapao, nao textura miuda.
+  const texto = units.map((u) => `${u.name}   ·   `).join("");
 
   return (
     <svg
@@ -40,11 +38,11 @@ export default function WordRing() {
       </defs>
 
       <text
-        fill="rgba(255,255,255,0.17)"
+        fill="rgba(255,255,255,0.22)"
         style={{
-          fontSize: 3.6,
-          fontWeight: 700,
-          letterSpacing: "0.02em",
+          fontSize: 6.4,
+          fontWeight: 900,
+          letterSpacing: "0.01em",
         }}
       >
         <textPath
