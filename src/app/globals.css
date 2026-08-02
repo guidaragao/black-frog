@@ -387,3 +387,44 @@ html.bug-cursor * {
   html.bug-cursor * { cursor: auto !important; }
   .bug-wing { animation: none; }
 }
+
+/* ==========================================================
+   O LAGO
+   ========================================================== */
+
+/* Ondas concentricas na agua, saindo de onde a folha pousa.
+   Tres aneis defasados dao a impressao de agua viva sem video. */
+@keyframes bfRipple {
+  0%   { transform: translateX(-50%) scale(0.28); opacity: 0; }
+  18%  { opacity: 0.5; }
+  100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
+}
+
+.ripple {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: 60%;
+  aspect-ratio: 3.4 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(166, 255, 0, 0.32);
+  animation: bfRipple 7s ease-out infinite;
+  pointer-events: none;
+}
+
+.ripple-2 { animation-delay: 2.33s; }
+.ripple-3 { animation-delay: 4.66s; }
+
+/* Reflexo respirando de leve, como agua parada mexendo. */
+@keyframes bfShimmer {
+  0%, 100% { transform: translateX(-50%) scaleY(-1) skewX(0deg); }
+  50%      { transform: translateX(-50%) scaleY(-1.03) skewX(0.5deg); }
+}
+
+.water-shimmer {
+  animation: bfShimmer 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple, .water-shimmer { animation: none; }
+}

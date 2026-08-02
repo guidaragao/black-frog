@@ -77,6 +77,7 @@ export default function HeroFrog() {
   useEffect(() => setMontado(true), []);
 
   const hostRef = useRef<HTMLDivElement>(null);
+  const artRef = useRef<HTMLDivElement>(null);
   const pupilRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const poseRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -87,7 +88,9 @@ export default function HeroFrog() {
   const tonguePadHiRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
-    const host = hostRef.current;
+    // Mede a ARTE, nao a cena: olho e boca sao % da arte do sapao, e a
+    // cena inclui a vitoria-regia e a agua embaixo.
+    const host = artRef.current;
     if (!host) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -310,10 +313,24 @@ export default function HeroFrog() {
   );
 
   return (
-    <div ref={hostRef} className="frog-float relative w-full">
+    <div ref={hostRef} className="relative w-full">
       {montado && createPortal(lingua, document.body)}
 
-      <div className="relative">
+      {/* A CENA: sapao + vitoria-regia flutuam JUNTOS, senao ele descola
+          da folha. A agua embaixo fica parada. */}
+      <div className="frog-float relative">
+        {/* a folha entra por tras e por baixo dele */}
+        <Image
+          src="/brand/lily-pad.webp"
+          alt=""
+          aria-hidden
+          width={1200}
+          height={554}
+          className="pointer-events-none absolute bottom-[2%] left-1/2 w-[126%] max-w-none -translate-x-1/2"
+          style={{ filter: "drop-shadow(0 18px 26px rgba(0,0,0,0.65))" }}
+        />
+
+        <div ref={artRef} className="relative z-10">
         {/* As tres poses empilhadas. Todas carregam junto e a troca e so
             opacidade, senao a primeira bicada piscaria esperando o
             download da pose aberta. */}
@@ -409,6 +426,49 @@ export default function HeroFrog() {
             />
           </span>
         ))}
+        </div>
+      </div>
+
+      {/* A AGUA. Reflexo e so o sapao espelhado, borrado e apagado, com
+          mascara pra sumir conforme desce. Nao e imagem nova, e o mesmo
+          arquivo virado. */}
+      <div
+        aria-hidden
+        className="pointer-events-none relative -mt-[6%] h-[26%] w-full overflow-hidden"
+        style={{ minHeight: 150 }}
+      >
+        <div
+          className="absolute inset-x-0 top-0 h-full"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(18,30,14,0.85) 0%, rgba(11,18,9,0.55) 45%, rgba(13,13,13,0) 100%)",
+          }}
+        />
+
+        <div
+          className="water-shimmer absolute left-1/2 top-0 w-[126%] max-w-none -translate-x-1/2 opacity-[0.16]"
+          style={{
+            transform: "translateX(-50%) scaleY(-1)",
+            filter: "blur(3px)",
+            maskImage:
+              "linear-gradient(to top, transparent 4%, #000 78%)",
+            WebkitMaskImage:
+              "linear-gradient(to top, transparent 4%, #000 78%)",
+          }}
+        >
+          <Image
+            src="/brand/lily-pad.webp"
+            alt=""
+            width={1200}
+            height={554}
+            className="h-auto w-full"
+          />
+        </div>
+
+        {/* ondas concentricas saindo de onde ele pousa */}
+        <span className="ripple ripple-1" />
+        <span className="ripple ripple-2" />
+        <span className="ripple ripple-3" />
       </div>
     </div>
   );
