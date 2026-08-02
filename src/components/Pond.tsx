@@ -32,9 +32,10 @@ export default function Pond() {
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-      {/* A AGUA. `object-bottom` prende a superficie na base da tela, entao
-          o horizonte cai sempre no mesmo lugar em qualquer altura de tela. */}
-      <div className="absolute inset-x-0 bottom-0 top-[26%] overflow-hidden">
+      {/* A AGUA ocupa a tela INTEIRA, desde o topo. Antes ela comecava a
+          26% e o terco de cima ficava preto chapado, o que denunciava que
+          o lago era um adesivo colado embaixo em vez de ser o ambiente. */}
+      <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/brand/lago-poster.webp"
           alt=""
@@ -61,14 +62,29 @@ export default function Pond() {
         )}
       </div>
 
-      {/* Nevoa do horizonte: funde a agua com o preto da pagina, pra nao
-          existir uma linha reta denunciando onde o video comeca. */}
+      {/* Escuridao no alto, pro cabecalho ler. Nao e mais um corte: e
+          sombra caindo por cima da propria agua. */}
       <div
-        className="absolute inset-x-0 top-[18%] h-[26%]"
+        className="absolute inset-x-0 top-0 h-[42%]"
         style={{
           background:
-            "linear-gradient(to bottom, #0d0d0d 6%, rgba(13,13,13,0.72) 48%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(6,8,6,0.96) 0%, rgba(8,11,8,0.72) 42%, transparent 100%)",
         }}
+      />
+
+      {/* MASSA ESCURA ATRAS DO SAPAO. E o que da o ar de fundo de lago:
+          alguma coisa densa la atras, sem forma definida, so peso. */}
+      <div
+        className="absolute left-1/2 top-[30%] h-[46%] w-[62%] -translate-x-1/2 rounded-[50%] blur-[70px]"
+        style={{ background: "rgba(4,10,4,0.85)" }}
+      />
+      <div
+        className="absolute left-[26%] top-[36%] h-[30%] w-[26%] -translate-x-1/2 rounded-[50%] blur-[60px]"
+        style={{ background: "rgba(3,8,3,0.7)" }}
+      />
+      <div
+        className="absolute left-[76%] top-[34%] h-[32%] w-[28%] -translate-x-1/2 rounded-[50%] blur-[60px]"
+        style={{ background: "rgba(3,8,3,0.7)" }}
       />
 
       {/* Escurece a agua o suficiente pra a copy ler por cima dela. */}
@@ -76,7 +92,7 @@ export default function Pond() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(13,13,13,0.2) 0%, rgba(13,13,13,0.55) 55%, rgba(13,13,13,0.78) 100%)",
+            "radial-gradient(120% 90% at 50% 58%, transparent 22%, rgba(9,12,9,0.6) 68%, rgba(9,12,9,0.9) 100%)",
         }}
       />
     </div>
