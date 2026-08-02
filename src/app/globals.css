@@ -428,3 +428,77 @@ html.bug-cursor * {
 @media (prefers-reduced-motion: reduce) {
   .ripple, .water-shimmer { animation: none; }
 }
+
+/* Anel de palavras girando em volta do sapao. Lento de proposito:
+   rapido viraria carrossel de loja, e a ideia e so respirar. */
+@keyframes bfRingSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.word-ring {
+  animation: bfRingSpin 68s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-ring { animation: none; }
+}
+
+/* ==========================================================
+   LAGO EM PERSPECTIVA
+   ========================================================== */
+
+/* Ondas nascendo perto e viajando pro fundo. Como vivem dentro do plano
+   ja deitado, a perspectiva encolhe elas sozinha no caminho. */
+@keyframes bfPondWave {
+  0%   { transform: translate(-50%, 0) scale(0.15); opacity: 0; }
+  12%  { opacity: 0.45; }
+  100% { transform: translate(-50%, -78%) scale(1.5); opacity: 0; }
+}
+
+.pond-wave {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 46%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(166, 255, 0, 0.3);
+  animation: bfPondWave 9s linear infinite;
+}
+
+.pond-wave-2 { animation-delay: 3s; }
+.pond-wave-3 { animation-delay: 6s; }
+
+/* Blocos de texto boiando no lago. Cada um com atraso proprio, senao
+   o hero inteiro sobe e desce junto e parece elevador, nao agua. */
+@keyframes bfDrift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.drift    { animation: bfDrift 8s ease-in-out infinite; }
+.drift-2  { animation: bfDrift 9.5s ease-in-out infinite; animation-delay: -3s; }
+
+/* Reflexo do bloco na agua: o proprio conteudo espelhado e apagado. */
+.on-water { position: relative; }
+
+.on-water::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 42%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(166, 255, 0, 0.05),
+    transparent 70%
+  );
+  filter: blur(6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pond-wave, .drift, .drift-2 { animation: none; }
+}

@@ -2,6 +2,8 @@
 
 import { hero, proof } from "@/content/site";
 import HeroFrog from "./HeroFrog";
+import Pond from "./Pond";
+import WordRing from "./WordRing";
 
 /**
  * Hero em tres colunas: fala de um lado, sapao no meio, fala do outro.
@@ -20,6 +22,9 @@ export default function Hero() {
       id="top"
       className="vignette relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
     >
+      {/* O lago em perspectiva, atras de tudo. */}
+      <Pond />
+
       {/* Brilho verde respirando atras do sapao, no centro. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
         <div
@@ -30,7 +35,7 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1500px] items-center gap-10 px-5 pb-12 pt-32 md:px-10 md:pb-16 md:pt-28 lg:grid-cols-[1fr_0.9fr] lg:gap-12 xl:grid-cols-[1fr_1.05fr_1fr] xl:gap-10">
         {/* ---------- ESQUERDA: o titulo ---------- */}
-        <div className="xl:order-1">
+        <div className="drift on-water xl:order-1">
           <p
             className="eyebrow flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
             style={{ animation: "bfRise 0.9s var(--ease-bf) 0.85s both" }}
@@ -60,11 +65,19 @@ export default function Hero() {
           className="relative mx-auto w-[74%] max-w-[520px] lg:order-3 lg:col-span-2 lg:w-[54%] xl:order-2 xl:col-span-1 xl:w-full xl:max-w-none"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
-          <HeroFrog />
+          {/* O anel de palavras gira em volta dele, um pouco maior que a
+              cena, e fica atras. */}
+          <div className="pointer-events-none absolute left-1/2 top-[42%] aspect-square w-[132%] -translate-x-1/2 -translate-y-1/2">
+            <WordRing />
+          </div>
+
+          <div className="relative">
+            <HeroFrog />
+          </div>
         </div>
 
         {/* ---------- DIREITA: o argumento e os botoes ---------- */}
-        <div className="lg:order-2 xl:order-3">
+        <div className="drift-2 on-water lg:order-2 xl:order-3">
           <p
             className="max-w-[46ch] text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem] xl:border-l xl:border-white/10 xl:pl-7"
             style={{ animation: "bfRise 0.9s var(--ease-bf) 1s both" }}

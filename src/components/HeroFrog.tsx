@@ -86,6 +86,8 @@ export default function HeroFrog() {
   const tongueShineRef = useRef<SVGPathElement>(null);
   const tonguePadRef = useRef<SVGCircleElement>(null);
   const tonguePadHiRef = useRef<SVGCircleElement>(null);
+  const tongueGradRef = useRef<SVGLinearGradientElement>(null);
+  const tongueShadowRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     // Mede a ARTE, nao a cena: olho e boca sao % da arte do sapao, e a
@@ -132,6 +134,7 @@ export default function HeroFrog() {
       const shine = tongueShineRef.current;
       const pad = tonguePadRef.current;
       const padHi = tonguePadHiRef.current;
+      const shadow = tongueShadowRef.current;
       if (!svg || !body || !shine || !pad || !padHi) return;
 
       if (len <= 1) {
@@ -162,16 +165,36 @@ export default function HeroFrog() {
       const cX = px + ux * len * 0.5 + nx * sag;
       const cY = py + uy * len * 0.5 + ny * sag;
 
-      body.setAttribute(
-        "d",
-        [
+      const contorno = [
           `M ${px + nx * wRaiz * 0.5} ${py + ny * wRaiz * 0.5}`,
           `Q ${cX + nx * wMeio * 0.5} ${cY + ny * wMeio * 0.5} ${tipX + nx * wPonta * 0.5} ${tipY + ny * wPonta * 0.5}`,
           `L ${tipX - nx * wPonta * 0.5} ${tipY - ny * wPonta * 0.5}`,
           `Q ${cX - nx * wMeio * 0.5} ${cY - ny * wMeio * 0.5} ${px - nx * wRaiz * 0.5} ${py - ny * wRaiz * 0.5}`,
-          "Z",
-        ].join(" "),
-      );
+        "Z",
+      ].join(" ");
+
+      body.setAttribute("d", contorno);
+      // mesma forma, deslocada, faz a sombra projetada
+      if (shadow) {
+        shadow.setAttribute("d", contorno);
+        shadow.setAttribute(
+          "transform",
+          `translate(${ny * 5 + 2} ${-nx * 5 + 5})`,
+        );
+      }
+
+      // O gradiente atravessa a LARGURA da lingua, nao o comprimento, e por
+      // isso e recalculado a cada quadro em coordenada de tela: e o que da
+      // volume de tubo em vez de fita chapada.
+      const grad = tongueGradRef.current;
+      if (grad) {
+        const gx = px + ux * len * 0.45;
+        const gy = py + uy * len * 0.45;
+        grad.setAttribute("x1", `${gx + nx * wMeio * 0.6}`);
+        grad.setAttribute("y1", `${gy + ny * wMeio * 0.6}`);
+        grad.setAttribute("x2", `${gx - nx * wMeio * 0.6}`);
+        grad.setAttribute("y2", `${gy - ny * wMeio * 0.6}`);
+      }
 
       const off = wMeio * 0.24;
       shine.setAttribute(
@@ -300,13 +323,43 @@ export default function HeroFrog() {
       className="pointer-events-none fixed inset-0 z-[290] h-full w-full"
       style={{ opacity: 0 }}
     >
-      <path ref={tongueBodyRef} fill="#b23a50" />
-      <circle ref={tonguePadRef} r="0" fill="#c94a63" />
-      <circle ref={tonguePadHiRef} r="0" fill="rgba(255,214,222,0.75)" />
+      <defs>
+        {/* as coordenadas sao setadas por quadro no setTongue */}
+        <linearGradient ref={tongueGradRef} id="bfTongueGrad" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#5c1522" />
+          <stop offset="0.18" stopColor="#9c2f44" />
+          <stop offset="0.46" stopColor="#d05a72" />
+          <stop offset="0.62" stopColor="#b8455c" />
+          <stop offset="1" stopColor="#4d101c" />
+        </linearGradient>
+        <radialGradient id="bfPadGrad">
+          <stop offset="0" stopColor="#e0798f" />
+          <stop offset="0.55" stopColor="#c04a62" />
+          <stop offset="1" stopColor="#6d1626" />
+        </radialGradient>
+      </defs>
+
+      {/* sombra por baixo, separa a lingua do corpo dele */}
+      <path
+        ref={tongueShadowRef}
+        fill="rgba(0,0,0,0.5)"
+        style={{ filter: "blur(4px)" }}
+      />
+
+      <path
+        ref={tongueBodyRef}
+        fill="url(#bfTongueGrad)"
+        stroke="rgba(60,8,18,0.55)"
+        strokeWidth="1"
+      />
+
+      <circle ref={tonguePadRef} r="0" fill="url(#bfPadGrad)" />
+      <circle ref={tonguePadHiRef} r="0" fill="rgba(255,222,230,0.85)" />
+
       <path
         ref={tongueShineRef}
         fill="none"
-        stroke="rgba(255,196,208,0.5)"
+        stroke="rgba(255,206,216,0.55)"
         strokeLinecap="round"
       />
     </svg>
