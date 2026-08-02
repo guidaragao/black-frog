@@ -62,16 +62,6 @@ export default function Pond() {
         )}
       </div>
 
-      {/* Escuridao no alto, pro cabecalho ler. Nao e mais um corte: e
-          sombra caindo por cima da propria agua. */}
-      <div
-        className="absolute inset-x-0 top-0 h-[42%]"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(6,8,6,0.96) 0%, rgba(8,11,8,0.72) 42%, transparent 100%)",
-        }}
-      />
-
       {/* MASSA ESCURA ATRAS DO SAPAO. E o que da o ar de fundo de lago:
           alguma coisa densa la atras, sem forma definida, so peso. */}
       <div
@@ -87,14 +77,6 @@ export default function Pond() {
         style={{ background: "rgba(3,8,3,0.7)" }}
       />
 
-      {/* Escurece a agua o suficiente pra a copy ler por cima dela. */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(120% 90% at 50% 58%, transparent 22%, rgba(9,12,9,0.6) 68%, rgba(9,12,9,0.9) 100%)",
-        }}
-      />
     </div>
   );
 }

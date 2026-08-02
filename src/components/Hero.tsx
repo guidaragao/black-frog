@@ -4,6 +4,7 @@ import { hero, proof } from "@/content/site";
 import DistantWords from "./DistantWords";
 import HeroFrog from "./HeroFrog";
 import Pond from "./Pond";
+import PondVeil from "./PondVeil";
 import WordRing from "./WordRing";
 
 /**
@@ -35,8 +36,8 @@ export default function Hero() {
 
       <div className="relative mx-auto w-full max-w-[1500px] px-5 pb-12 pt-32 md:px-10 md:pb-16 md:pt-28">
         {/* ---------- A COPY, POR BAIXO ---------- */}
-        <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-24">
-          <div className="drift on-water">
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-24">
+          <div className="drift on-water relative z-[2]">
             <p
               className="eyebrow flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 0.85s both" }}
@@ -63,7 +64,7 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div className="drift-2 on-water lg:justify-self-end lg:max-w-[22rem]">
+          <div className="drift-2 on-water relative z-10 lg:justify-self-end lg:max-w-[22rem]">
             <p
               className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 1s both" }}
@@ -90,6 +91,10 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        {/* O VEU: nevoa passando POR CIMA do titulo (z 2) e das frases
+            (z 1), e POR BAIXO da copy da direita (z 10) e do sapao (z 20). */}
+        <PondVeil />
 
         {/* ---------- O SAPAO, POR CIMA ----------
             pointer-events desligado no desktop pra ele nao roubar o clique
