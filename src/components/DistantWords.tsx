@@ -39,7 +39,7 @@ const FRASES: Frase[] = [
 
 export default function DistantWords() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]">
+    <div aria-hidden className="pointer-events-none absolute inset-0 z-[1] hidden xl:block">
       {FRASES.map((f, i) => {
         // um so parametro governa os tres, senao a distancia nao convence
         // Distancia dita por TAMANHO e POSICAO, quase nao por borrao.

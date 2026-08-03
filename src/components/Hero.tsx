@@ -45,7 +45,7 @@ export default function Hero() {
           Bloco unico na ESQUERDA, "Standing still" junto na mesma linha.
           A versao de ponta a ponta separava as duas palavras e confundia.
           O sapao encosta na ponta do bloco mas nao come letra. */}
-      <div className="pointer-events-none absolute inset-x-0 top-[15%] z-[2] px-5 md:px-10">
+      <div className="pointer-events-none relative z-[2] px-5 pt-28 md:px-10 xl:absolute xl:inset-x-0 xl:top-[15%] xl:pt-0">
         <div className="mx-auto max-w-[1500px]">
           <p className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
              style={{ animation: "bfRise 0.9s var(--ease-bf) 0.7s both" }}>
@@ -55,15 +55,16 @@ export default function Hero() {
 
           <h1 className="far-title text-white">
             {hero.headline.map((line, i) => (
-              <span key={line} className="line-mask">
+              <span
+                key={line}
+                className="line-mask"
+                style={{ fontSize: "clamp(2.7rem, 5.4vw, 5.6rem)" }}
+              >
                 <span
                   className={`block font-black leading-[0.92] tracking-[-0.045em] ${
                     i === hero.headline.length - 1 ? "text-bf-green" : ""
                   }`}
-                  style={{
-                    fontSize: "clamp(2.7rem, 5.4vw, 5.6rem)",
-                    animationDelay: `${0.15 + i * 0.12}s`,
-                  }}
+                  style={{ animationDelay: `${0.15 + i * 0.12}s` }}
                 >
                   {line}
                 </span>
@@ -75,7 +76,7 @@ export default function Hero() {
               apagando conforme desce. E o que cola o titulo no lago. */}
           <div
             aria-hidden
-            className="select-none"
+            className="hidden select-none xl:block"
             style={{
               opacity: 0.26,
               filter: "blur(2px)",
@@ -106,23 +107,23 @@ export default function Hero() {
       <PondVeil />
 
       {/* ---------- PALCO ---------- */}
-      <div className="relative mx-auto w-full max-w-[1500px] px-5 pb-12 pt-32 md:px-10 md:pb-16 md:pt-28">
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto] lg:gap-24">
+      <div className="relative mx-auto flex w-full max-w-[1500px] flex-col px-5 pb-12 pt-6 md:px-10 md:pb-16 xl:block xl:pt-28">
+        <div className="order-2 grid items-end gap-10 xl:order-none lg:grid-cols-[1fr_auto] lg:gap-24">
           {/* espaco reservado: o titulo mora na camada de tras, mas a
               coluna precisa existir pra a copy da direita nao subir */}
-          <div aria-hidden className="hidden lg:block lg:h-[30rem]" />
+          <div aria-hidden className="hidden xl:block xl:h-[30rem]" />
 
-          <div className="drift-2 on-water relative z-10 lg:absolute lg:right-6 lg:top-[26%] lg:max-w-[17rem] xl:right-10 xl:top-[34%] xl:max-w-[22rem]">
+          <div className="drift-2 on-water relative z-10 mx-auto w-full max-w-xl text-center xl:mx-0 xl:w-auto xl:absolute xl:right-10 xl:top-[34%] xl:max-w-[22rem] xl:text-left">
 
             <p
-              className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem] lg:text-[0.95rem] lg:leading-[1.65] xl:text-[1.125rem] xl:leading-[1.7]"
+              className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 1s both" }}
             >
               {hero.body}
             </p>
 
             <div
-              className="mt-9 flex flex-wrap items-center gap-3"
+              className="mt-9 flex flex-wrap items-center justify-center gap-3 xl:justify-start"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 1.15s both" }}
             >
               <a
@@ -144,7 +145,7 @@ export default function Hero() {
         {/* ---------- O SAPAO, POR CIMA DE TUDO ----------
             No desktop ele nao captura clique, pra nao roubar os botoes. */}
         <div
-          className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[34%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+          className="order-1 relative mx-auto mt-2 mb-10 w-[68%] max-w-[420px] xl:order-none xl:pointer-events-none xl:absolute xl:left-1/2 xl:top-[52%] xl:z-20 xl:m-0 xl:w-[34%] xl:max-w-none xl:-translate-x-1/2 xl:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
           <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[116%] -translate-x-1/2 -translate-y-1/2">
