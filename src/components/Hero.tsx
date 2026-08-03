@@ -112,10 +112,10 @@ export default function Hero() {
               coluna precisa existir pra a copy da direita nao subir */}
           <div aria-hidden className="hidden lg:block lg:h-[30rem]" />
 
-          <div className="drift-2 on-water relative z-10 lg:absolute lg:right-10 lg:top-[34%] lg:max-w-[22rem]">
+          <div className="drift-2 on-water relative z-10 lg:absolute lg:right-6 lg:top-[26%] lg:max-w-[17rem] xl:right-10 xl:top-[34%] xl:max-w-[22rem]">
 
             <p
-              className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
+              className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem] lg:text-[0.95rem] lg:leading-[1.65] xl:text-[1.125rem] xl:leading-[1.7]"
               style={{ animation: "bfRise 0.9s var(--ease-bf) 1s both" }}
             >
               {hero.body}

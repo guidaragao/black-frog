@@ -13,6 +13,8 @@ import { units } from "@/content/site";
  */
 
 type Frase = {
+  /** so aparece em tela bem larga, onde nao ha risco de bater nos botoes */
+  soLarga?: boolean;
   texto: string;
   /** 0 = colada na camera, 1 = quase no horizonte */
   d: number;
@@ -29,9 +31,9 @@ const FRASES: Frase[] = [
   // Cinco, nao seis: menos frase boiando = cena mais limpa. E nenhuma
   // na zona do titulo (x < 45, y < 56) nem da copy (x > 70, y 30-78).
   { texto: units[0].line, d: 0.2, x: 6, y: 78 },
-  { texto: units[3].line, d: 0.34, x: 94, y: 85 },
+  { texto: units[3].line, d: 0.34, x: 94, y: 85, soLarga: true },
   { texto: units[1].line, d: 0.54, x: 10, y: 67 },
-  { texto: units[4].line, d: 0.64, x: 74, y: 91 },
+  { texto: units[4].line, d: 0.64, x: 74, y: 91, soLarga: true },
   { texto: units[2].line, d: 0.82, x: 15, y: 59 },
 ];
 
@@ -49,7 +51,7 @@ export default function DistantWords() {
         return (
           <span
             key={f.texto}
-            className="drift absolute whitespace-nowrap font-black uppercase text-white"
+            className={`drift absolute whitespace-nowrap font-black uppercase text-white ${f.soLarga ? "hidden min-[1500px]:block" : ""}`}
             style={{
               // Frase da metade esquerda ancora pela ESQUERDA e a da direita
               // pela DIREITA. Centralizar todas fazia as longas saírem da tela.
