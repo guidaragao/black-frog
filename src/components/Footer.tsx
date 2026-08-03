@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { nav, site, units } from "@/content/site";
+import { asset } from "@/lib/asset";
 
 export default function Footer() {
   const year = 2026;
@@ -10,7 +11,7 @@ export default function Footer() {
           fotorrealista do hero: la e a cara seria, aqui e o personagem.
           Some no celular, onde nao sobra canto pra ele. */}
       <Image
-        src="/brand/frog-tall.png"
+        src={asset("/brand/frog-tall.png")}
         alt=""
         aria-hidden
         width={950}
@@ -28,7 +29,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div>
             <Image
-              src="/brand/logo-horizontal.png"
+              src={asset("/brand/logo-horizontal.png")}
               alt={`${site.name}, ${site.tagline}`}
               width={1114}
               height={338}

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 /**
  * O que existe LA NO FUNDO do lago.
@@ -91,7 +92,7 @@ export default function PondDepth() {
           }}
         >
           <Image
-            src="/brand/lily-pad.webp"
+            src={asset("/brand/lily-pad.webp")}
             alt=""
             width={1200}
             height={554}

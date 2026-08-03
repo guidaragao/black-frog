@@ -31,6 +31,10 @@ jobs:
           # o Pages serve o projeto em /<nome-do-repo>, entao o site
           # precisa saber esse prefixo pra os links e assets nao quebrarem
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
+          # Mesmo valor, mas visivel no NAVEGADOR. O basePath do Next nao
+          # alcanca src escrito a mao nem next/image sem otimizador, entao
+          # src/lib/asset.ts usa esta variavel pra prefixar na mao.
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
         run: npm run build
       - name: .nojekyll
         # sem isso o Pages ignora as pastas _next do Next.js

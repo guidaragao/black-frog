@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { leap } from "@/content/site";
 import Reveal from "./Reveal";
+import { asset } from "@/lib/asset";
 
 export default function Leap() {
   return (
@@ -11,7 +12,7 @@ export default function Leap() {
       {/* A marca gigante como textura de fundo. Fica quase invisivel de
           proposito: e presenca de marca, nao decoracao. */}
       <Image
-        src="/brand/mark.png"
+        src={asset("/brand/mark.png")}
         alt=""
         aria-hidden
         width={272}

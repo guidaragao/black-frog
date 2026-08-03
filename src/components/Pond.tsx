@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { asset } from "@/lib/asset";
 
 /**
  * O lago do hero. Video real (o que a Ingrid gerou), nao mais a grade em CSS.
@@ -37,7 +38,7 @@ export default function Pond() {
           o lago era um adesivo colado embaixo em vez de ser o ambiente. */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src="/brand/lago-poster.webp"
+          src={asset("/brand/lago-poster.webp")}
           alt=""
           fill
           priority
@@ -48,7 +49,7 @@ export default function Pond() {
         {querVideo && (
           <video
             ref={ref}
-            src="/brand/lago-loop.mp4"
+            src={asset("/brand/lago-loop.mp4")}
             autoPlay
             muted
             loop

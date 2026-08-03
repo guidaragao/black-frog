@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://blackfrog.io"),
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
       "Brands, products and campaigns that leap ahead. Sites, apps, CRM, SEO, film and brand systems, in one house.",
     url: "https://blackfrog.io",
     siteName: "Black Frog",
-    images: [{ url: "/brand/logo-stacked.png", width: 786, height: 503 }],
+    images: [{ url: asset("/brand/logo-stacked.png"), width: 786, height: 503 }],
     locale: "en_US",
     type: "website",
   },
@@ -32,14 +33,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Black Frog. Design & Digital Solutions",
     description: "Brands, products and campaigns that leap ahead.",
-    images: ["/brand/logo-stacked.png"],
+    images: [asset("/brand/logo-stacked.png")],
   },
   icons: {
     icon: [
-      { url: "/brand/icon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/brand/icon-48.png", sizes: "48x48", type: "image/png" },
+      { url: asset("/brand/icon-32.png"), sizes: "32x32", type: "image/png" },
+      { url: asset("/brand/icon-48.png"), sizes: "48x48", type: "image/png" },
     ],
-    apple: [{ url: "/brand/icon-180.png", sizes: "180x180" }],
+    apple: [{ url: asset("/brand/icon-180.png"), sizes: "180x180" }],
   },
 };
 

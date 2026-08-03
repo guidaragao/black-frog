@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { contact } from "@/content/site";
 import Reveal from "./Reveal";
+import { asset } from "@/lib/asset";
 
 export default function Contact() {
   return (
     <section id="contact" className="relative overflow-hidden">
       {/* O sapao fecha a pagina do jeito que abriu. */}
       <Image
-        src="/brand/mark.png"
+        src={asset("/brand/mark.png")}
         alt=""
         aria-hidden
         width={272}

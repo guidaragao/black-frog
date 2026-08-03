@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { featuredCase } from "@/content/site";
 import Reveal from "./Reveal";
+import { asset } from "@/lib/asset";
 
 export default function CaseFeature() {
   return (
@@ -42,7 +43,7 @@ export default function CaseFeature() {
           <Reveal delay={140} className="relative">
             <div className="relative overflow-hidden rounded-3xl border border-white/[0.07]">
               <Image
-                src="/brand/frog-plinth.png"
+                src={asset("/brand/frog-plinth.png")}
                 alt="Black Frog, a black frog poised on a polished stone plinth under a ribbon of liquid glass"
                 width={2304}
                 height={1296}

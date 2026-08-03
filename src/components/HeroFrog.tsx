@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { gazeTarget, hunt, pointer, watchPointer } from "@/lib/pointer";
+import { asset } from "@/lib/asset";
 
 /**
  * O sapao do hero: olhos que seguem o inseto e boca que abre de verdade.
@@ -64,9 +65,9 @@ const HOLD_MS = 120;
 const BACK_MS = 250;
 
 const POSES = [
-  "/brand/frog-mouth-0.webp", // fechada
-  "/brand/frog-mouth-1.webp", // entreaberta
-  "/brand/frog-mouth-2.webp", // escancarada
+  asset("/brand/frog-mouth-0.webp"), // fechada
+  asset("/brand/frog-mouth-1.webp"), // entreaberta
+  asset("/brand/frog-mouth-2.webp"), // escancarada
 ];
 
 export default function HeroFrog() {
@@ -374,7 +375,7 @@ export default function HeroFrog() {
       <div className="frog-float relative">
         {/* a folha entra por tras e por baixo dele */}
         <Image
-          src="/brand/lily-pad.webp"
+          src={asset("/brand/lily-pad.webp")}
           alt=""
           aria-hidden
           width={1200}

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { asset } from "@/lib/asset";
 
 /**
  * Abertura da marca. Tela preta, a ra da logo entra, um filete verde
@@ -57,7 +58,7 @@ export default function Intro() {
       <div className="flex flex-col items-center">
         <div className="intro-mark">
           <Image
-            src="/brand/mark.png"
+            src={asset("/brand/mark.png")}
             alt=""
             width={272}
             height={311}

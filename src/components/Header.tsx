@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
+import { asset } from "@/lib/asset";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function Header() {
           className="group shrink-0"
         >
           <Image
-            src="/brand/logo-lockup.png"
+            src={asset("/brand/logo-lockup.png")}
             alt={`${site.name}, ${site.tagline}`}
             width={1112}
             height={302}
