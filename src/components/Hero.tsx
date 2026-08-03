@@ -42,38 +42,27 @@ export default function Hero() {
       <DistantWords />
 
       {/* ---------- O TITULO, z 2, ATRAS DA NEVOA ----------
-          O rascunho 1 da Ingrid ao pe da letra: "STANDING ..... STILL" de
-          ponta a ponta, com o sapao sentado no VAO entre as duas palavras.
-          Nenhuma palavra e comida, porque o sapao mora no espaco entre
-          elas, nao em cima delas. O resto desce menor, na esquerda. */}
-      <div className="pointer-events-none absolute inset-x-0 top-[13%] z-[2] px-5 md:px-10">
+          Bloco unico na ESQUERDA, "Standing still" junto na mesma linha.
+          A versao de ponta a ponta separava as duas palavras e confundia.
+          O sapao encosta na ponta do bloco mas nao come letra. */}
+      <div className="pointer-events-none absolute inset-x-0 top-[15%] z-[2] px-5 md:px-10">
         <div className="mx-auto max-w-[1500px]">
-          <h1 className="far-title text-white">
-            <span
-              className="flex w-full items-baseline justify-between font-black leading-[0.86] tracking-[-0.05em]"
-              style={{ fontSize: "clamp(2.6rem, 9.2vw, 10rem)" }}
-            >
-              {faixa.split(" ").map((palavra, i) => (
-                <span key={palavra} className="line-mask">
-                  <span
-                    className="block"
-                    style={{ animationDelay: `${0.15 + i * 0.1}s` }}
-                  >
-                    {palavra}
-                  </span>
-                </span>
-              ))}
-            </span>
+          <p className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
+             style={{ animation: "bfRise 0.9s var(--ease-bf) 0.7s both" }}>
+            <span className="inline-block h-px w-8 bg-bf-green/60" />
+            {hero.eyebrow}
+          </p>
 
-            {resto.map((line, i) => (
+          <h1 className="far-title text-white">
+            {hero.headline.map((line, i) => (
               <span key={line} className="line-mask">
                 <span
-                  className={`block font-black leading-[0.96] tracking-[-0.035em] ${
-                    i === resto.length - 1 ? "text-bf-green" : ""
+                  className={`block font-black leading-[0.92] tracking-[-0.045em] ${
+                    i === hero.headline.length - 1 ? "text-bf-green" : ""
                   }`}
                   style={{
-                    fontSize: "clamp(1.9rem, 4.6vw, 4.4rem)",
-                    animationDelay: `${0.35 + i * 0.12}s`,
+                    fontSize: "clamp(2.7rem, 5.4vw, 5.6rem)",
+                    animationDelay: `${0.15 + i * 0.12}s`,
                   }}
                 >
                   {line}
@@ -82,39 +71,28 @@ export default function Hero() {
             ))}
           </h1>
 
-          {/* O REFLEXO do titulo na agua: o mesmo bloco de cabeca pra
-              baixo, apagando conforme desce. Espelhar o bloco INTEIRO poe
-              o "real risk." refletido colado no original, que e como
-              espelho d'agua funciona. E isso que faz o titulo fazer parte
-              do lago em vez de flutuar sobre ele. */}
+          {/* O REFLEXO do titulo na agua: o bloco de cabeca pra baixo,
+              apagando conforme desce. E o que cola o titulo no lago. */}
           <div
             aria-hidden
             className="select-none"
             style={{
-              opacity: 0.28,
+              opacity: 0.26,
               filter: "blur(2px)",
               maskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 58%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 55%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 58%)",
+                "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 55%)",
             }}
           >
             <div className="water-shimmer-soft" style={{ transform: "scaleY(-1)" }}>
-              <span
-                className="flex w-full items-baseline justify-between font-black leading-[0.86] tracking-[-0.05em]"
-                style={{ fontSize: "clamp(2.6rem, 9.2vw, 10rem)" }}
-              >
-                {faixa.split(" ").map((palavra) => (
-                  <span key={palavra}>{palavra}</span>
-                ))}
-              </span>
-              {resto.map((line, i) => (
+              {hero.headline.map((line, i) => (
                 <span
                   key={line}
-                  className={`block font-black leading-[0.96] tracking-[-0.035em] ${
-                    i === resto.length - 1 ? "text-bf-green" : ""
+                  className={`block font-black leading-[0.92] tracking-[-0.045em] ${
+                    i === hero.headline.length - 1 ? "text-bf-green" : ""
                   }`}
-                  style={{ fontSize: "clamp(1.9rem, 4.6vw, 4.4rem)" }}
+                  style={{ fontSize: "clamp(2.7rem, 5.4vw, 5.6rem)" }}
                 >
                   {line}
                 </span>
@@ -135,13 +113,6 @@ export default function Hero() {
           <div aria-hidden className="hidden lg:block lg:h-[30rem]" />
 
           <div className="drift-2 on-water relative z-10 lg:absolute lg:right-10 lg:top-[34%] lg:max-w-[22rem]">
-            <p
-              className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
-              style={{ animation: "bfRise 0.9s var(--ease-bf) 0.85s both" }}
-            >
-              <span className="inline-block h-px w-8 bg-bf-green/60" />
-              {hero.eyebrow}
-            </p>
 
             <p
               className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
@@ -176,7 +147,7 @@ export default function Hero() {
           className="relative mx-auto mt-12 w-[76%] max-w-[440px] lg:pointer-events-none lg:absolute lg:left-1/2 lg:top-[52%] lg:z-20 lg:mt-0 lg:w-[34%] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
-          <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[116%] -translate-x-1/2 -translate-y-1/2">
             <WordRing />
           </div>
 
