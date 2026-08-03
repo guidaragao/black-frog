@@ -45,7 +45,7 @@ export default function Hero() {
           Bloco unico na ESQUERDA, "Standing still" junto na mesma linha.
           A versao de ponta a ponta separava as duas palavras e confundia.
           O sapao encosta na ponta do bloco mas nao come letra. */}
-      <div className="pointer-events-none relative z-[2] px-5 pt-28 md:px-10 xl:absolute xl:inset-x-0 xl:top-[15%] xl:pt-0">
+      <div className="pointer-events-none relative z-[2] px-5 pt-28 md:px-10 xl:absolute xl:inset-x-0 xl:top-1/2 xl:-translate-y-1/2 xl:pt-0">
         <div className="mx-auto max-w-[1500px]">
           <p className="eyebrow mb-6 flex items-center gap-3 text-[11px] text-bf-green md:text-[13px]"
              style={{ animation: "bfRise 0.9s var(--ease-bf) 0.7s both" }}>
@@ -113,7 +113,7 @@ export default function Hero() {
               coluna precisa existir pra a copy da direita nao subir */}
           <div aria-hidden className="hidden xl:block xl:h-[30rem]" />
 
-          <div className="drift-2 on-water relative z-10 mx-auto w-full max-w-xl text-center xl:mx-0 xl:w-auto xl:absolute xl:right-10 xl:top-[34%] xl:max-w-[22rem] xl:text-left">
+          <div className="drift-2 on-water relative z-10 mx-auto w-full max-w-xl text-center xl:mx-0 xl:w-auto xl:absolute xl:right-10 xl:top-1/2 xl:max-w-[20rem] xl:-translate-y-1/2 xl:text-left">
 
             <p
               className="text-[1.0625rem] leading-[1.7] text-white/70 md:text-[1.125rem]"
@@ -145,7 +145,7 @@ export default function Hero() {
         {/* ---------- O SAPAO, POR CIMA DE TUDO ----------
             No desktop ele nao captura clique, pra nao roubar os botoes. */}
         <div
-          className="order-1 relative mx-auto mt-2 mb-10 w-[68%] max-w-[420px] xl:order-none xl:pointer-events-none xl:absolute xl:left-1/2 xl:top-[52%] xl:z-20 xl:m-0 xl:w-[34%] xl:max-w-none xl:-translate-x-1/2 xl:-translate-y-1/2"
+          className="order-1 relative mx-auto mt-2 mb-10 w-[68%] max-w-[420px] xl:order-none xl:pointer-events-none xl:absolute xl:left-[47%] xl:top-1/2 xl:z-20 xl:m-0 xl:w-[31%] xl:max-w-none xl:-translate-x-1/2 xl:-translate-y-1/2"
           style={{ animation: "bfRise 1.1s var(--ease-bf) 0.5s both" }}
         >
           <div className="pointer-events-none absolute left-1/2 top-[44%] aspect-square w-[116%] -translate-x-1/2 -translate-y-1/2">

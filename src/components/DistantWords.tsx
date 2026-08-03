@@ -28,13 +28,16 @@ type Frase = {
 // de copy. Frase distante passando por tras de texto legivel vira sujeira,
 // nao profundidade.
 const FRASES: Frase[] = [
-  // Cinco, nao seis: menos frase boiando = cena mais limpa. E nenhuma
-  // na zona do titulo (x < 45, y < 56) nem da copy (x > 70, y 30-78).
-  { texto: units[0].line, d: 0.2, x: 6, y: 78 },
-  { texto: units[3].line, d: 0.34, x: 94, y: 85, soLarga: true },
-  { texto: units[1].line, d: 0.54, x: 10, y: 67 },
-  { texto: units[4].line, d: 0.64, x: 74, y: 91, soLarga: true },
-  { texto: units[2].line, d: 0.82, x: 15, y: 59 },
+  // ZONAS PROIBIDAS, aprendidas na marra:
+  //   titulo  x 4-48  / y 30-70   (as tres linhas grandes)
+  //   copy    x 68-98 / y 25-80   (paragrafo e botoes)
+  //   sapao   x 34-62 / y 20-85   (ele e a vitoria-regia)
+  // Sobra a faixa de baixo e as bordas. E onde todas moram.
+  { texto: units[0].line, d: 0.2, x: 6, y: 86 },
+  { texto: units[1].line, d: 0.5, x: 9, y: 78 },
+  { texto: units[2].line, d: 0.72, x: 30, y: 92 },
+  { texto: units[3].line, d: 0.34, x: 94, y: 90, soLarga: true },
+  { texto: units[4].line, d: 0.64, x: 72, y: 96, soLarga: true },
 ];
 
 export default function DistantWords() {
