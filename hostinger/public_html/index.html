@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Black Frog · scroll 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@700;800&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* ==========================================================
+   BLACK FROG · SCROLL 3D (prototipo local, nao publicado)
+   Ato 1  o mergulho     filme preso ao scroll dentro da palavra
+   Ato 2  o que fazemos  a PAREDE DE TELAS NEON subindo da agua (10/09)
+   Ato 3  o trabalho     grade que da play no hover
+   Sapo = o do filme. O recorte antigo (outro render) SAIU em 10/09: dava sapo duplo
+   ========================================================== */
+:root{
+  --ink:#0D0D0D; --graphite:#141414; --green:#A6FF00; --green-deep:#77B800;
+  --white:#fff; --muted:#8A8A8A; --line:rgba(255,255,255,.10);
+  --line-strong:rgba(255,255,255,.20);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SF Mono",Menlo,monospace;
+  --display:"Archivo","Plus Jakarta Sans",system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --shell:1240px; --gutter:clamp(20px,5vw,48px); --r:9px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--white);font-family:var(--font);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.shell{max-width:var(--shell);margin-inline:auto;padding-inline:var(--gutter)}
+.label{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;
+  gap:.6rem;margin:0 0 18px}
+.label::before{content:"";width:26px;height:1px;background:var(--green);flex:none}
+.label.plain{color:var(--muted)}
+.label.plain::before{background:var(--line-strong)}
+
+/* ---------------- topo ---------------- */
+.top{position:fixed;inset:0 0 auto;z-index:80;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;padding:18px var(--gutter);
+  background:linear-gradient(rgba(13,13,13,.85) 30%,rgba(13,13,13,0))}
+.top .logo{height:26px;width:auto}
+.top .cta{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;border:1px solid var(--line-strong);
+  padding:10px 16px;border-radius:var(--r)}
+.top .cta:hover{border-color:var(--green);color:var(--green)}
+
+/* ======================================================
+   ATO 1  o mergulho
+   A palavra e um buraco na chapa preta. O filme corre
+   dentro dela. O scroll cresce a palavra ate a chapa
+   sumir e voce cair dentro do lago.
+   ====================================================== */
+#act1{height:520vh;position:relative}
+/* ---------- O POUSO: LETREIROS NEON, e o MOTION que aparece embaixo ----------
+   Quando o filme chega no ultimo quadro (o sapo na pedra, a esquerda), na
+   direita acendem cinco LETREIROS NEON com o nome de cada servico (WEBSITES
+   maior, no centro). Passou o mouse num letreiro: embaixo dele aparece UM
+   painel com o video de motion daquele servico, feito pelo robo de motion.
+   Sem numero, sem quadrado fixo, sem print. O sapo do filme e o sapo.       */
+.pouso{position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.stage1.landed .pouso{opacity:1;pointer-events:auto}
+/* o quadro NITIDO do pouso: o ultimo frame do filme em 4K com unsharp, por cima do
+   canvas (que e 1080p esticado e fica mole). Mesma conta de cover, entao encaixa. */
+.pouso .still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;z-index:0}
+/* a nevoa da direita vai pro escuro: o sapo fica na luz, os letreiros no preto */
+.pouso::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(4,6,4,0) 30%,rgba(4,6,4,.55) 48%,rgba(4,6,4,.86) 70%,rgba(4,6,4,.92) 100%),
+             radial-gradient(60% 80% at 72% 50%,rgba(166,255,0,.06),transparent 70%)}
+.pouso .wall{position:absolute;left:0;top:0;width:100%;height:100%;z-index:2}
+@media (orientation:portrait){
+  .pouso .still{object-position:24% 50%}
+  /* em pe o sapo ocupa o alto da tela e os letreiros o pe: a nevoa escurece de cima pra baixo */
+  .pouso::before{background:linear-gradient(180deg,rgba(4,6,4,0) 36%,rgba(4,6,4,.86) 56%,rgba(4,6,4,.97) 100%)}
+}
+/* o letreiro: um tubo de neon. Duas linhas (a de fora fina, a de dentro fraca)
+   e o nome brilhando. Fundo vazio: o lago passa por dentro. */
+.neon{position:absolute;left:0;top:0;will-change:transform,opacity;opacity:0;
+  padding:.62em 1.05em;border:1.5px solid rgba(190,255,60,.95);border-radius:7px;
+  font-family:"Archivo",var(--font);font-weight:800;text-transform:uppercase;letter-spacing:.03em;
+  line-height:1;font-size:var(--fs,clamp(16px,1.55vw,28px));color:#F6FFE3;white-space:nowrap;
+  animation:boia var(--per,6s) ease-in-out var(--ph,0s) infinite;
+  text-shadow:0 0 4px rgba(255,255,255,.7),0 0 10px rgba(166,255,0,.9),0 0 26px rgba(166,255,0,.5),0 0 54px rgba(166,255,0,.25);
+  box-shadow:0 0 6px rgba(166,255,0,.7),0 0 20px rgba(166,255,0,.35),0 0 50px rgba(166,255,0,.15),
+             inset 0 0 6px rgba(166,255,0,.35),inset 0 0 1px rgba(255,255,255,.5);
+  cursor:pointer;user-select:none;transition:box-shadow .3s,text-shadow .3s,color .3s,transform .3s}
+.neon.big{--fs:clamp(30px,3.3vw,58px);border-width:2.5px;letter-spacing:.01em;padding:.42em 1em;border-radius:10px}
+@media (max-width:900px){.neon{--fs:clamp(13px,3.6vw,16px)}.neon.big{--fs:clamp(24px,7.5vw,34px)}}
+@keyframes boia{0%,100%{margin-top:0;rotate:-.4deg}50%{margin-top:-10px;rotate:.4deg}}
+/* o hero do pouso v2: coluna editorial a direita do sapo (que mora ate ~40% da tela) */
+.pouso .wall{display:none}
+.hero2{position:absolute;z-index:3;left:44.5%;right:3.5%;top:50%;transform:translateY(-50%);text-align:left;pointer-events:none}
+.hero2>*{opacity:0}
+.stage1.landed .hero2{pointer-events:auto}
+.h2-k{margin:0 0 22px;font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(246,255,227,.5)}
+.h2-t{margin:0 0 20px;font-family:var(--font);font-weight:800;font-size:clamp(42px,4.9vw,80px);line-height:.96;letter-spacing:-.045em;color:#F6FFE3}
+.h2-t .g{color:var(--green)}
+.h2-d{margin:0 0 30px;max-width:44ch;font-size:clamp(15px,1.15vw,18px);line-height:1.55;color:rgba(246,255,227,.62)}
+.h2-cta{display:flex;align-items:center;gap:26px;margin:0 0 44px}
+.h2-btn{display:inline-block;background:var(--green);color:#0A0A0A;border-radius:var(--r);padding:17px 28px;font-family:var(--mono);
+  font-size:.76rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s}
+.h2-btn:hover{background:#BCFF3D;transform:translateY(-1px)}
+.h2-lnk{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,255,227,.7);text-decoration:none;
+  border-bottom:1px solid rgba(246,255,227,.25);padding-bottom:3px;transition:color .2s,border-color .2s}
+.h2-lnk:hover{color:#fff;border-color:#fff}
+/* os botoezinhos neon : pequenos, lado a lado, flutuando devagar embaixo do hero (ela sentiu falta deles) */
+.h2-svc{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.h2-svc a{display:inline-block;padding:.62em .95em;border:1.5px solid rgba(190,255,60,.9);border-radius:7px;
+  font-family:"Archivo",var(--font);font-weight:800;font-size:clamp(11px,.85vw,13px);letter-spacing:.04em;text-transform:uppercase;line-height:1;
+  color:#F6FFE3;text-decoration:none;white-space:nowrap;
+  text-shadow:0 0 4px rgba(255,255,255,.6),0 0 10px rgba(166,255,0,.8),0 0 22px rgba(166,255,0,.4);
+  box-shadow:0 0 5px rgba(166,255,0,.6),0 0 16px rgba(166,255,0,.3),0 0 36px rgba(166,255,0,.12),inset 0 0 5px rgba(166,255,0,.3);
+  animation:boia var(--per,6s) ease-in-out var(--ph,0s) infinite;transition:box-shadow .3s,color .3s,background .3s}
+.h2-svc a:nth-child(1){--per:6.4s;--ph:-.6s}.h2-svc a:nth-child(2){--per:5.6s;--ph:-2.2s}.h2-svc a:nth-child(3){--per:6.9s;--ph:-3.1s}
+.h2-svc a:nth-child(4){--per:5.9s;--ph:-1.4s}.h2-svc a:nth-child(5){--per:6.6s;--ph:-4s}
+.h2-svc a:hover{animation-play-state:paused;color:#fff;background:rgba(166,255,0,.08);
+  box-shadow:0 0 8px rgba(166,255,0,.9),0 0 26px rgba(166,255,0,.5),0 0 60px rgba(166,255,0,.25),inset 0 0 8px rgba(166,255,0,.45)}
+.h2-svc a.on{color:#fff}
+@media (max-width:900px){
+  .hero2{left:6%;right:6%;top:auto;bottom:6%;transform:none}
+  .h2-k{margin-bottom:12px;font-size:.62rem}
+  .h2-t{font-size:clamp(32px,9.4vw,44px);margin-bottom:22px}
+  .h2-d{display:none}
+  .h2-cta{gap:18px;margin-bottom:26px}
+  .h2-btn{padding:14px 20px;font-size:.7rem}
+  .h2-svc{gap:8px}
+  .h2-svc a{font-size:11px;padding:.6em .85em}
+}
+.neon.hot{animation-play-state:paused}
+.neon.hot{color:#fff;
+  text-shadow:0 0 5px #fff,0 0 14px rgba(166,255,0,1),0 0 38px rgba(166,255,0,.8),0 0 80px rgba(166,255,0,.45);
+  box-shadow:0 0 10px rgba(166,255,0,.95),0 0 36px rgba(166,255,0,.55),0 0 90px rgba(166,255,0,.25),
+             inset 0 0 10px rgba(166,255,0,.5),inset 0 0 1px rgba(255,255,255,.7)}
+@keyframes flick{0%,100%{opacity:1}8%{opacity:.3}12%{opacity:1}24%{opacity:.55}28%{opacity:1}}
+.neon.flick{animation:flick .8s steps(1) 1}
+.stage1{height:100vh;width:100%;position:relative;overflow:hidden;background:#000}
+.stage1 canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage1 .knock{position:absolute;inset:0;width:100%;height:100%}
+.stage1 .vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(0,0,0,.75) 100%)}
+.a1-hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);z-index:6}
+.a1-hint b{color:var(--green);font-weight:500}
+.a1-line{position:absolute;left:0;right:0;bottom:0;text-align:center;z-index:5;
+  opacity:0;padding:0 var(--gutter) 20vh;
+  background:linear-gradient(transparent,rgba(6,10,6,.55) 45%,rgba(6,10,6,.9))}
+.a1-line p{margin:0 auto;max-width:22ch;font-size:clamp(24px,3.4vw,42px);
+  font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.a1-line em{font-style:normal;color:var(--green)}
+
+/* ======================================================
+   ATO 3  o trabalho
+   Grade desencontrada. Em repouso e placa parada.
+   O mouse chega, ela cresce POR CIMA das vizinhas,
+   o brilho vaza por baixo e o filme comeca.
+   O video so carrega no hover.
+   ====================================================== */
+#act3{padding:16vh 0 18vh;position:relative;background:var(--ink)}
+.a3-head{margin-bottom:64px}
+.a3-head h2{font-size:clamp(30px,4.2vw,50px);font-weight:800;line-height:1.06;
+  letter-spacing:-.03em;margin:0 0 14px}
+.a3-head .lede{font-size:19px;color:var(--muted);max-width:56ch;margin:0}
+.grid{display:grid;grid-template-columns:1fr;gap:clamp(40px,6vw,88px)}
+@media(min-width:860px){
+  .grid{grid-template-columns:1fr 1fr}
+  .grid .card:nth-child(odd){margin-top:0}
+  .grid .card:nth-child(even){margin-top:12vh}
+}
+.card{position:relative;display:block}
+.card__box,.card__glow,.card__meta{display:block}
+.card__glow{position:absolute;inset:6% 6% 14%;border-radius:24px;z-index:0;
+  filter:blur(46px);opacity:0;transition:opacity .45s ease;pointer-events:none}
+.card__box{position:relative;z-index:1;border-radius:var(--r);overflow:hidden;
+  aspect-ratio:16/10;background:var(--graphite);
+  transform:scale(1);transition:transform .55s cubic-bezier(.19,1,.22,1);
+  will-change:transform}
+.card__box img,.card__box video{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover}
+.card__box video{opacity:0;transition:opacity .45s ease}
+.card__box video[preload="auto"]{opacity:1}
+.card__box .soon{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(166,255,0,.45);z-index:0}
+.card.is-open{z-index:9}
+.card.is-open .card__box{transform:scale(1.075)}
+.card.is-open .card__glow{opacity:.85}
+.card.is-open .card__box video{opacity:1}
+.card__site img{height:auto;min-height:100%;object-fit:cover;object-position:top;will-change:transform;transition:transform 9s cubic-bezier(.45,.05,.2,1)}
+.card__meta{margin-top:22px;display:flex !important;align-items:baseline;
+  justify-content:space-between;gap:20px}
+.card__meta h3{margin:0;font-size:clamp(20px,2.2vw,27px);font-weight:800;
+  letter-spacing:-.03em}
+.card__tags{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);text-align:right}
+/* pilula colada no cursor, dentro do card */
+.pill{position:fixed;z-index:70;pointer-events:none;left:0;top:0;
+  background:#0A0A0A;color:var(--white);border:1px solid var(--line-strong);
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:10px 15px;border-radius:var(--r);opacity:0;
+  transform:translate(-50%,-50%) scale(.85);
+  transition:opacity .22s ease,transform .22s cubic-bezier(.19,1,.22,1)}
+.pill.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+.tail{padding:0 0 16vh;text-align:center;color:var(--muted);font-size:15px}
+.tail b{color:var(--green);font-weight:500;font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:10px}
+
+/* ======================================================
+   ATO 4  CONTATO
+   O mesmo lead.php da raiz, que ja grava e avisa por email.
+   ====================================================== */
+#act4{position:relative;background:var(--ink);border-top:1px solid var(--line);
+  padding:clamp(70px,11vh,130px) 0 clamp(30px,5vh,50px)}
+.a4-grid{display:grid;gap:clamp(28px,4vw,64px);grid-template-columns:1fr;
+  align-items:start}
+@media (min-width:900px){.a4-grid{grid-template-columns:1.1fr .9fr}}
+#act4 h2{margin:0;font-size:clamp(30px,4.2vw,58px);font-weight:800;
+  letter-spacing:-.035em;line-height:1.04;max-width:14ch}
+#act4 h2 em{font-style:italic;font-family:var(--serif);font-weight:400;
+  color:var(--green);letter-spacing:0}
+#act4 .lede{margin:18px 0 0;color:#CFCFCF;font-size:17px;max-width:44ch}
+.a4-form{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0;max-width:520px}
+.a4-form--big{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px}
+.a4-form--big button{grid-column:1/-1;justify-self:start;padding:17px 30px}
+.a4-form--big select{background:rgba(0,0,0,.5);color:var(--white);border:1px solid var(--line-strong);border-radius:var(--r);padding:16px 17px;font-family:var(--font);font-size:17px;outline:none;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238A8A8A' stroke-width='1.5'/></svg>");background-repeat:no-repeat;background-position:right 16px center}
+.a4-form--big select option{background:#111}
+.a4-note{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E6E}
+.a4-fine{margin:10px 0 0;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E6E}
+@media (max-width:620px){.a4-form--big{grid-template-columns:1fr}.a4-form--big button{width:100%}}
+.a4-form input{flex:1 1 190px;min-width:0;background:rgba(0,0,0,.5);color:var(--white);
+  border:1px solid var(--line-strong);border-radius:var(--r);padding:16px 17px;
+  font-family:var(--font);font-size:17px;outline:none;transition:border-color .25s,box-shadow .25s}
+.a4-form input::placeholder{color:#6A6A6A}
+.a4-form input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(166,255,0,.12)}
+.a4-form button{flex:0 0 auto;background:var(--green);color:#0A0A0A;border:0;
+  border-radius:var(--r);padding:16px 26px;font-family:var(--mono);font-size:.8rem;
+  font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  transition:background .2s}
+.a4-form button:hover{background:#BCFF3D}
+.a4-form button[disabled]{opacity:.55;cursor:default}
+.a4-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.a4-msg{margin:13px 0 0;font-family:var(--mono);font-size:.8rem;min-height:1.3em;
+  color:var(--green)}
+.a4-msg.err{color:#FF7A57}
+.a4-side dl{margin:0;display:grid;gap:18px}
+.a4-side dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted)}
+.a4-side dd{margin:6px 0 0;font-size:17px}
+.a4-side a{border-bottom:1px solid rgba(166,255,0,.5);padding-bottom:2px}
+.a4-side a:hover{color:var(--green);border-color:var(--green)}
+.a4-foot{margin:clamp(40px,7vh,80px) 0 0;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#6E6E6E}
+
+/* redes sociais (pedido do Thiago 14/09): topo e rodape */
+.social{display:flex;align-items:center;gap:8px}
+.social a{display:inline-grid;place-items:center;width:34px;height:34px;border:1px solid var(--line-strong);
+  border-radius:var(--r);color:var(--muted);transition:border-color .25s,color .25s}
+.social a:hover{border-color:var(--green);color:var(--green)}
+.social svg{width:16px;height:16px;fill:currentColor;display:block}
+.top .right{display:flex;align-items:center;gap:14px}
+.top .social a{width:32px;height:32px}
+@media (max-width:620px){.top .social{display:none}}
+.a4-foot{align-items:center}
+
+/* ---------- legal + cookies (14/09) ---------- */
+.legal{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.legal a,.legal button,.foot .legal a{font-family:"JetBrains Mono","SF Mono",Menlo,monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#8A8A8A;background:none;border:0;border-bottom:1px solid transparent;padding:0 0 2px;cursor:pointer;text-decoration:none;border-radius:0}
+.legal a:hover,.legal button:hover,.foot .legal a:hover{color:#A6FF00;border-color:#A6FF00}
+.bfc{position:fixed;left:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:300;width:min(400px,calc(100vw - 32px));
+  background:rgba(10,10,10,.96);border:1px solid rgba(255,255,255,.16);border-radius:var(--r,9px);padding:20px 20px 18px;
+  color:#D2D2D2;font:15px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 30px 80px -30px #000;
+  opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;pointer-events:none;visibility:hidden}
+.bfc.on{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.bfc .bfc-k{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:500 .7rem/1 "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.24em;text-transform:uppercase;color:#fff}
+.bfc .bfc-k::before{content:"";width:6px;height:6px;border-radius:50%;background:#A6FF00;box-shadow:0 0 12px #A6FF00}
+.bfc p{margin:0 0 16px;color:#BDBDBD}
+.bfc p a{color:#fff;border-bottom:1px solid rgba(166,255,0,.5);text-decoration:none}
+.bfc p a:hover{color:#A6FF00}
+.bfc-b{display:flex;gap:8px}
+.bfc-b button{flex:1;font:500 .7rem/1 "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;padding:14px 10px;border-radius:var(--r,9px);
+  cursor:pointer;border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;transition:background .25s,border-color .25s,color .25s}
+.bfc-b .no:hover{border-color:#A6FF00;color:#A6FF00}
+.bfc-b .yes{background:#A6FF00;border-color:#A6FF00;color:#0A0A0A}
+.bfc-b .yes:hover{background:#BCFF3D}
+
+/* ---------- botao de som (14/09) ---------- */
+.snd{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 12px;border:1px solid var(--line-strong);border-radius:var(--r);
+  background:transparent;color:var(--muted);font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;
+  transition:border-color .25s,color .25s}
+.snd:hover,.snd.on{border-color:var(--green);color:var(--green)}
+.snd.wait{border-color:rgba(166,255,0,.45)}
+.snd-b{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.snd-b i{display:block;width:2px;height:3px;background:currentColor;border-radius:1px}
+.snd.on .snd-b i{animation:sndb 1s ease-in-out infinite}
+.snd.on .snd-b i:nth-child(2){animation-delay:-.4s}.snd.on .snd-b i:nth-child(3){animation-delay:-.2s}.snd.on .snd-b i:nth-child(4){animation-delay:-.7s}
+@keyframes sndb{0%,100%{height:3px}50%{height:12px}}
+@media (max-width:620px){.snd .snd-l{display:none}.snd{padding:0 10px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <img class="logo" src="brand/logo-horizontal.webp" alt="Black Frog">
+  <div class="right"><button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Sound"><span class="snd-b" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="snd-l">Sound off</span></button><nav class="social" aria-label="Social"><a href="https://www.instagram.com/blkfrogmarketing/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.75a3.05 3.05 0 1 1 0-6.1 3.05 3.05 0 0 1 0 6.1zM17.5 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 2c-2.7 0-3.05.01-4.12.06-1.07.05-1.8.22-2.43.47a4.9 4.9 0 0 0-1.78 1.16A4.9 4.9 0 0 0 2.5 5.47c-.25.64-.42 1.36-.47 2.43C1.98 8.97 1.97 9.31 1.97 12s.01 3.03.06 4.1c.05 1.07.22 1.8.47 2.43a4.9 4.9 0 0 0 1.16 1.78 4.9 4.9 0 0 0 1.78 1.16c.64.25 1.36.42 2.43.47 1.07.05 1.41.06 4.12.06s3.05-.01 4.12-.06c1.07-.05 1.8-.22 2.43-.47a4.9 4.9 0 0 0 1.78-1.16 4.9 4.9 0 0 0 1.16-1.78c.25-.64.42-1.36.47-2.43.05-1.07.06-1.41.06-4.1s-.01-3.03-.06-4.1c-.05-1.07-.22-1.8-.47-2.43a4.9 4.9 0 0 0-1.16-1.78 4.9 4.9 0 0 0-1.78-1.16c-.64-.25-1.36-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.65 0 2.97.01 4.02.06.97.04 1.5.2 1.85.34.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.35.3.88.34 1.85.05 1.05.06 1.37.06 4.02s-.01 2.97-.06 4.02c-.04.97-.2 1.5-.34 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.14-.88.3-1.85.34-1.05.05-1.37.06-4.02.06s-2.97-.01-4.02-.06c-.97-.04-1.5-.2-1.85-.34a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.35-.3-.88-.34-1.85C3.79 14.97 3.78 14.65 3.78 12s.01-2.97.06-4.02c.04-.97.2-1.5.34-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.14.88-.3 1.85-.34C9.03 3.81 9.35 3.8 12 3.8z"/></svg></a><a href="https://www.linkedin.com/company/blackfrogmarketing" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://www.facebook.com/blkfrogagency/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a></nav><a class="cta" href="/brief/">See mine first · Free</a></div>
+</header>
+
+<!-- ============ ATO 1 · O MERGULHO ============ -->
+<section id="act1">
+  <div class="stage1">
+    <canvas id="film"></canvas>
+    <svg class="knock" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <mask id="cut" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="5000" height="5000">
+          <rect x="-2000" y="-2000" width="5000" height="5000" fill="#fff"/>
+          <g id="cutg">
+            <text x="500" y="452" text-anchor="middle" fill="#000"
+                  font-family="Plus Jakarta Sans, sans-serif" font-weight="800"
+                  font-size="196" letter-spacing="-10">BLACK</text>
+            <text x="500" y="640" text-anchor="middle" fill="#000"
+                  font-family="Plus Jakarta Sans, sans-serif" font-weight="800"
+                  font-size="196" letter-spacing="-10">FROG</text>
+          </g>
+        </mask>
+      </defs>
+      <rect x="-2000" y="-2000" width="5000" height="5000" fill="#0D0D0D" mask="url(#cut)"/>
+    </svg>
+    <div class="vig"></div>
+    <div class="a1-line"><p>Twelve years of film. <em>Now it builds too.</em></p></div>
+    <div class="a1-hint">Scroll <b>&darr;</b></div>
+
+    <div class="pouso" id="pouso">
+      <img class="still" src="brand/pouso-still.webp" alt="" decoding="async" loading="lazy">
+      <div class="wall" id="wall">
+        <a class="neon" data-k="marketing" href="#m-marketing" style="--per:6.2s;--ph:-1.1s">Marketing</a>
+        <a class="neon" data-k="apps" href="#m-apps" style="--per:5.4s;--ph:-2.6s">Apps</a>
+        <a class="neon big" data-k="websites" href="#m-websites" style="--per:7s;--ph:-.4s">Websites</a>
+        <a class="neon" data-k="automation" href="#m-automation" style="--per:5.8s;--ph:-3.4s">Automation</a>
+        <a class="neon" data-k="brand" href="#m-brand" style="--per:6.6s;--ph:-1.9s">Brand</a>
+      </div>
+      <!-- o hero do pouso, v2 (12/09): editorial, alinhado a esquerda ao lado do sapo.
+           Uma promessa grande, uma linha de apoio, uma porta, e os cinco servicos numa
+           linha fina de neon. As caixas neon (.wall) ficam escondidas, pra voltar facil. -->
+      <div class="hero2" id="hero2">
+        <p class="h2-k">Black Frog · San Diego</p>
+        <h2 class="h2-t">Your site, <span class="g">built first.</span><br>Paid only if you like it.</h2>
+        <p class="h2-d">We build the first version and send it to your phone. Live in five days. $797, nothing if you pass.</p>
+        <div class="h2-cta"><a class="h2-btn" href="/brief/">See yours first</a><a class="h2-lnk" href="#act3">What we do</a></div>
+        <nav class="h2-svc" aria-label="Services">
+          <a href="#m-websites" class="on">Websites</a><a href="#m-marketing">Marketing</a><a href="#m-apps">Apps</a><a href="#m-automation">Automation</a><a href="#m-brand">Brand</a>
+        </nav>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATO 3 · O QUE FAZEMOS (os motions) e O TRABALHO ============ -->
+<section id="act3">
+  <div class="shell">
+    <div class="a3-head">
+      <p class="label plain">What we do</p>
+      <h2>Five things. Done properly.</h2>
+      <p class="lede" id="a3lede">Hover a plate and it moves. Each one is a piece of motion we made about the service itself.</p>
+    </div>
+    <div class="grid">
+      <a class="card" id="m-websites" href="/checkup/" data-glow="#A6FF00">
+        <div class="card__glow" style="background:#A6FF00"></div>
+        <div class="card__box"><span class="soon" hidden>Websites · motion</span>
+          <video poster="brand/motion/01-websites.jpg" src="brand/motion/01-websites.mp4#t=5.3" data-rest="5.3" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="card__meta"><h3>Websites</h3>
+          <span class="card__tags">Live in 5 days &middot; Phones first</span></div>
+      </a>
+      <a class="card" id="m-marketing" href="#act4" data-glow="#4FA3FF">
+        <div class="card__glow" style="background:#4FA3FF"></div>
+        <div class="card__box"><span class="soon" hidden>Marketing · motion</span>
+          <video poster="brand/motion/02-ads.jpg" src="brand/motion/02-ads.mp4#t=5.0" data-rest="5.0" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="card__meta"><h3>Marketing</h3>
+          <span class="card__tags">Paid media &middot; Measured</span></div>
+      </a>
+      <a class="card" id="m-apps" href="#act4" data-glow="#E0A040">
+        <div class="card__glow" style="background:#E0A040"></div>
+        <div class="card__box"><span class="soon" hidden>Apps · motion</span>
+          <video poster="brand/motion/03-apps.jpg" src="brand/motion/03-apps.mp4#t=7.0" data-rest="7.0" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="card__meta"><h3>Apps</h3>
+          <span class="card__tags">Members &middot; Bookings &middot; Yours</span></div>
+      </a>
+      <a class="card" id="m-automation" href="#act4" data-glow="#B388FF">
+        <div class="card__glow" style="background:#B388FF"></div>
+        <div class="card__box"><span class="soon" hidden>Automation · motion</span>
+          <video poster="brand/motion/04-automation.jpg" src="brand/motion/04-automation.mp4#t=5.6" data-rest="5.6" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="card__meta"><h3>Automation</h3>
+          <span class="card__tags">Robots that answer while you sleep</span></div>
+      </a>
+      <a class="card" id="m-brand" href="#act4" data-glow="#FF6B3D">
+        <div class="card__glow" style="background:#FF6B3D"></div>
+        <div class="card__box"><span class="soon" hidden>Brand · motion</span>
+          <video poster="brand/motion/05-brand.jpg" src="brand/motion/05-brand.mp4#t=4.8" data-rest="4.8" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="card__meta"><h3>Brand</h3>
+          <span class="card__tags">Identity as components</span></div>
+      </a>
+    </div>
+
+    <div class="a3-head" style="margin-top:clamp(70px,12vh,140px)">
+      <p class="label plain">Work we shipped</p>
+      <h2>The archive earns its keep.</h2>
+      <p class="lede">Sites that are live right now. Open them on your phone.</p>
+    </div>
+    <div class="grid">
+      <a class="card card--site" href="https://omicronsnmx.com" target="_blank" rel="noopener" data-glow="#E0A040">
+        <div class="card__glow" style="background:#E0A040"></div>
+        <div class="card__box card__site"><img src="brand/work/scroll-omicron.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><h3>Omicron</h3>
+          <span class="card__tags">Website &middot; Members app &middot; WhatsApp</span></div>
+      </a>
+      <a class="card card--site" href="https://vadmediagroup.com" target="_blank" rel="noopener" data-glow="#4FA3FF">
+        <div class="card__glow" style="background:#4FA3FF"></div>
+        <div class="card__box card__site"><img src="brand/work/scroll-vmg.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="card__meta"><h3>Vander Media Group</h3>
+          <span class="card__tags">Website &middot; Booking &middot; Live assistant</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATO 4 · O FORM DA OFERTA (mesmo do checkup) ============ -->
+<section id="act4">
+  <div class="shell">
+    <div class="a4-grid">
+      <div>
+        <p class="label">Free websites</p>
+        <h2>See your site first. <em>You only pay if you like it.</em></h2>
+        <p class="lede">We build the first version of your site for free and send it to your phone.
+        Like it? $797 and it is live in five days. Already have a site? Put its address in and we read it too.</p>
+        <form class="a4-form a4-form--big" id="a4f" novalidate>
+          <input type="text" id="a4name" name="name" required autocomplete="name" placeholder="Your name" aria-label="Your name">
+          <input type="email" id="a4mail" name="email" required autocomplete="email" placeholder="you@company.com" aria-label="Email">
+          <input type="text" id="a4biz" name="business" required autocomplete="organization" placeholder="Business name, or your current site" aria-label="Business name or current site">
+          <input type="tel" id="a4phone" name="phone" autocomplete="tel" placeholder="Phone number (optional)" aria-label="Phone number">
+          <select id="a4kind" name="kind" aria-label="What you do">
+            <option value="">What you do</option>
+            <option>Retail or e-commerce</option><option>Restaurant or hospitality</option>
+            <option>Health, clinic or wellness</option><option>Trades, home or field service</option>
+            <option>Professional services</option><option>Real estate</option>
+            <option>Fitness or studio</option><option>Something else</option>
+          </select>
+          <input class="a4-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" id="a4go">Show me mine first · Free</button>
+        </form>
+        <p class="a4-msg" id="a4msg" role="status" aria-live="polite"></p>
+        <p class="a4-fine">Free to see. Nothing is charged unless you say yes.</p>
+      </div>
+      <div class="a4-side">
+        <dl>
+          <dt>Email</dt>
+          <dd><a href="mailto:hello@blkfrog.com">hello@blkfrog.com</a></dd>
+          <dt>Phone</dt>
+          <dd><a href="tel:+16193194224">(619) 319-4224</a><br><span class="a4-note">Text or call. A person, not a front desk.</span></dd>
+          <dt>What the $797 buys</dt>
+          <dd>A site built for phones first, a form that works, Google Analytics, your Google Business Profile tidied up, hosting for the first year. Live in five days. It is yours.</dd>
+          <dt>Paying</dt>
+          <dd>$797 up front, or $398 now and $398 when it is live. A one page agreement, no clauses.</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="a4-foot">
+      <span>Black Frog &middot; Design &amp; Digital Solutions</span>
+      <nav class="social" aria-label="Social"><a href="https://www.instagram.com/blkfrogmarketing/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.75a3.05 3.05 0 1 1 0-6.1 3.05 3.05 0 0 1 0 6.1zM17.5 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 2c-2.7 0-3.05.01-4.12.06-1.07.05-1.8.22-2.43.47a4.9 4.9 0 0 0-1.78 1.16A4.9 4.9 0 0 0 2.5 5.47c-.25.64-.42 1.36-.47 2.43C1.98 8.97 1.97 9.31 1.97 12s.01 3.03.06 4.1c.05 1.07.22 1.8.47 2.43a4.9 4.9 0 0 0 1.16 1.78 4.9 4.9 0 0 0 1.78 1.16c.64.25 1.36.42 2.43.47 1.07.05 1.41.06 4.12.06s3.05-.01 4.12-.06c1.07-.05 1.8-.22 2.43-.47a4.9 4.9 0 0 0 1.78-1.16 4.9 4.9 0 0 0 1.16-1.78c.25-.64.42-1.36.47-2.43.05-1.07.06-1.41.06-4.1s-.01-3.03-.06-4.1c-.05-1.07-.22-1.8-.47-2.43a4.9 4.9 0 0 0-1.16-1.78 4.9 4.9 0 0 0-1.78-1.16c-.64-.25-1.36-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.65 0 2.97.01 4.02.06.97.04 1.5.2 1.85.34.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.35.3.88.34 1.85.05 1.05.06 1.37.06 4.02s-.01 2.97-.06 4.02c-.04.97-.2 1.5-.34 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.14-.88.3-1.85.34-1.05.05-1.37.06-4.02.06s-2.97-.01-4.02-.06c-.97-.04-1.5-.2-1.85-.34a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.35-.3-.88-.34-1.85C3.79 14.97 3.78 14.65 3.78 12s.01-2.97.06-4.02c.04-.97.2-1.5.34-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.14.88-.3 1.85-.34C9.03 3.81 9.35 3.8 12 3.8z"/></svg></a><a href="https://www.linkedin.com/company/blackfrogmarketing" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://www.facebook.com/blkfrogagency/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a></nav>
+      <nav class="legal" aria-label="Legal"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/privacy/#cookies">Cookies</a><button type="button" data-bfc-open>Cookie settings</button></nav>
+      <span>&copy; 2026</span>
+    </div>
+  </div>
+</section>
+
+<div class="pill" id="pill">Open</div>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+var TOUCH = window.matchMedia('(hover:none)').matches;
+
+/* ---------- scroll amortecido ----------
+   ARMADILHA: RAF proprio pro Lenis congela o GSAP (lagSmoothing).
+   Tem que passar pelo ticker do GSAP.  */
+var lenis = new Lenis({
+  duration:1.15,
+  easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},
+  smooth:true, smoothTouch:false
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(function(t){ lenis.raf(t*1000); });
+gsap.ticker.lagSmoothing(0);
+
+/* ================= ATO 1 ================= */
+/* ---------- ATO 1 · o filme e sequencia de imagem num canvas ----------
+   Por que nao <video>:
+   1. `python3 -m http.server` responde 200, nunca 206. Sem Range o video
+      nao busca frame, entao scrub nenhum funciona.
+   2. Chrome adia carregar midia em aba escondida.
+   3. Scrub de <video> no iOS e quebrado.
+   Sequencia de webp resolve os tres. 61 quadros, 1,9 MB, busca instantanea. */
+var SEQ_VER = '2026-09-05a';  /* MUDAR a cada filme novo: os frames tem cache de 30 dias e o nome nao muda */
+var FRAMES = 226;   /* HISTORIA-v2.mp4 sem o T7, 28.3s a 8fps */
+/* em PE a tela so mostra ~26% da largura do quadro: centro durante o mergulho e o salto,
+   e no fim desliza pro sapo (que mora em 8% a 40% do quadro) */
+var FILM_F = 0;
+function FOCUS_X(w,h){ if (w/h >= 1) return 0.5; var t = Math.max(0, Math.min(1, (FILM_F-0.72)/0.16)); return 0.5 + (0.24-0.5)*t; }
+/* AVIF 1080p quando o navegador decodifica; senao webp 1280 */
+var AVIF = false, AVIF_READY = true; /* scrub/seq-avif no ar: 1080p */
+var __start = null;  /* a carga dos frames so comeca depois do teste de AVIF (leva ms) */
+(function(){ var im=new Image(); im.onload=function(){AVIF = im.width>0; if(__start) __start();}; im.onerror=function(){AVIF=false; if(__start) __start();};
+  im.src='data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YAAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgANogQEAwgMg8f8D///8WfhwB8+ErK42A=';
+})();
+var pad = function(n){ return ('00'+n).slice(-3); };
+var imgs = new Array(FRAMES), loaded = 0;
+var cv = document.getElementById('film');
+var ctx = cv.getContext('2d', {alpha:false});
+var cutg = document.getElementById('cutg');
+var shown = -1;
+
+function fit(){
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width  = Math.round(cv.clientWidth  * dpr);
+  cv.height = Math.round(cv.clientHeight * dpr);
+  shown = -1;
+}
+function paint(i){
+  i = Math.max(0, Math.min(FRAMES-1, i|0));
+  var im = imgs[i];
+  if (!im || !im.complete){
+    /* ainda nao chegou: recua ate o quadro carregado mais proximo */
+    for (var j=i; j>=0; j--){ if (imgs[j] && imgs[j].complete){ i=j; im=imgs[j]; break; } }
+    if (!im || !im.complete) return;
+  }
+  if (i === shown) return;
+  shown = i;
+  var cw = cv.width, ch = cv.height;
+  ctx.fillStyle = '#000'; ctx.fillRect(0,0,cw,ch);
+  /* cover puro (o zoom de 1.22 do filme antigo esticava o frame e borrava).
+     No retrato o foco vai pra esquerda, onde esta a pedra e o sapo. */
+  var s = Math.max(cw/im.width, ch/im.height);
+  var w = im.width*s, h = im.height*s;
+  ctx.drawImage(im, -(w-cw)*FOCUS_X(cw,ch), -(h-ch)*0.5, w, h);
+}
+/* CARGA EM BLOCOS: 226 quadros sao 12 MB. Disparar tudo de uma vez afoga a
+   conexao e a primeira tela fica preta. Os 60 primeiros (1,9 MB) vem na
+   frente, o resto entra atras em blocos de 40 enquanto a pessoa le o topo. */
+var FIRST = 60, CHUNK = 40;
+function loadRange(a, b, then){
+  var pending = b - a;
+  if (pending <= 0){ if (then) then(); return; }
+  for (var i=a;i<b;i++){
+    (function(k){
+      var im = new Image();
+      im.onload = im.onerror = function(){
+        loaded++;
+        if (k === 0){ fit(); paint(0); }
+        if (--pending === 0 && then) then();
+      };
+      im.src = ((AVIF && AVIF_READY) ? 'scrub/seq-avif/f'+pad(k+1)+'.avif' : 'scrub/seq/f'+pad(k+1)+'.webp') + '?v=' + SEQ_VER;
+      imgs[k] = im;
+    })(i);
+  }
+}
+__start = function(){ __start=null;
+loadRange(0, Math.min(FIRST, FRAMES), function(){
+  var next = FIRST;
+  (function chunk(){
+    if (next >= FRAMES) return;
+    var end = Math.min(next + CHUNK, FRAMES);
+    loadRange(next, end, chunk);
+    next = end;
+  })();
+});
+};
+if(AVIF!==false || document.readyState==='complete'){ /* nada: o teste chama __start */ }
+setTimeout(function(){ if(__start) __start(); }, 400);  /* rede de seguranca se o teste nao responder */
+/* ARMADILHA: com preserveAspectRatio="slice" a viewBox de 1000 e CORTADA
+   na horizontal em tela estreita, e a palavra sai pelos lados. Nao da pra
+   chutar breakpoint: tem que medir quantas unidades cabem e ajustar o corpo. */
+var texts = cutg.querySelectorAll('text');
+function fitWord(){
+  var vw = window.innerWidth, vh = window.innerHeight;
+  var k = Math.max(vw/1000, vh/1000);      /* o mesmo fator do slice */
+  var visible = vw / k;                     /* unidades de viewBox visiveis */
+  var size = 196;
+  for (var n=0;n<texts.length;n++) texts[n].setAttribute('font-size', size);
+  var widest = 0;
+  for (var n=0;n<texts.length;n++) widest = Math.max(widest, texts[n].getBBox().width);
+  if (widest > visible*0.88){
+    size = Math.floor(size * (visible*0.88) / widest);
+    for (var n=0;n<texts.length;n++) texts[n].setAttribute('font-size', size);
+  }
+  /* as duas linhas seguem coladas, proporcional ao corpo */
+  texts[0].setAttribute('y', 546 - size*0.48);
+  texts[1].setAttribute('y', 546 + size*0.48);
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWord);
+fitWord();
+window.addEventListener('resize', function(){ fit(); fitWord(); paint(shown<0?0:shown); });
+
+var t1 = gsap.timeline({
+  scrollTrigger:{
+    trigger:'#act1', start:'top top', end:'bottom bottom',
+    pin:'.stage1', pinSpacing:false, scrub:1
+  }
+});
+/* a palavra cresce ate engolir a chapa: voce cai dentro do lago */
+/* o zoom mira DENTRO do O de FROG (buraco = filme), nao no vao entre as linhas (chapa = preto) */
+/* svgOrigin = coordenada ABSOLUTA do viewBox (transformOrigin em px e relativa ao bbox do <g>,
+   por isso o zoom antigo caia ABAIXO da palavra, na chapa preta). 546,570 = centro do O de FROG. */
+/* ATENCAO: as posicoes deste timeline sao em "segundos" (duracao total ~.67), NAO em fracao do
+   scroll. progress = tempo / .67. Zoom: tempo 0-.16 = 0-24% do scroll. */
+t1.fromTo(cutg,{scale:1,svgOrigin:'492 570'},
+              {scale:30,svgOrigin:'492 570',ease:'power2.in',duration:.16},0);
+t1.to('.a1-hint',{opacity:0,duration:.05},0);
+/* ARMADILHA: ampliar sem fim cai no VAO entre as linhas, que e chapa e nao
+   buraco, e a tela apaga. A chapa tem que dissolver quando a palavra ja
+   encheu a tela: cresce, some a chapa, voce esta dentro do filme. */
+/* a chapa some CEDO, com a palavra ja enchendo a tela: o miolo preto do O nunca domina */
+t1.to('.knock',{opacity:0,ease:'power1.in',duration:.05},.05);   /* chapa some entre 7% e 15% do scroll */
+/* a frase sai ANTES do pouso (landed = 85% do scroll = .57 aqui): nada em cima dos letreiros */
+t1.fromTo('.a1-line',{opacity:0,y:26},{opacity:1,y:0,duration:.06},.42);
+t1.to('.a1-line',{opacity:0,duration:.05},.52);
+
+/* o filme preso ao scroll: quem puxa a historia e o dedo dela */
+/* 0 a .10: a palavra abre. .10 a .86: o filme. .86 a 1: o pouso, parado, com as placas. */
+var FILM_SEC = 28.28;  /* duracao do filme: o som se guia por ele */
+var FILM_A = .08, FILM_B = .86, stage1 = document.querySelector('.stage1');
+ScrollTrigger.create({
+  trigger:'#act1', start:'top top', end:'bottom bottom', scrub:1,
+  onUpdate:function(self){
+    var p = self.progress, f = Math.max(0, Math.min(1, (p-FILM_A)/(FILM_B-FILM_A)));
+    FILM_F = f; if (cv.width/cv.height < 1) shown = -1;   /* em pe o foco anda com o filme: repinta */
+    paint(Math.round(f*(FRAMES-1)));
+    if (window.bfSom) bfSom.upd(p, f*FILM_SEC);
+    stage1.classList.toggle('landed', p >= FILM_B - .01);
+  },
+  /* descendo, o hero fica (sobe junto com a secao, ordem dela 12/09); so apaga quando volta pro filme */
+  onEnterBack:function(){ stage1.classList.add('landed'); }
+});
+
+/* ================= O POUSO: os letreiros neon ================= */
+(function(){
+  var st=stage1, wall=document.getElementById('wall');
+  var neons=[].slice.call(wall.querySelectorAll('.neon'));
+  var ORDER=['marketing','apps','websites','automation','brand'];
+  var N={}; neons.forEach(function(el){N[el.dataset.k]={el:el,x:0,y:0,w:0};});
+  var shown=false, keys=ORDER, narrow=false;
+  /* LAYOUT: os letreiros na direita, lado a lado com a mesma folga, nunca em
+     cima do sapo (que mora ate ~40%). Se nao cabe, o corpo encolhe. */
+  function layout(){
+    var W=st.clientWidth, H=st.clientHeight; narrow = W < 900;
+    keys = ORDER;
+    var x0 = narrow ? W*0.05 : W*0.44, x1 = narrow ? W*0.95 : W*0.965, span = x1-x0, cx = x0+span/2;
+    ORDER.forEach(function(k){ N[k].el.style.display = ''; N[k].el.style.fontSize=''; });
+    if(narrow){
+      /* EM PE: sapo em cima, letreiros no terco de baixo. WEBSITES centrado, depois 2 + 2. */
+      var big=N['websites']; big.w=big.el.offsetWidth; big.x = cx - big.w/2; big.y = H*0.575 - big.el.offsetHeight/2;
+      [['marketing','apps'],['automation','brand']].forEach(function(par,r){
+        var g=span*0.04, w1=N[par[0]].el.offsetWidth, w2=N[par[1]].el.offsetWidth, tot=w1+g+w2, x=cx-tot/2, y=H*(r?0.765:0.675);
+        N[par[0]].x=x; N[par[0]].y=y-N[par[0]].el.offsetHeight/2; N[par[0]].w=w1;
+        N[par[1]].x=x+w1+g; N[par[1]].y=y-N[par[1]].el.offsetHeight/2; N[par[1]].w=w2;
+      });
+      return;
+    }
+    /* WEBSITES sozinho em cima, centrado; os outros numa fileira embaixo, com a mesma folga */
+    var big=N['websites']; big.w=big.el.offsetWidth; big.x = cx - big.w/2; big.y = H*0.30 - big.el.offsetHeight/2;
+    var row = keys.filter(function(k){return k!=='websites';}), gap = span*0.03, tot=0;
+    row.forEach(function(k){ tot += N[k].el.offsetWidth; }); tot += gap*(row.length-1);
+    var scale = Math.min(1, span/tot);
+    if(scale<1) row.forEach(function(k){ N[k].el.style.fontSize = 'calc(var(--fs,clamp(16px,1.55vw,28px))*'+scale.toFixed(3)+')'; });
+    tot=0; row.forEach(function(k){ N[k].w = N[k].el.offsetWidth; tot += N[k].w; }); tot += gap*(row.length-1);
+    var x = cx - tot/2, yR = narrow ? H*0.24 : H*0.47;
+    row.forEach(function(k){ var n=N[k]; n.x = x; n.y = yR - n.el.offsetHeight/2; x += n.w + gap; });
+  }
+  layout(); addEventListener('resize',function(){ layout(); if(shown) ORDER.forEach(function(k){ gsap.set(N[k].el,{x:N[k].x,y:N[k].y}); }); });
+  ORDER.forEach(function(k){ gsap.set(N[k].el,{x:N[k].x,y:N[k].y,opacity:0}); });
+  neons.forEach(function(el){
+    el.addEventListener('pointerenter',function(){el.classList.add('hot');});
+    el.addEventListener('pointerleave',function(){el.classList.remove('hot');});
+    /* clique: desce suave ate o card daquele servico no Ato 3 */
+    el.addEventListener('click',function(e){ var t=document.querySelector(el.getAttribute('href')); if(t){ e.preventDefault(); lenis.scrollTo(t,{offset:-90,duration:1.4}); } });
+  });
+  [].slice.call(document.querySelectorAll('.h2-svc a, .h2-lnk')).forEach(function(el){
+    el.addEventListener('click',function(e){ var t=document.querySelector(el.getAttribute('href')); if(t){ e.preventDefault(); lenis.scrollTo(t,{offset:-90,duration:1.4}); } });
+  });
+  /* ENTRADA: acendem um atras do outro, como neon ligando */
+  var tl=null;
+  function enter(){
+    if(shown) return; shown=true; layout();
+    if(tl) tl.kill(); tl=gsap.timeline();
+    ['websites','marketing','apps','automation','brand'].filter(function(k){return keys.indexOf(k)>=0;}).forEach(function(k,i){ var n=N[k];
+      gsap.set(n.el,{x:n.x,y:n.y+10,opacity:0});
+      tl.to(n.el,{y:n.y,opacity:1,duration:.45,ease:'power2.out',onStart:function(){n.el.classList.add('flick');},
+        onComplete:function(){ setTimeout(function(){n.el.classList.remove('flick');},800); }}, i*0.14);
+    });
+    tl.fromTo('#hero2 > *',{opacity:0,y:16},{opacity:1,y:0,duration:.7,stagger:.09,ease:'power3.out'}, 0.15);
+  }
+  function leave(){
+    if(!shown) return; shown=false; if(tl) tl.kill();
+    gsap.to('#hero2 > *',{opacity:0,duration:.25,overwrite:true});
+    ORDER.forEach(function(k){ gsap.to(N[k].el,{opacity:0,duration:.3,ease:'power2.in',overwrite:true}); N[k].el.classList.remove('hot'); });
+  }
+  new MutationObserver(function(){ st.classList.contains('landed') ? enter() : leave(); })
+    .observe(st,{attributes:true,attributeFilter:['class']});
+})();
+
+/* ================= ATO 4 · O FORM DA OFERTA ================= */
+(function(){
+  var f=document.getElementById('a4f'),b=document.getElementById('a4go'),m=document.getElementById('a4msg');
+  if(!f) return;
+  function say(t,err){m.textContent=t;m.className=err?'a4-msg err':'a4-msg';}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var nome=f.name.value.trim(), email=f.email.value.trim(), neg=f.business.value.trim();
+    if(!nome){say('Tell us your name first.',1);f.name.focus();return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){say('That email does not look right.',1);f.email.focus();return;}
+    if(neg.length<2){say('Your business name, or your current site.',1);f.business.focus();return;}
+    b.disabled=true;say('Sending...');
+    fetch('/checkup/pedido.php',{method:'POST',body:new FormData(f)})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(j){
+        if(j&&j.ok){
+          /* leva pra build sheet ja preenchida, igual ao checkup */
+          var qs=new URLSearchParams({ref:j.id||'',name:nome,email:email,business:neg,phone:f.phone?f.phone.value.trim():'',kind:f.kind?f.kind.value:''}).toString();
+          f.reset();window.fbq&&fbq('track','Lead');
+          say('Got it. One more step, 8 minutes: tell us about your business so we can build it right.');
+          var a=document.createElement('a');a.href='/brief/?'+qs;a.textContent='Fill my build sheet';
+          a.style.cssText='display:inline-block;margin-top:16px;background:#A6FF00;color:#080808;padding:16px 28px;font:500 .82rem/1 "JetBrains Mono",Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none';
+          m.parentNode.insertBefore(a,m.nextSibling);
+        }
+        else{say('Could not send. Please write to hello@blkfrog.com',1);}
+        b.disabled=false;
+      })
+      .catch(function(){say('Could not send. Please write to hello@blkfrog.com',1);b.disabled=false;});
+  });
+})();
+
+/* ================= ATO 3 ================= */
+var pill = document.getElementById('pill');
+gsap.utils.toArray('.card').forEach(function(card){
+  var v = card.querySelector('video');
+  var shot = card.querySelector('.card__site img');
+  function rola(on){ if(!shot) return; var box=shot.parentNode, d=Math.max(0, shot.offsetHeight-box.offsetHeight);
+    shot.style.transitionDuration = on ? Math.max(6, d/140)+'s' : '1.6s';
+    shot.style.transform = on ? 'translateY(-'+d+'px)' : 'translateY(0)'; }
+  card.addEventListener('mouseenter', function(e){
+    if (v){ if (!v.src && v.dataset.src){ v.src = v.dataset.src; } if(v.dataset.rest){ try{ v.currentTime=0; }catch(e){} } v.play().catch(function(){}); }
+    rola(true);
+    card.classList.add('is-open');
+    gsap.set(pill,{x:e.clientX,y:e.clientY});
+    pill.classList.add('on');
+  });
+  card.addEventListener('mouseleave', function(){
+    if (v){ v.pause(); v.currentTime = +v.dataset.rest||0; }
+    rola(false);
+    card.classList.remove('is-open');
+    pill.classList.remove('on');
+  });
+  card.addEventListener('mousemove', function(e){
+    gsap.to(pill,{x:e.clientX,y:e.clientY,duration:.45,ease:'power3.out'});
+  });
+});
+
+/* no toque nao existe hover: quem manda e o card no centro da tela */
+if (TOUCH){
+  var l3=document.getElementById('a3lede'); if(l3) l3.textContent='Scroll past a plate and it moves. Each one is a piece of motion we made about the service itself.';
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      var card = en.target, v = card.querySelector('video');
+      if (en.isIntersecting){
+        if (v){ if (!v.src && v.dataset.src){ v.src = v.dataset.src; } if(v.dataset.rest){ try{ v.currentTime=0; }catch(e){} } v.play().catch(function(){}); }
+        var sh=card.querySelector('.card__site img'); if(sh){ var d=Math.max(0,sh.offsetHeight-sh.parentNode.offsetHeight); sh.style.transitionDuration=Math.max(6,d/140)+'s'; sh.style.transform='translateY(-'+d+'px)'; }
+        card.classList.add('is-open');
+      } else { if (v){ v.pause(); v.currentTime=+v.dataset.rest||0; } card.classList.remove('is-open'); }
+    });
+  },{rootMargin:'-38% 0px -38% 0px'});
+  gsap.utils.toArray('.card').forEach(function(c){ io.observe(c); });
+}
+</script>
+
+<script>
+/* ============ O SOM DO FILME (14/09) ============
+   O som anda com o scroll. Camadas (lago, nado) sobem com a velocidade da rolagem
+   e somem quando ela para; no redemoinho o nado fica abafado. Impactos (splash,
+   mergulho, tunel, saida, coaxar) disparam quando o scroll cruza o quadro deles;
+   voltando, tocam baixinho. So toca depois do clique no botao (regra do navegador).
+   Sons: Freesound CC0, lista e links em 03_SITE-SCROLL/05_som/candidatos.json */
+(function(){
+  var VER='1409a', FILES=['lago','nado','splash','mergulho','tunel','saida','coaxar'];
+  var EVENTS=[{t:.35,s:'coaxar',v:.8},{t:3.95,s:'splash',v:1},{t:4.15,s:'mergulho',v:.7},
+              {t:8.05,s:'tunel',v:.9},{t:24.2,s:'saida',v:1},{t:27.0,s:'coaxar',v:.9}];
+  var btn=document.getElementById('snd'), act1=document.getElementById('act1'); if(!btn||!act1) return;
+  var AC=window.AudioContext||window.webkitAudioContext; if(!AC){ btn.style.display='none'; return; }
+  var ctx=null, buf={}, master, lp, beds={}, ready=false, on=false, loading=null;
+  var lastT=null, lastP=0, lastAt=0, speed=0, act=0, log=[];
+  function mem(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+  function clamp(x,a,b){ return Math.max(a,Math.min(b,x)); }
+  function ramp(t,a,b){ return clamp((t-a)/(b-a),0,1); }
+  function init(){
+    if(loading) return loading;
+    ctx=new AC(); master=ctx.createGain(); master.gain.value=0; master.connect(ctx.destination);
+    lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=18000; lp.Q.value=.7; lp.connect(master);
+    loading=Promise.all(FILES.map(function(n){
+      return fetch('brand/som/'+n+'.mp3?v='+VER).then(function(r){ return r.arrayBuffer(); })
+        .then(function(a){ return new Promise(function(ok,no){ ctx.decodeAudioData(a,ok,no); }); })
+        .then(function(b){ buf[n]=b; });
+    })).then(function(){
+      ['lago','nado'].forEach(function(n){
+        var src=ctx.createBufferSource(), g=ctx.createGain(); src.buffer=buf[n]; src.loop=true; g.gain.value=0;
+        src.connect(g); g.connect(n==='nado'?lp:master); src.start(); beds[n]={src:src,g:g};
+      });
+      ready=true; requestAnimationFrame(tick);
+    });
+    return loading;
+  }
+  function paintBtn(){
+    btn.classList.toggle('on',on); btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.querySelector('.snd-l').textContent = on ? 'Sound on' : 'Sound off';
+    if(ctx){ if(on) ctx.resume(); master.gain.setTargetAtTime(on?1:0, ctx.currentTime, .25); }
+  }
+  function turnOn(){ on=true; mem('bf-sound','on'); btn.classList.remove('wait'); paintBtn(); init().then(paintBtn,function(){ on=false; paintBtn(); }); }
+  btn.addEventListener('click',function(){ if(on){ on=false; mem('bf-sound','off'); paintBtn(); } else turnOn(); });
+  /* lembra quem ligou; o navegador so deixa tocar depois de um toque, entao espera o primeiro */
+  if(mem('bf-sound')==='on'){
+    btn.classList.add('wait');
+    var EV=['pointerdown','touchend','keydown'];
+    var go=function(e){ if(e.target.closest && e.target.closest('#snd')) return; EV.forEach(function(k){ removeEventListener(k,go,true); }); turnOn(); };
+    EV.forEach(function(k){ addEventListener(k,go,true); });
+  }
+  document.addEventListener('visibilitychange',function(){ if(!ctx) return; if(document.hidden) ctx.suspend(); else if(on) ctx.resume(); });
+  function shot(n,v){
+    log.push(n+'@'+(lastT||0).toFixed(2)+'x'+v.toFixed(2));
+    if(!ready||!on||!buf[n]) return;
+    var src=ctx.createBufferSource(), g=ctx.createGain(); src.buffer=buf[n]; g.gain.value=v; src.connect(g); g.connect(master); src.start();
+  }
+  var PER_P = FILM_SEC/((window.FILM_B||.86)-(window.FILM_A||.08));  /* segundos de filme por unidade de scroll */
+  function upd(p,t){
+    var now=performance.now();
+    if(lastT!==null){
+      var dr=Math.max(16,now-lastAt)/1000, sp=Math.abs(p-lastP)*PER_P/dr;
+      speed = speed*.5 + sp*.5;
+      if(Math.abs(t-lastT) < 6) EVENTS.forEach(function(e){
+        if(lastT<e.t && t>=e.t) shot(e.s,e.v);
+        else if(lastT>=e.t && t<e.t) shot(e.s,e.v*.35);
+      });
+    }
+    lastT=t; lastP=p; lastAt=now;
+  }
+  function tick(){
+    requestAnimationFrame(tick);
+    var now=performance.now(), T=ctx.currentTime;
+    if(now-lastAt > 120) speed *= .85;                    /* parou de rolar: o som vai sumindo */
+    var target=clamp(speed/1.2,0,1); act += (target-act)*(target>act ? .3 : .07);
+    var r=act1.getBoundingClientRect(), inAct = r.bottom > innerHeight*.4 && r.top < innerHeight*.6;
+    var t=lastT||0, landed = lastP >= (window.FILM_B||.86)-.01;
+    var water = ramp(t,3.9,4.3)*(1-ramp(t,24.1,24.5)), tun = ramp(t,8.0,8.4)*(1-ramp(t,11.8,12.3));
+    var lago = inAct ? Math.max((1-water)*act, landed ? .3 : 0) : 0;   /* sentado na pedra: o lago fica baixinho */
+    var nado = inAct ? water*act : 0;
+    beds.lago.g.gain.setTargetAtTime(lago*.9, T, .08);
+    beds.nado.g.gain.setTargetAtTime(nado, T, .08);
+    lp.frequency.setTargetAtTime(18000 - 17300*tun, T, .12);
+    beds.nado.src.playbackRate.setTargetAtTime(.85 + .3*act - .12*tun, T, .1);
+    beds.lago.src.playbackRate.setTargetAtTime(.92 + .12*act, T, .1);
+  }
+  window.bfSom = { upd:upd, debug:function(){ return { ready:ready, on:on, act:+act.toFixed(2), speed:+speed.toFixed(2),
+    lago: beds.lago ? +beds.lago.g.gain.value.toFixed(2) : null, nado: beds.nado ? +beds.nado.g.gain.value.toFixed(2) : null,
+    filtro: lp ? Math.round(lp.frequency.value) : null, log: log.slice(-12) }; } };
+})();
+</script>
+
+<!-- aviso de cookies (14/09). Pixel/Analytics futuros: window.bfConsent(function(){ ...carrega... }) so roda com "Accept" -->
+<div class="bfc" id="bfc" role="dialog" aria-label="Cookies">
+  <p class="bfc-k">Cookies</p>
+  <p>We use what the site needs to work. With your yes, we also use the Meta Pixel to measure our ads and show them to the right people. <a href="/privacy/#cookies">Read more</a></p>
+  <div class="bfc-b"><button type="button" class="no" data-bfc="essential">Essential only</button><button type="button" class="yes" data-bfc="all">Accept</button></div>
+</div>
+<script>
+(function(){
+  var K="bf-consent",el=document.getElementById("bfc"),q=[];
+  function get(){try{return localStorage.getItem(K)}catch(e){return null}}
+  function set(v){try{localStorage.setItem(K,v)}catch(e){}}
+  function run(){q.splice(0).forEach(function(f){try{f()}catch(e){}})}
+  window.bfConsent=function(cb){q.push(cb);if(get()==="all")run()};
+  el.addEventListener("click",function(e){var b=e.target.closest("[data-bfc]");if(!b)return;
+    var v=b.getAttribute("data-bfc");set(v);el.classList.remove("on");if(v==="all")run()});
+  document.addEventListener("click",function(e){if(e.target.closest("[data-bfc-open]")){e.preventDefault();el.classList.add("on")}});
+  if(!get())setTimeout(function(){el.classList.add("on")},1600);
+})();
+</script>
+<script>
+/* Meta Pixel da Black Frog (14/09). So carrega depois do "Accept" no aviso de cookies. */
+var BF_PIXEL="3565658580266138";
+window.bfConsent&&/^\d+$/.test(BF_PIXEL)&&bfConsent(function(){
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init",BF_PIXEL);fbq("track","PageView");
+});
+</script>
+</body>
+</html>
