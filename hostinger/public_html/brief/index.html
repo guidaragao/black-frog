@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Build sheet · Black Frog</title>
+<meta name="description" content="Tell us about your business. We build the first version of your site from this sheet, before you pay anything.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0D0D0D">
+<link rel="icon" href="../checkup/assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../checkup/assets/icon-180.png">
+<meta property="og:title" content="Your build sheet · Black Frog">
+<meta property="og:description" content="Eight minutes. We build the first version of your site from this. You only pay if you like it.">
+<meta property="og:image" content="https://blkfrog.com/checkup/assets/sapo-phone.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@700;800&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* ==========================================================
+   BLACK FROG · BUILD SHEET   blkfrog.com/brief
+   O formulario que vale pra TODO lead (16/10/2026). A gente
+   monta o site antes da pessoa pagar, entao ela preenche aqui
+   o que a gente precisa pra montar: e a ORDEM DE SERVICO da
+   casa. Folha numerada 01 a 07, o numero grande na margem e a
+   regua da obra; tudo visivel, nada escondido atras de clique.
+   O bloco do ramo (04) troca as perguntas conforme o ramo.
+   Mesma temperatura do /checkup: preto, verde acido, Archivo.
+   ========================================================== */
+:root{
+  --ink:#0D0D0D; --graphite:#141414; --deep:#080808;
+  --green:#A6FF00; --green-deep:#77B800;
+  --white:#fff; --text:#D8D8D8; --muted:#9A9A9A; --muted-2:#7C7C7C;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.22);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SF Mono",Menlo,monospace;
+  --display:"Archivo","Plus Jakarta Sans",system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --shell:1120px; --gutter:clamp(16px,5vw,48px); --r:2px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--white);font-family:var(--font);
+  font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--green)}
+::selection{background:var(--green);color:#000}
+.shell{max-width:var(--shell);margin-inline:auto;padding-inline:var(--gutter)}
+body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:90;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>")}
+
+/* ---------------- topo ---------------- */
+.top{position:sticky;top:0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px var(--gutter);background:rgba(13,13,13,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+.top img{height:24px;width:auto}
+.meter{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.meter .bar{width:clamp(70px,16vw,180px);height:3px;background:var(--line-strong);position:relative;overflow:hidden}
+.meter .bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--green);transition:width .35s}
+.meter b{color:var(--green);font-weight:500}
+
+/* ---------------- cabeca da folha ---------------- */
+.head{padding:clamp(48px,9vh,96px) 0 clamp(28px,5vh,48px);border-bottom:1px solid var(--line)}
+.ticket{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:0;margin:0 0 34px;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ticket span{padding:8px 16px;border:1px solid var(--line-strong);margin-left:-1px}
+.ticket span:first-child{margin-left:0}
+.ticket b{color:var(--white);font-weight:500}
+h1{margin:0;font-family:var(--display);font-size:clamp(40px,7vw,92px);font-weight:800;letter-spacing:-.035em;
+  line-height:.95;text-transform:uppercase;max-width:14ch}
+h1 em{display:block;font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;color:var(--green);
+  letter-spacing:-.01em;font-size:.82em;margin-top:.1em}
+.lede{margin:26px 0 0;max-width:56ch;color:var(--text);font-size:20px;line-height:1.55}
+.rules{display:flex;flex-wrap:wrap;gap:10px 28px;margin:26px 0 0;padding:0;list-style:none;
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rules li::before{content:"■ ";color:var(--green)}
+
+/* ---------------- as secoes numeradas ---------------- */
+.sheet{display:grid;grid-template-columns:minmax(150px,240px) minmax(0,1fr);gap:clamp(20px,4vw,56px);
+  padding-block:clamp(40px,7vh,72px);border-bottom:1px solid var(--line)}
+.sheet .num{position:relative}
+.sheet .num div{position:sticky;top:90px}
+.sheet .num b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(64px,9vw,128px);line-height:.8;
+  letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--line-strong);transition:color .4s,-webkit-text-stroke-color .4s}
+.sheet.done .num b{color:var(--green);-webkit-text-stroke-color:var(--green)}
+.sheet .num h2{margin:16px 0 0;font-family:var(--display);font-size:clamp(22px,2.2vw,28px);font-weight:800;
+  text-transform:uppercase;letter-spacing:-.01em;line-height:1.05}
+.sheet .num p{margin:10px 0 0;color:var(--muted);font-size:16px;line-height:1.5;max-width:24ch}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 20px}
+.full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:9px;min-width:0}
+label,.lbl{font-family:var(--mono);font-size:.8rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+label small,.lbl small{letter-spacing:.02em;text-transform:none;font-size:.86rem;color:var(--muted-2)}
+.req{color:var(--green)}
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{
+  background:rgba(0,0,0,.5);color:var(--white);border:1px solid var(--line-strong);border-radius:var(--r);
+  padding:15px 16px;font-family:var(--font);font-size:18px;outline:none;width:100%;
+  transition:border-color .25s,box-shadow .25s,background .25s}
+textarea{min-height:120px;resize:vertical;line-height:1.5}
+::placeholder{color:#6E6E6E}
+input:focus,select:focus,textarea:focus{border-color:var(--green);background:rgba(0,0,0,.72);box-shadow:0 0 0 3px rgba(166,255,0,.14)}
+select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%239A9A9A' stroke-width='1.5'/></svg>");
+  background-repeat:no-repeat;background-position:right 16px center}
+select option{background:#111}
+.bad{border-color:#FF7A57!important}
+
+/* escolhas: quadrados de verdade, nada de pilula */
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--line-strong);
+  border-radius:var(--r);font-family:var(--font);font-size:17px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--text);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.opt span::before{content:"";width:14px;height:14px;border:1.5px solid var(--muted-2);flex:none;transition:all .2s}
+.opt input[type=radio]+span::before{border-radius:50%}
+.opt input:checked+span{border-color:var(--green);color:var(--white);background:rgba(166,255,0,.07)}
+.opt input:checked+span::before{background:var(--green);border-color:var(--green);box-shadow:inset 0 0 0 3px #0D0D0D}
+.opt input:focus-visible+span{box-shadow:0 0 0 3px rgba(166,255,0,.25)}
+
+/* o bloco do ramo */
+.trade-note{padding:18px 20px;border:1px dashed var(--line-strong);color:var(--muted);font-size:16.5px}
+.trade-note b{color:var(--green);font-weight:500}
+.trade{display:none}
+.trade.on{display:contents}
+.tag{display:inline-block;font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#080808;background:var(--green);padding:5px 10px;margin:0 0 4px}
+
+/* uploads */
+.drop{position:relative;border:1px dashed var(--line-strong);border-radius:var(--r);padding:22px;
+  display:flex;align-items:center;gap:18px;transition:border-color .2s,background .2s;min-height:92px}
+.drop:hover,.drop.over{border-color:var(--green);background:rgba(166,255,0,.04)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.drop .plus{font-family:var(--display);font-size:40px;line-height:1;color:var(--green);flex:none}
+.drop .t{font-size:16.5px;color:var(--text)}
+.drop .t small{display:block;color:var(--muted-2);font-size:14.5px;margin-top:2px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:10px}
+.thumbs:empty{display:none}
+.thumbs figure{margin:0;position:relative;aspect-ratio:1;background:#111;border:1px solid var(--line);overflow:hidden}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.thumbs figcaption{position:absolute;inset:auto 0 0;font-family:var(--mono);font-size:.66rem;padding:3px 5px;
+  background:rgba(0,0,0,.7);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thumbs button{position:absolute;top:3px;right:3px;width:24px;height:24px;border:0;background:rgba(0,0,0,.75);
+  color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.swatches{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.swatches input[type=color]{width:56px;height:44px;border:1px solid var(--line-strong);background:none;padding:2px;cursor:pointer}
+.swatches.off{opacity:.35;pointer-events:none}
+
+/* o fecho */
+.send{padding-block:clamp(44px,8vh,84px) clamp(60px,10vh,110px)}
+.send .box{display:grid;grid-template-columns:minmax(150px,240px) minmax(0,1fr);gap:clamp(20px,4vw,56px)}
+.consent{display:flex;gap:14px;align-items:flex-start;color:var(--text);font-size:16.5px;cursor:pointer}
+.consent input{width:22px;height:22px;accent-color:#A6FF00;flex:none;margin-top:3px}
+.btn{display:inline-block;background:var(--green);color:#080808;border:0;border-radius:var(--r);padding:20px 34px;
+  font-family:var(--mono);font-size:.9rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  transition:background .2s,box-shadow .3s;box-shadow:0 0 34px -12px rgba(166,255,0,.75);margin-top:26px}
+.btn:hover{background:#BCFF3D}
+.btn[disabled]{opacity:.5;cursor:wait}
+.msg{margin:16px 0 0;font-family:var(--mono);font-size:.92rem;letter-spacing:.03em;min-height:1.4em;color:var(--green)}
+.msg.err{color:#FF7A57}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.fine{margin:14px 0 0;color:var(--muted-2);font-size:15px}
+
+/* recebido */
+.thanks{display:none;padding-block:clamp(60px,12vh,140px)}
+.thanks.on{display:block}
+.thanks h2{margin:0;font-family:var(--display);font-size:clamp(36px,6vw,78px);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:.95}
+.thanks h2 em{display:block;font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;color:var(--green)}
+.thanks p{color:var(--text);font-size:20px;max-width:52ch;margin:24px 0 0}
+.thanks .stamp{display:inline-block;margin-top:30px;font-family:var(--mono);font-size:.82rem;letter-spacing:.16em;
+  text-transform:uppercase;border:1.5px solid var(--green);color:var(--green);padding:10px 16px;transform:rotate(-2deg)}
+
+.foot{border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);font-size:.76rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted-2)}
+.foot a{color:var(--muted);text-decoration:none}
+
+@media (max-width:860px){
+  .sheet,.send .box{grid-template-columns:1fr}
+  .sheet .num div{position:static;display:flex;align-items:flex-end;gap:16px}
+  .sheet .num h2{margin:0 0 6px}
+  .sheet .num p{display:none}
+  .grid{grid-template-columns:1fr}
+  .ticket{grid-template-columns:1fr 1fr}
+  .ticket span{margin:-1px 0 0 -1px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="/checkup/"><img src="../checkup/assets/logo-horizontal.webp" alt="Black Frog" width="120" height="24"></a>
+  <div class="meter" aria-hidden="true"><span><b id="cnt">0</b> / 7</span><span class="bar"><i id="bar"></i></span></div>
+</header>
+
+<main id="main">
+<section class="head">
+  <div class="shell">
+    <div class="ticket">
+      <span>Build sheet</span>
+      <span>No. <b id="ticket-no">BF·NEW</b></span>
+      <span>7 sections</span>
+      <span>About <b>8 min</b></span>
+    </div>
+    <h1>Your site starts here. <em>We build it before you pay.</em></h1>
+    <p class="lede">Fill this in once. We build the first version of your site from it and send it to your phone.
+    If you like it, it goes live for $797. If you don't, you owe nothing.</p>
+    <ul class="rules">
+      <li>Fields marked <span class="req">*</span> are the only must-haves</li>
+      <li>Skip what you don't know</li>
+      <li>Photos from your phone are fine</li>
+    </ul>
+  </div>
+</section>
+
+<form id="f" novalidate>
+<input type="hidden" name="ref" id="ref">
+<input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+<!-- 01 -->
+<section class="sheet shell" data-s="1">
+  <div class="num"><div><b>01</b><h2>You</h2><p>So we know who to send the preview to.</p></div></div>
+  <div class="grid">
+    <div class="field"><label for="name">Your name <span class="req">*</span></label>
+      <input type="text" id="name" name="name" required autocomplete="name" placeholder="Jordan Reyes"></div>
+    <div class="field"><label for="email">Email <span class="req">*</span></label>
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@company.com"></div>
+    <div class="field"><label for="phone">Phone <small>so we can text you the preview</small></label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+1 619 555 0100"></div>
+    <div class="field"><span class="lbl">Best way to reach you</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="reach" value="Email" checked><span>Email</span></label>
+        <label class="opt"><input type="radio" name="reach" value="Text"><span>Text</span></label>
+        <label class="opt"><input type="radio" name="reach" value="WhatsApp"><span>WhatsApp</span></label>
+        <label class="opt"><input type="radio" name="reach" value="Call"><span>Call</span></label>
+      </div></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="sheet shell" data-s="2">
+  <div class="num"><div><b>02</b><h2>The business</h2><p>What goes on the sign, and where people find you.</p></div></div>
+  <div class="grid">
+    <div class="field full"><label for="business">Business name <span class="req">*</span> <small>exactly as it should read on the site</small></label>
+      <input type="text" id="business" name="business" required autocomplete="organization" placeholder="Reyes Plumbing"></div>
+    <div class="field"><label for="website">Current website <small>if you have one</small></label>
+      <input type="text" id="website" name="website" inputmode="url" placeholder="reyesplumbing.com"></div>
+    <div class="field"><label for="social">Instagram or Facebook</label>
+      <input type="text" id="social" name="social" placeholder="@reyesplumbing"></div>
+    <div class="field"><label for="area">City or area you serve <span class="req">*</span></label>
+      <input type="text" id="area" name="area" required placeholder="San Diego and North County"></div>
+    <div class="field"><label for="years">Years in business</label>
+      <input type="text" id="years" name="years" inputmode="numeric" placeholder="12"></div>
+    <div class="field full"><label for="address">Street address <small>leave empty if you don't want it on the site</small></label>
+      <input type="text" id="address" name="address" autocomplete="street-address" placeholder="1234 Main St, Suite 200, San Diego, CA 92101"></div>
+    <div class="field full"><label for="hours">Hours</label>
+      <input type="text" id="hours" name="hours" placeholder="Mon to Fri 8am to 6pm, Sat 9am to 1pm"></div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="sheet shell" data-s="3">
+  <div class="num"><div><b>03</b><h2>What you do</h2><p>In your words. We do the polishing.</p></div></div>
+  <div class="grid">
+    <div class="field full"><label for="kind">Industry <span class="req">*</span></label>
+      <select id="kind" name="kind" required>
+        <option value="">Pick one</option>
+        <option value="legal">Law firm or attorney</option>
+        <option value="health">Health, clinic or wellness</option>
+        <option value="trades">Trades, home or field service</option>
+        <option value="restaurant">Restaurant or hospitality</option>
+        <option value="retail">Retail or e-commerce</option>
+        <option value="realestate">Real estate</option>
+        <option value="fitness">Fitness or studio</option>
+        <option value="pro">Professional services</option>
+        <option value="other">Something else</option>
+      </select></div>
+    <div class="field full"><label for="oneline">What you do, in one sentence <span class="req">*</span></label>
+      <input type="text" id="oneline" name="oneline" required placeholder="We fix leaks and install water heaters, same day, all over San Diego."></div>
+    <div class="field full"><label for="services">Your main services <small>one per line, up to 6, add a price if you want it shown</small></label>
+      <textarea id="services" name="services" placeholder="Water heater install, from $1,200&#10;Leak repair&#10;Drain cleaning, $149"></textarea></div>
+    <div class="field"><label for="different">Why people pick you over others</label>
+      <textarea id="different" name="different" placeholder="We answer the phone. Licensed, 12 years, upfront prices."></textarea></div>
+    <div class="field"><label for="ideal">Who is your best customer</label>
+      <textarea id="ideal" name="ideal" placeholder="Homeowners in older houses who need it fixed today."></textarea></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="sheet shell" data-s="4">
+  <div class="num"><div><b>04</b><h2>Your trade</h2><p>The questions that only matter in your line of work.</p></div></div>
+  <div class="grid" id="trades">
+    <div class="trade-note full" id="trade-note">Pick your <b>industry in section 03</b> and the questions for your line of work show up right here.</div>
+
+    <div class="trade" data-t="legal">
+      <div class="full"><span class="tag">Law firm</span></div>
+      <div class="field full"><span class="lbl">Practice areas</span>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Personal injury"><span>Personal injury</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Family and divorce"><span>Family and divorce</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Criminal defense"><span>Criminal defense</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Immigration"><span>Immigration</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Estate planning and probate"><span>Estate planning and probate</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Business"><span>Business</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Real estate"><span>Real estate</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Employment"><span>Employment</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Bankruptcy"><span>Bankruptcy</span></label>
+          <label class="opt"><input type="checkbox" name="legal_areas[]" value="Other"><span>Other</span></label>
+        </div></div>
+      <div class="field"><label for="legal_attorneys">Attorney names <small>as they should appear</small></label>
+        <input type="text" id="legal_attorneys" name="legal_attorneys" placeholder="David L. Evans, Esq."></div>
+      <div class="field"><label for="legal_bar">Bar number and state</label>
+        <input type="text" id="legal_bar" name="legal_bar" placeholder="CA #123456"></div>
+      <div class="field"><label for="legal_langs">Languages you serve clients in</label>
+        <input type="text" id="legal_langs" name="legal_langs" placeholder="English, Spanish"></div>
+      <div class="field"><span class="lbl">First consultation</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="legal_consult" value="Free"><span>Free</span></label>
+          <label class="opt"><input type="radio" name="legal_consult" value="Paid"><span>Paid</span></label>
+        </div></div>
+      <div class="field full"><span class="lbl">No fee unless we win <small>(contingency)</small></span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="legal_contingency" value="Yes"><span>Yes</span></label>
+          <label class="opt"><input type="radio" name="legal_contingency" value="Some cases"><span>Some cases</span></label>
+          <label class="opt"><input type="radio" name="legal_contingency" value="No"><span>No</span></label>
+        </div></div>
+      <div class="field full"><label for="legal_wins">Results you can share <small>settlements, verdicts, case counts, only what is public</small></label>
+        <textarea id="legal_wins" name="legal_wins" placeholder="Over 500 cases handled. $1.2M settlement in a trucking case (2024)."></textarea></div>
+    </div>
+
+    <div class="trade" data-t="health">
+      <div class="full"><span class="tag">Health and wellness</span></div>
+      <div class="field"><label for="health_team">Doctors or practitioners <small>names and titles</small></label>
+        <input type="text" id="health_team" name="health_team" placeholder="Dr. Ana Lima, DDS"></div>
+      <div class="field"><label for="health_license">License or certifications</label>
+        <input type="text" id="health_license" name="health_license"></div>
+      <div class="field"><label for="health_insurance">Insurance you take</label>
+        <input type="text" id="health_insurance" name="health_insurance" placeholder="Delta Dental, Aetna, cash"></div>
+      <div class="field"><label for="health_booking">Online booking link</label>
+        <input type="text" id="health_booking" name="health_booking" placeholder="zocdoc.com/..."></div>
+    </div>
+
+    <div class="trade" data-t="trades">
+      <div class="full"><span class="tag">Trades and home service</span></div>
+      <div class="field"><label for="trades_license">License number</label>
+        <input type="text" id="trades_license" name="trades_license" placeholder="CSLB #987654"></div>
+      <div class="field"><label for="trades_reviews">Google, Yelp or Angi page</label>
+        <input type="text" id="trades_reviews" name="trades_reviews"></div>
+      <div class="field full"><span class="lbl">You offer</span>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="trades_offer[]" value="Free estimates"><span>Free estimates</span></label>
+          <label class="opt"><input type="checkbox" name="trades_offer[]" value="24/7 emergency"><span>24/7 emergency</span></label>
+          <label class="opt"><input type="checkbox" name="trades_offer[]" value="Financing"><span>Financing</span></label>
+          <label class="opt"><input type="checkbox" name="trades_offer[]" value="Warranty"><span>Warranty</span></label>
+          <label class="opt"><input type="checkbox" name="trades_offer[]" value="Insured and bonded"><span>Insured and bonded</span></label>
+        </div></div>
+    </div>
+
+    <div class="trade" data-t="restaurant">
+      <div class="full"><span class="tag">Restaurant and hospitality</span></div>
+      <div class="field"><label for="food_menu">Menu link <small>or upload it in section 06</small></label>
+        <input type="text" id="food_menu" name="food_menu"></div>
+      <div class="field"><label for="food_cuisine">Cuisine or style</label>
+        <input type="text" id="food_cuisine" name="food_cuisine" placeholder="Baja seafood, casual"></div>
+      <div class="field"><label for="food_reserve">Reservations link</label>
+        <input type="text" id="food_reserve" name="food_reserve" placeholder="OpenTable, Resy"></div>
+      <div class="field"><label for="food_delivery">Delivery or pickup links</label>
+        <input type="text" id="food_delivery" name="food_delivery" placeholder="DoorDash, Uber Eats, Toast"></div>
+    </div>
+
+    <div class="trade" data-t="retail">
+      <div class="full"><span class="tag">Retail and e-commerce</span></div>
+      <div class="field"><label for="retail_what">What you sell</label>
+        <input type="text" id="retail_what" name="retail_what"></div>
+      <div class="field"><label for="retail_count">How many products, roughly</label>
+        <input type="text" id="retail_count" name="retail_count" placeholder="40"></div>
+      <div class="field full"><span class="lbl">Sell online?</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="retail_online" value="Yes, already"><span>Yes, already</span></label>
+          <label class="opt"><input type="radio" name="retail_online" value="I want to"><span>I want to</span></label>
+          <label class="opt"><input type="radio" name="retail_online" value="Store only"><span>Store only</span></label>
+        </div></div>
+      <div class="field full"><label for="retail_platform">Current shop <small>Shopify, Etsy, Square, Amazon</small></label>
+        <input type="text" id="retail_platform" name="retail_platform"></div>
+    </div>
+
+    <div class="trade" data-t="realestate">
+      <div class="full"><span class="tag">Real estate</span></div>
+      <div class="field"><label for="re_license">License number</label>
+        <input type="text" id="re_license" name="re_license" placeholder="DRE #01234567"></div>
+      <div class="field"><label for="re_brokerage">Brokerage</label>
+        <input type="text" id="re_brokerage" name="re_brokerage"></div>
+      <div class="field full"><span class="lbl">You work with</span>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="re_focus[]" value="Buyers"><span>Buyers</span></label>
+          <label class="opt"><input type="checkbox" name="re_focus[]" value="Sellers"><span>Sellers</span></label>
+          <label class="opt"><input type="checkbox" name="re_focus[]" value="Rentals"><span>Rentals</span></label>
+          <label class="opt"><input type="checkbox" name="re_focus[]" value="Commercial"><span>Commercial</span></label>
+          <label class="opt"><input type="checkbox" name="re_focus[]" value="Luxury"><span>Luxury</span></label>
+        </div></div>
+      <div class="field full"><label for="re_listings">Listings page <small>Zillow profile, MLS link</small></label>
+        <input type="text" id="re_listings" name="re_listings"></div>
+    </div>
+
+    <div class="trade" data-t="fitness">
+      <div class="full"><span class="tag">Fitness and studio</span></div>
+      <div class="field"><label for="fit_classes">Classes or programs</label>
+        <input type="text" id="fit_classes" name="fit_classes" placeholder="Boxing, HIIT, personal training"></div>
+      <div class="field"><label for="fit_prices">Membership prices</label>
+        <input type="text" id="fit_prices" name="fit_prices" placeholder="$89/month, drop-in $20"></div>
+      <div class="field"><label for="fit_schedule">Schedule or booking link</label>
+        <input type="text" id="fit_schedule" name="fit_schedule" placeholder="Mindbody, Glofox"></div>
+      <div class="field"><label for="fit_trial">Free trial or first class offer</label>
+        <input type="text" id="fit_trial" name="fit_trial" placeholder="First class free"></div>
+    </div>
+
+    <div class="trade" data-t="pro">
+      <div class="full"><span class="tag">Professional services</span></div>
+      <div class="field"><label for="pro_creds">Licenses or certifications</label>
+        <input type="text" id="pro_creds" name="pro_creds" placeholder="CPA, PMP"></div>
+      <div class="field"><label for="pro_booking">Booking or calendar link</label>
+        <input type="text" id="pro_booking" name="pro_booking" placeholder="calendly.com/..."></div>
+      <div class="field full"><label for="pro_clients">Clients or industries you serve</label>
+        <input type="text" id="pro_clients" name="pro_clients"></div>
+    </div>
+
+    <div class="trade" data-t="other">
+      <div class="full"><span class="tag">Your business</span></div>
+      <div class="field full"><label for="other_more">Anything about your line of work we should know</label>
+        <textarea id="other_more" name="other_more"></textarea></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="sheet shell" data-s="5">
+  <div class="num"><div><b>05</b><h2>The one thing</h2><p>What a visitor should do before they leave.</p></div></div>
+  <div class="grid">
+    <div class="field full"><span class="lbl">Main button on your site <span class="req">*</span></span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="action" value="Call us" required><span>Call us</span></label>
+        <label class="opt"><input type="radio" name="action" value="Text or WhatsApp"><span>Text or WhatsApp</span></label>
+        <label class="opt"><input type="radio" name="action" value="Book online"><span>Book online</span></label>
+        <label class="opt"><input type="radio" name="action" value="Request a quote"><span>Request a quote</span></label>
+        <label class="opt"><input type="radio" name="action" value="Free consultation"><span>Free consultation</span></label>
+        <label class="opt"><input type="radio" name="action" value="Buy online"><span>Buy online</span></label>
+        <label class="opt"><input type="radio" name="action" value="Visit us"><span>Visit us</span></label>
+      </div></div>
+    <div class="field"><label for="action_phone">Number for that button</label>
+      <input type="tel" id="action_phone" name="action_phone" placeholder="Same as above, or another"></div>
+    <div class="field"><label for="action_link">Booking or shop link <small>if the button goes to one</small></label>
+      <input type="text" id="action_link" name="action_link"></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="sheet shell" data-s="6">
+  <div class="num"><div><b>06</b><h2>The look</h2><p>Your real logo and real photos beat any stock image.</p></div></div>
+  <div class="grid">
+    <div class="field full"><span class="lbl">Logo <small>PNG, JPG, SVG or PDF</small></span>
+      <div class="drop" data-for="logo"><input type="file" id="logo" accept="image/*,.svg,.pdf"><span class="plus">+</span>
+        <span class="t">Drop your logo here, or tap to choose<small>No logo yet? Skip it, we set your name in type.</small></span></div>
+      <div class="thumbs" id="logo-th"></div></div>
+    <div class="field full"><span class="lbl">Photos <small>up to 12: you, your team, your work, your place</small></span>
+      <div class="drop" data-for="photos"><input type="file" id="photos" accept="image/*,.pdf" multiple><span class="plus">+</span>
+        <span class="t">Drop photos here, or tap to choose<small>Straight from your phone is fine. We resize them.</small></span></div>
+      <div class="thumbs" id="photos-th"></div></div>
+    <div class="field full"><span class="lbl">Colors</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="colors" value="From my logo" checked><span>Take them from my logo</span></label>
+        <label class="opt"><input type="radio" name="colors" value="Pick for me"><span>Pick for me</span></label>
+        <label class="opt"><input type="radio" name="colors" value="These"><span>These ones</span></label>
+      </div>
+      <div class="swatches off" id="sw">
+        <input type="color" name="color1" value="#0D0D0D" aria-label="Main color">
+        <input type="color" name="color2" value="#A6FF00" aria-label="Accent color">
+        <input type="color" name="color3" value="#FFFFFF" aria-label="Third color">
+      </div></div>
+    <div class="field"><label for="likes">2 sites you like <small>any business, any country</small></label>
+      <textarea id="likes" name="likes" placeholder="apple.com&#10;a competitor you envy"></textarea></div>
+    <div class="field"><label for="hates">Anything you don't want</label>
+      <textarea id="hates" name="hates" placeholder="No pink. No stock photos of handshakes."></textarea></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="sheet shell" data-s="7">
+  <div class="num"><div><b>07</b><h2>Proof</h2><p>What makes a stranger trust you in five seconds.</p></div></div>
+  <div class="grid">
+    <div class="field full"><label for="reviews">Reviews you're proud of <small>paste 2 or 3, with first name</small></label>
+      <textarea id="reviews" name="reviews" placeholder="&quot;Came the same day and fixed it in an hour.&quot; Maria, Chula Vista"></textarea></div>
+    <div class="field"><label for="reviews_link">Google reviews link</label>
+      <input type="text" id="reviews_link" name="reviews_link"></div>
+    <div class="field"><label for="numbers">Numbers worth showing</label>
+      <input type="text" id="numbers" name="numbers" placeholder="4.9 stars, 300 reviews, 2,000 jobs"></div>
+    <div class="field full"><span class="lbl">Do you own a domain?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="domain" value="Yes"><span>Yes</span></label>
+        <label class="opt"><input type="radio" name="domain" value="No"><span>No, help me get one</span></label>
+        <label class="opt"><input type="radio" name="domain" value="Not sure"><span>Not sure</span></label>
+      </div></div>
+    <div class="field full"><label for="extra">Anything else</label>
+      <textarea id="extra" name="extra" placeholder="A deadline, a launch, something you tried before that didn't work."></textarea></div>
+  </div>
+</section>
+
+<section class="send shell">
+  <div class="box">
+    <div></div>
+    <div>
+      <label class="consent"><input type="checkbox" id="ok" name="consent" value="yes">
+        <span>You can use what I sent to build the first version of my site. I pay nothing unless I say yes.</span></label>
+      <button class="btn" type="submit" id="go">Send it · Start my site</button>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      <p class="fine">Questions? Write to <a href="mailto:hello@blkfrog.com">hello@blkfrog.com</a></p>
+    </div>
+  </div>
+</section>
+</form>
+
+<section class="thanks shell" id="thanks">
+  <h2>Got it. <em>Your site is in the works.</em></h2>
+  <p>We start from your sheet today. The first version comes to your phone or inbox. If something is missing, we'll ask, short and once.</p>
+  <span class="stamp" id="stamp">Received</span>
+</section>
+</main>
+
+<footer class="foot"><div class="shell">Black Frog · <a href="mailto:hello@blkfrog.com">hello@blkfrog.com</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></div></footer>
+
+<script>
+(function(){
+  var f=document.getElementById('f'),go=document.getElementById('go'),msg=document.getElementById('msg');
+  var MAX_PHOTOS=12, files={logo:[],photos:[]};
+  function say(t,err){msg.textContent=t;msg.className=err?'msg err':'msg';}
+
+  /* --- veio do email/checkup com os dados no link: ja preenche --- */
+  var q=new URLSearchParams(location.search);
+  ['name','email','phone','business','website'].forEach(function(k){var v=q.get(k);if(v&&f[k])f[k].value=v.slice(0,200);});
+  var ref=q.get('ref')||q.get('id');
+  if(ref){ref=ref.replace(/[^a-z0-9-]/gi,'').slice(0,40);document.getElementById('ref').value=ref;document.getElementById('ticket-no').textContent=ref.slice(-6).toUpperCase();}
+  var kindMap={'Health, clinic or wellness':'health','Trades, home or field service':'trades','Restaurant or hospitality':'restaurant',
+    'Retail or e-commerce':'retail','Real estate':'realestate','Fitness or studio':'fitness','Professional services':'pro','Something else':'other'};
+  var k=q.get('kind'); if(k){f.kind.value=kindMap[k]||k;}
+
+  /* --- o bloco do ramo --- */
+  function trade(){
+    var v=f.kind.value;
+    document.querySelectorAll('.trade').forEach(function(t){t.classList.toggle('on',t.dataset.t===v);});
+    document.getElementById('trade-note').style.display=v?'none':'';
+  }
+  f.kind.addEventListener('change',trade); trade();
+
+  /* --- cores --- */
+  var sw=document.getElementById('sw');
+  f.querySelectorAll('input[name=colors]').forEach(function(r){r.addEventListener('change',function(){sw.classList.toggle('off',f.colors.value!=='These');});});
+
+  /* --- regua: secao com algo preenchido acende o numero --- */
+  var secs=[].slice.call(document.querySelectorAll('.sheet'));
+  function meter(){
+    var n=0;
+    secs.forEach(function(s){
+      var on=[].some.call(s.querySelectorAll('input,select,textarea'),function(el){
+        if(el.type==='radio'&&el.defaultChecked)return false;
+        if(el.type==='checkbox'||el.type==='radio')return el.checked;
+        if(el.type==='file'||el.type==='color'||el.type==='hidden')return false;
+        return el.value.trim()!=='';
+      })||(s.dataset.s==='6'&&(files.logo.length||files.photos.length));
+      s.classList.toggle('done',!!on); if(on)n++;
+    });
+    document.getElementById('cnt').textContent=n;
+    document.getElementById('bar').style.width=(n/7*100)+'%';
+  }
+  f.addEventListener('input',meter); f.addEventListener('change',meter); meter();
+
+  /* --- fotos: reduz no navegador (foto de celular tem 5 a 12 MB) --- */
+  function shrink(file){
+    return new Promise(function(ok){
+      if(!/^image\/(jpeg|png|webp|heic|heif)$/i.test(file.type)||file.size<900000){ok(file);return;}
+      var img=new Image(),u=URL.createObjectURL(file);
+      img.onload=function(){
+        var m=2400,w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,m/Math.max(w,h));
+        var c=document.createElement('canvas');c.width=Math.round(w*s);c.height=Math.round(h*s);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);
+        c.toBlob(function(b){ok(b&&b.size<file.size?new File([b],file.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'}):file);},'image/jpeg',.86);
+      };
+      img.onerror=function(){URL.revokeObjectURL(u);ok(file);};
+      img.src=u;
+    });
+  }
+  function draw(key){
+    var box=document.getElementById(key+'-th');box.innerHTML='';
+    files[key].forEach(function(fl,i){
+      var fig=document.createElement('figure');
+      if(/^image\//.test(fl.type)&&!/heic|heif/i.test(fl.type)){var im=document.createElement('img');im.src=URL.createObjectURL(fl);im.alt='';fig.appendChild(im);}
+      var cap=document.createElement('figcaption');cap.textContent=fl.name;fig.appendChild(cap);
+      var x=document.createElement('button');x.type='button';x.textContent='×';x.setAttribute('aria-label','Remove '+fl.name);
+      x.onclick=function(){files[key].splice(i,1);draw(key);meter();};fig.appendChild(x);
+      box.appendChild(fig);
+    });
+  }
+  function add(key,list){
+    var arr=[].slice.call(list);
+    if(key==='logo')files.logo=[];
+    var room=key==='logo'?1:MAX_PHOTOS-files.photos.length;
+    if(arr.length>room){say(key==='logo'?'One logo file is enough.':'Up to '+MAX_PHOTOS+' photos. We kept the first ones.',1);}
+    arr=arr.slice(0,Math.max(0,room));
+    Promise.all(arr.map(shrink)).then(function(out){
+      out.forEach(function(fl){if(fl.size>25e6){say(fl.name+' is over 25 MB, skipped.',1);return;}files[key].push(fl);});
+      draw(key);meter();
+    });
+  }
+  document.querySelectorAll('.drop').forEach(function(d){
+    var key=d.dataset.for,inp=d.querySelector('input');
+    inp.addEventListener('change',function(){add(key,inp.files);inp.value='';});
+    ['dragenter','dragover'].forEach(function(ev){d.addEventListener(ev,function(e){e.preventDefault();d.classList.add('over');});});
+    ['dragleave','drop'].forEach(function(ev){d.addEventListener(ev,function(e){e.preventDefault();d.classList.remove('over');});});
+    d.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files)add(key,e.dataTransfer.files);});
+  });
+
+  /* --- envio --- */
+  function need(el,t){say(t,1);el.classList.add('bad');el.focus();el.addEventListener('input',function(){el.classList.remove('bad');},{once:true});return false;}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!f.name.value.trim())return need(f.name,'Your name, in section 01.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.value.trim()))return need(f.email,'That email does not look right.');
+    if(f.business.value.trim().length<2)return need(f.business,'Your business name, in section 02.');
+    if(!f.area.value.trim())return need(f.area,'The city or area you serve, in section 02.');
+    if(!f.kind.value)return need(f.kind,'Pick your industry, in section 03.');
+    if(f.oneline.value.trim().length<4)return need(f.oneline,'One sentence about what you do, in section 03.');
+    if(!f.querySelector('input[name=action]:checked')){say('Pick the main button for your site, in section 05.',1);f.querySelector('input[name=action]').focus();return;}
+    if(!document.getElementById('ok').checked){say('Tick the box above the button so we can use what you sent.',1);document.getElementById('ok').focus();return;}
+
+    var fd=new FormData(f);
+    /* manda so os campos do ramo escolhido */
+    document.querySelectorAll('.trade:not(.on) [name]').forEach(function(el){fd.delete(el.name);});
+    files.logo.forEach(function(fl){fd.append('logo',fl,fl.name);});
+    files.photos.forEach(function(fl){fd.append('photos[]',fl,fl.name);});
+
+    go.disabled=true;say('Sending...');
+    var x=new XMLHttpRequest();
+    x.open('POST','brief.php');
+    x.upload.onprogress=function(ev){if(ev.lengthComputable&&ev.total>400000)say('Sending... '+Math.round(ev.loaded/ev.total*100)+'%');};
+    x.onload=function(){
+      var j=null;try{j=JSON.parse(x.responseText);}catch(_){}
+      if(j&&j.ok){
+        window.fbq&&fbq('track','SubmitApplication');
+        f.style.display='none';document.querySelector('.head').style.display='none';
+        document.getElementById('stamp').textContent='Received · No. '+String(j.id||'').slice(-6).toUpperCase();
+        document.getElementById('thanks').classList.add('on');window.scrollTo(0,0);
+      }else{
+        var why=j&&j.why?{name:'Your name, in section 01.',email:'That email does not look right.',business:'Your business name, in section 02.',
+          files:'One of the files could not be read. Try a JPG or PNG.',big:'The photos are too big together. Send fewer and email the rest to hello@blkfrog.com'}[j.why]:'';
+        say(why||'Could not send. Please write to hello@blkfrog.com',1);go.disabled=false;
+      }
+    };
+    x.onerror=function(){say('Could not send. Check your connection and try again.',1);go.disabled=false;};
+    x.send(fd);
+  });
+})();
+</script>
+</body>
+</html>

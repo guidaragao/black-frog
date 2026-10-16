@@ -5,3 +5,7 @@ out/
 *.log
 .env*
 !.env.example
+hostinger/bf-*
+hostinger/bf-briefs/
+hostinger/public_html/**/.dados/
+hostinger/public_html/**/.leads/

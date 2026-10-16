@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Site de graça. Você só paga se gostar · Black Frog</title>
+<meta name="description" content="Site feito pro celular primeiro, no ar em 5 dias por US$ 797. A gente faz a primeira versão antes de você pagar qualquer coisa. Você só paga se gostar.">
+<meta name="theme-color" content="#0D0D0D">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32">
+<link rel="icon" href="../assets/icon-16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Site de graça. Você só paga se gostar · Black Frog">
+<meta property="og:description" content="A gente faz a primeira versão antes de você pagar. Você vê no celular. Só paga se gostar.">
+<meta property="og:image" content="https://blkfrog.com/checkup/assets/sapo-phone.jpg">
+<meta property="og:url" content="https://blkfrog.com/checkup/pt/">
+<link rel="canonical" href="https://blkfrog.com/checkup/pt/">
+<link rel="preload" as="image" href="../assets/sapo-phone.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@700;800&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* ==========================================================
+   BLACK FROG · A NEW WEBSITE, LIVE IN 5 DAYS   blkfrog.com/checkup
+   v3 (09/09/2026), com as ideias do Thiago: a pagina deixa de
+   convencer o cara de que o site dele e ruim (ele ja sabe) e
+   passa a responder o que ele quer saber: PRECO, PRAZO, PROVA.
+   "You only pay if you like it": a gente faz a primeira versao
+   antes de cobrar. O checkup vira a segunda porta, la embaixo.
+   Mesma lingua visual do scroll do sapo (Archivo caixa alta,
+   Instrument Serif italico verde, placas que acendem, o lago).
+   ========================================================== */
+:root{
+  --ink:#0D0D0D; --graphite:#141414; --deep:#080808;
+  --green:#A6FF00; --green-deep:#77B800;
+  --white:#fff; --text:#D2D2D2; --muted:#8A8A8A; --muted-2:#6E6E6E;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.20);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SF Mono",Menlo,monospace;
+  --display:"Archivo","Plus Jakarta Sans",system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --shell:1240px; --gutter:clamp(20px,5vw,48px); --r:2px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--white);font-family:var(--font);
+  font-size:17.5px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--green);color:#000}
+.shell{max-width:var(--shell);margin-inline:auto;padding-inline:var(--gutter);position:relative;z-index:3}
+body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:90;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>")}
+
+.label{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:.6rem;margin:0 0 18px}
+.label::before{content:"";width:26px;height:1px;background:var(--green);flex:none}
+.label.plain{color:var(--muted-2)}
+.label.plain::before{background:var(--line-strong)}
+
+/* ---------------- topo ---------------- */
+.top{position:fixed;inset:0 0 auto;z-index:80;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:18px var(--gutter);background:linear-gradient(rgba(13,13,13,.88) 30%,rgba(13,13,13,0))}
+.top .logo{height:26px;width:auto}
+.top .cta{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--line-strong);padding:10px 16px;border-radius:var(--r);transition:border-color .25s,color .25s}
+.top .cta:hover{border-color:var(--green);color:var(--green)}
+
+/* ======================================================
+   O POUSO   o sapo com o celular na mao, o site aceso
+   na tela. O texto mora no vazio da direita.
+   ====================================================== */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:112px 0 80px;
+  overflow:hidden;background:#070907}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(55% 50% at 30% 66%,rgba(166,255,0,.12),transparent 62%),
+             radial-gradient(120% 100% at 50% 40%,transparent 35%,rgba(0,0,0,.85) 100%)}
+.hero .grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,4vw,56px);align-items:center;width:100%}
+.hero .art{position:absolute;inset:0;z-index:0}
+.hero .art img{width:100%;height:100%;object-fit:cover;object-position:22% 55%}
+.hero .art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(96deg,rgba(5,7,4,.18) 0%,rgba(5,7,4,.06) 30%,rgba(6,8,5,.74) 58%,rgba(6,8,5,.95) 80%),
+             radial-gradient(100% 80% at 24% 62%,transparent 34%,rgba(0,0,0,.45) 100%)}
+.hero .col{grid-column:2}
+h1{margin:0;font-size:clamp(36px,5vw,66px);font-weight:800;letter-spacing:-.04em;line-height:1.04;max-width:19ch;text-wrap:balance}
+h1 em{display:block;font-size:.9em;margin-top:.08em}
+h1 em,.em{font-style:italic;font-family:var(--serif);font-weight:400;color:var(--green);letter-spacing:0;margin-right:-.09em}
+.price{display:flex;align-items:baseline;gap:14px;margin:22px 0 0;flex-wrap:wrap}
+.price b{font-family:var(--display);font-size:clamp(40px,5vw,64px);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--green)}
+.price span{font-family:var(--mono);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.lede{margin:22px 0 0;max-width:46ch;color:var(--text);font-size:18.5px;line-height:1.6}
+.hero .go{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:30px 0 0}
+.btn{display:inline-block;background:var(--green);color:#080808;border:0;border-radius:var(--r);padding:17px 32px;
+  font-family:var(--mono);font-size:.82rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  transition:background .2s,transform .2s,box-shadow .3s;box-shadow:0 0 34px -12px rgba(166,255,0,.75)}
+.btn:hover{background:#BCFF3D;box-shadow:0 0 46px -10px rgba(166,255,0,.9)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--white);border:1px solid var(--line-strong);box-shadow:none}
+.btn.ghost:hover{border-color:var(--green);color:var(--green)}
+.terms{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
+.terms b{color:var(--green);font-weight:500}
+.hint{position:absolute;left:var(--gutter);bottom:26px;z-index:3;font-family:var(--mono);font-size:.7rem;
+  letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:.7rem}
+.hint i{display:block;width:1px;height:26px;background:linear-gradient(var(--green),transparent);animation:drip 2.6s ease-in-out infinite}
+@keyframes drip{0%,100%{transform:scaleY(.4);opacity:.5;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
+
+/* ======================================================
+   O FORMULARIO   "show me mine first"
+   ====================================================== */
+.form-wrap{position:relative;background:var(--ink);padding:clamp(56px,9vh,110px) 0 clamp(40px,6vh,70px)}
+.panel{position:relative;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(158deg,var(--graphite) 0%,#0B0B0B 60%,#060606 100%);padding:clamp(26px,3.4vw,48px);
+  box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 46px 100px -40px rgba(0,0,0,.95),0 0 60px -30px rgba(166,255,0,.25)}
+.panel::before{content:"";position:absolute;left:0;top:0;width:64px;height:2px;background:var(--green)}
+.panel h2{margin:0 0 8px;font-family:var(--display);font-size:clamp(23px,2.5vw,32px);font-weight:800;letter-spacing:-.02em;text-transform:uppercase}
+.panel h2 .em{text-transform:none;font-size:1.15em}
+.price span .em{font-size:1.3em;color:var(--green);margin-right:.1em}
+.panel .sub{margin:0 0 26px;color:var(--muted);font-size:16.5px;max-width:60ch}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:9px}
+label{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
+label small{color:var(--muted-2);letter-spacing:.08em;text-transform:none;font-size:.68rem}
+input,select{background:rgba(0,0,0,.5);color:var(--white);border:1px solid var(--line-strong);border-radius:var(--r);
+  padding:16px 17px;font-family:var(--font);font-size:17px;outline:none;width:100%;transition:border-color .25s,box-shadow .25s,background .25s}
+input::placeholder{color:#6A6A6A}
+input:focus,select:focus{border-color:var(--green);background:rgba(0,0,0,.72);box-shadow:0 0 0 3px rgba(166,255,0,.12)}
+select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238A8A8A' stroke-width='1.5'/></svg>");
+  background-repeat:no-repeat;background-position:right 16px center}
+select option{background:#111}
+.actions{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:28px 0 0}
+.panel button{margin:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.msg{margin:15px 0 0;font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;min-height:1.3em;color:var(--green)}
+.msg.err{color:#FF7A57}
+.fine{margin:0;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);text-align:right}
+
+/* ======================================================
+   AS PLACAS   como funciona, em tres
+   ====================================================== */
+.sec{position:relative;padding:clamp(56px,10vh,120px) 0 0;background:var(--ink)}
+h2.big{margin:0;font-size:clamp(28px,3.8vw,50px);font-weight:800;letter-spacing:-.035em;line-height:1.06;max-width:22ch}
+h2.big em{font-style:italic;font-family:var(--serif);font-weight:400;color:var(--green);letter-spacing:0;margin-right:-.09em}
+.plates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);margin:clamp(30px,4.5vw,52px) 0 0}
+.plate{position:relative;padding:clamp(22px,2.4vw,32px);border-radius:var(--r);border:1px solid rgba(166,255,0,.24);
+  background:linear-gradient(160deg,rgba(20,20,20,.85),rgba(6,6,6,.9));
+  box-shadow:0 0 24px -14px rgba(166,255,0,.4),0 30px 60px -40px rgba(0,0,0,.9);
+  transition:border-color .4s,box-shadow .4s,transform .4s cubic-bezier(.19,1,.22,1)}
+.plate:hover{border-color:rgba(166,255,0,.9);transform:translateY(-4px);box-shadow:0 0 46px -8px rgba(166,255,0,.42),0 40px 70px -40px rgba(0,0,0,.95)}
+.plate .n{position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;color:rgba(166,255,0,.6)}
+.plate h3{margin:0 0 12px;font-family:var(--display);font-size:clamp(18px,1.6vw,23px);font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:1.05;padding-right:34px}
+.plate p{margin:0;color:var(--muted);font-size:16px;line-height:1.55}
+.plate .s{margin:12px 0 0;font-family:var(--serif);font-style:italic;font-size:17px;color:#B9B9B9;line-height:1.4}
+
+/* ---------- o que vem nos $797 ---------- */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start;margin:clamp(26px,3.4vw,40px) 0 0}
+.two p{color:var(--text);font-size:17.5px;margin:0 0 16px}
+.list{list-style:none;margin:0;padding:0}
+.list li{position:relative;padding:0 0 0 28px;margin:0 0 14px;color:var(--text);font-size:17px}
+.list li::before{content:"";position:absolute;left:0;top:.62em;width:13px;height:1px;background:var(--green)}
+.list li b{color:var(--white);font-weight:700}
+.pay{margin:26px 0 0;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r);background:rgba(255,255,255,.02)}
+.pay .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);margin:0 0 8px}
+.pay p{margin:0;color:var(--text);font-size:16.5px}
+.pay p b{color:var(--white)}
+.not{margin:18px 0 0;color:var(--muted);font-size:15.5px;line-height:1.55}
+
+/* ======================================================
+   A PROVA   sites de verdade, com link. Nada de "5.000 sites".
+   ====================================================== */
+.work{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,24px);margin:clamp(30px,4.5vw,52px) 0 0}
+.site{display:block;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#0A0A0A;
+  transition:border-color .35s,transform .35s cubic-bezier(.19,1,.22,1),box-shadow .35s}
+.site:hover{border-color:rgba(166,255,0,.8);transform:translateY(-4px);box-shadow:0 0 46px -10px rgba(166,255,0,.35)}
+.site .shot{aspect-ratio:16/9;overflow:hidden;background:#111;border-bottom:1px solid var(--line)}
+.site .shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s cubic-bezier(.19,1,.22,1)}
+.site:hover .shot img{transform:scale(1.03)}
+.site .meta{padding:16px 18px 18px}
+.site .meta b{display:block;font-family:var(--display);text-transform:uppercase;font-size:16px;letter-spacing:-.01em}
+.site .meta span{display:block;color:var(--muted);font-size:14.5px;margin:4px 0 0;line-height:1.45}
+.site .meta i{display:block;margin:10px 0 0;font-style:normal;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+
+/* ======================================================
+   A TESE   no lago. "You only pay if you like it."
+   ====================================================== */
+.thesis{position:relative;margin:clamp(60px,11vh,130px) 0 0;overflow:hidden;min-height:clamp(420px,62vh,600px);
+  display:flex;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.thesis video,.thesis .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.thesis video{opacity:0;transition:opacity 1.2s ease}
+.thesis video.on{opacity:1}
+.thesis::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(78% 66% at 50% 50%,rgba(5,8,5,.30),rgba(4,6,4,.82) 100%)}
+.thesis .inner{position:relative;z-index:3;width:100%;text-align:center}
+.thesis .say{margin:0;font-family:var(--display);font-size:clamp(30px,5.4vw,68px);font-weight:800;text-transform:uppercase;letter-spacing:-.035em;line-height:1.02}
+.thesis .say em{font-style:italic;font-family:var(--serif);font-weight:400;text-transform:none;color:var(--green);letter-spacing:0}
+.thesis .after{margin:22px auto 0;max-width:56ch;color:#C3C3C3;font-size:17px;line-height:1.6}
+.bug{position:absolute;z-index:2;width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 12px 3px rgba(166,255,0,.75);will-change:transform;pointer-events:none}
+
+/* ======================================================
+   A SEGUNDA PORTA   o checkup, pra quem ainda nao decidiu
+   ====================================================== */
+.door{padding:clamp(56px,10vh,120px) 0 0;background:var(--ink)}
+.door .panel{background:linear-gradient(158deg,#0F0F0F 0%,#090909 60%,#060606 100%)}
+.door .panel::before{background:var(--line-strong)}
+.door .fields{grid-template-columns:1fr 1fr 1fr}
+
+
+/* ---------- redes sociais (pedido do Thiago 09/09): topo e rodape ----------
+   Os links moram SO no bloco <nav class="social"> do rodape; o topo clona.
+   Icone sem href real (#) nao aparece: link morto nao vai pro ar.          */
+.social{display:flex;align-items:center;gap:6px}
+.social a{display:inline-grid;place-items:center;width:36px;height:36px;border:1px solid var(--line-strong);
+  border-radius:var(--r);color:var(--muted);transition:border-color .25s,color .25s,background .25s}
+.social a:hover{border-color:var(--green);color:var(--green)}
+.social a[href="#"]{display:none}
+.social svg{width:16px;height:16px;fill:currentColor;display:block}
+.top .right{display:flex;align-items:center;gap:14px}
+.top .lang{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;color:var(--muted);padding:10px 6px}
+.top .lang:hover{color:var(--green)}
+.top .social a{width:32px;height:32px}
+.foot .social{gap:8px}
+@media (max-width:620px){.top .social{display:none}}
+
+
+/* ---------- o motion do site se construindo: o "olha isso" logo depois do hero ---------- */
+.reel{position:relative;border:1px solid rgba(166,255,0,.35);border-radius:var(--r);overflow:hidden;background:#070907;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 0 60px -14px rgba(166,255,0,.45),0 50px 90px -40px rgba(0,0,0,.95);margin:0 0 clamp(36px,5vw,60px)}
+.reel video{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#070907}
+.reel::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.12;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
+.reel .cap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 20px 16px;
+  border-top:1px solid rgba(166,255,0,.18);background:#050605;position:relative;z-index:3}
+.reel .cap b{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(14px,1.2vw,19px);letter-spacing:.01em}
+.reel .cap i{font-family:var(--serif);font-style:italic;font-size:clamp(14px,1.05vw,17px);color:#B9B9B9}
+
+/* ---------- fechamento ---------- */
+.close{padding:clamp(56px,10vh,120px) 0 0;text-align:center;background:var(--ink)}
+.close h2{margin:0 auto;font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.05;max-width:18ch}
+.close h2 em{font-style:italic;font-family:var(--serif);font-weight:400;color:var(--green);letter-spacing:0;margin-right:-.09em}
+.close .btn{margin:30px 0 0}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:clamp(52px,8vh,96px) 0 0;
+  padding:18px 0 clamp(30px,5vh,54px);border-top:1px solid var(--line);font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+.foot b{color:var(--muted);font-weight:500}
+.foot a{color:var(--white);border-bottom:1px solid rgba(166,255,0,.5);padding-bottom:2px}
+.foot a:hover{color:var(--green);border-color:var(--green)}
+
+@media (prefers-reduced-motion:no-preference){
+  .rise{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.19,1,.22,1),transform .8s cubic-bezier(.19,1,.22,1)}
+  .rise.seen{opacity:1;transform:none}
+  .plates .plate,.work .site{transition-delay:var(--d,0s)}
+}
+@media (max-width:980px){
+  .plates,.work{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1fr);gap:6px}
+  .door .fields{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .hero{display:block;min-height:auto;padding:92px 0 56px;background:#070905}
+  .hero .grid{grid-template-columns:minmax(0,1fr)}
+  .hero .col{grid-column:1}
+  .hero .art{position:relative;inset:auto;height:min(46vh,320px);margin:0 0 22px}
+  .hero .art img{object-position:20% 55%}
+  .hero .art::after{background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(7,9,5,.12) 55%,#070905 99%)}
+  .hint{display:none}
+}
+@media (max-width:620px){
+  body{font-size:17px}
+  .fields,.door .fields,.plates,.work{grid-template-columns:minmax(0,1fr)}
+  .btn{width:100%;text-align:center}
+  .actions{flex-direction:column;align-items:stretch;gap:14px}
+  .fine{text-align:left}
+  .top .cta{display:none}
+  .thesis{min-height:380px}
+  .hero .go{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){.hint i{animation:none}.bug{display:none}}
+
+/* ---------- legal + cookies (14/09) ---------- */
+.legal{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.legal a,.legal button,.foot .legal a{font-family:"JetBrains Mono","SF Mono",Menlo,monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#8A8A8A;background:none;border:0;border-bottom:1px solid transparent;padding:0 0 2px;cursor:pointer;text-decoration:none;border-radius:0}
+.legal a:hover,.legal button:hover,.foot .legal a:hover{color:#A6FF00;border-color:#A6FF00}
+.bfc{position:fixed;left:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:300;width:min(400px,calc(100vw - 32px));
+  background:rgba(10,10,10,.96);border:1px solid rgba(255,255,255,.16);border-radius:var(--r,9px);padding:20px 20px 18px;
+  color:#D2D2D2;font:15px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;box-shadow:0 30px 80px -30px #000;
+  opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;pointer-events:none;visibility:hidden}
+.bfc.on{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.bfc .bfc-k{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:500 .7rem/1 "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.24em;text-transform:uppercase;color:#fff}
+.bfc .bfc-k::before{content:"";width:6px;height:6px;border-radius:50%;background:#A6FF00;box-shadow:0 0 12px #A6FF00}
+.bfc p{margin:0 0 16px;color:#BDBDBD}
+.bfc p a{color:#fff;border-bottom:1px solid rgba(166,255,0,.5);text-decoration:none}
+.bfc p a:hover{color:#A6FF00}
+.bfc-b{display:flex;gap:8px}
+.bfc-b button{flex:1;font:500 .7rem/1 "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;padding:14px 10px;border-radius:var(--r,9px);
+  cursor:pointer;border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;transition:background .25s,border-color .25s,color .25s}
+.bfc-b .no:hover{border-color:#A6FF00;color:#A6FF00}
+.bfc-b .yes{background:#A6FF00;border-color:#A6FF00;color:#0A0A0A}
+.bfc-b .yes:hover{background:#BCFF3D}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="/"><img class="logo" src="../assets/logo-wordmark.webp" alt="Black Frog"></a>
+  <div class="right"><a class="lang" href="../" aria-label="English">EN</a><nav class="social" aria-label="Social"><a href="https://www.instagram.com/blkfrogmarketing/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.75a3.05 3.05 0 1 1 0-6.1 3.05 3.05 0 0 1 0 6.1zM17.5 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 2c-2.7 0-3.05.01-4.12.06-1.07.05-1.8.22-2.43.47a4.9 4.9 0 0 0-1.78 1.16A4.9 4.9 0 0 0 2.5 5.47c-.25.64-.42 1.36-.47 2.43C1.98 8.97 1.97 9.31 1.97 12s.01 3.03.06 4.1c.05 1.07.22 1.8.47 2.43a4.9 4.9 0 0 0 1.16 1.78 4.9 4.9 0 0 0 1.78 1.16c.64.25 1.36.42 2.43.47 1.07.05 1.41.06 4.12.06s3.05-.01 4.12-.06c1.07-.05 1.8-.22 2.43-.47a4.9 4.9 0 0 0 1.78-1.16 4.9 4.9 0 0 0 1.16-1.78c.25-.64.42-1.36.47-2.43.05-1.07.06-1.41.06-4.1s-.01-3.03-.06-4.1c-.05-1.07-.22-1.8-.47-2.43a4.9 4.9 0 0 0-1.16-1.78 4.9 4.9 0 0 0-1.78-1.16c-.64-.25-1.36-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.65 0 2.97.01 4.02.06.97.04 1.5.2 1.85.34.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.35.3.88.34 1.85.05 1.05.06 1.37.06 4.02s-.01 2.97-.06 4.02c-.04.97-.2 1.5-.34 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.14-.88.3-1.85.34-1.05.05-1.37.06-4.02.06s-2.97-.01-4.02-.06c-.97-.04-1.5-.2-1.85-.34a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.35-.3-.88-.34-1.85C3.79 14.97 3.78 14.65 3.78 12s.01-2.97.06-4.02c.04-.97.2-1.5.34-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.14.88-.3 1.85-.34C9.03 3.81 9.35 3.8 12 3.8z"/></svg></a><a href="https://www.linkedin.com/company/blackfrogmarketing" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://www.facebook.com/blkfrogagency/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a><a href="#" target="_blank" rel="noopener" aria-label="Tiktok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.6 2.6 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.47V9.66a5.7 5.7 0 0 0-.8-.06 5.7 5.7 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.26-1.48z"/></svg></a><a href="#" target="_blank" rel="noopener" aria-label="Youtube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a></nav><a class="cta" href="#form">Ver o meu primeiro · Grátis</a></div>
+</header>
+
+<!-- ============ O POUSO ============ -->
+<section class="hero">
+  <div class="art" aria-hidden="true">
+    <img src="../assets/sapo-phone.jpg" alt="" fetchpriority="high">
+  </div>
+  <div class="shell">
+    <div class="grid">
+      <div class="col">
+        <p class="label">Sites · No ar em 5 dias</p>
+        <h1>Site de graça. <em>Você só paga se gostar.</em></h1>
+        <div class="price"><b>US$ 797</b><span>Só se gostar · No ar em 5 dias · Seu</span></div>
+        <p class="lede">A gente faz o seu site primeiro, <b>de graça</b>. Você vê no celular. Gostou? US$ 797 e
+        ele entra no ar em cinco dias. Não gostou? Não deve nada, e ninguém te liga.</p>
+        <div class="go">
+          <a class="btn" href="#form">Quero ver o meu · Grátis</a>
+          <span class="terms"><b>Grátis</b> pra ver · Só paga <b>se gostar</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="hint"><i></i>Rola</span>
+</section>
+
+<!-- ============ A PROVA ============ -->
+<section class="sec" id="work" style="padding-top:clamp(64px,10vh,120px)">
+  <div class="shell">
+    <div class="rise">
+      <p class="label plain">Trabalho que dá pra clicar</p>
+      <h2 class="big">Sites que a gente fez. <em>Abre no seu celular</em>.</h2>
+    </div>
+    <div class="reel rise">
+      <video muted loop playsinline poster="../assets/motion/01-websites.jpg" src="../assets/motion/01-websites.mp4#t=5.3" data-rest="5.3" preload="auto"></video>
+      <div class="cap"><b>Veja um sendo construído.</b><i>Passa o mouse. O site se construindo sozinho, feito pela gente, em movimento.</i></div>
+    </div>
+    <div class="work">
+      <a class="site rise" style="--d:.12s" href="https://blkfrog.com/preview/" target="_blank" rel="noopener">
+        <div class="shot"><img src="../assets/work-blkfrog.jpg" alt="Black Frog website" loading="lazy" decoding="async"></div>
+        <div class="meta"><b>Black Frog</b><span>A nossa porta da frente. Um filme que roda no scroll, e a página que você está lendo agora.</span><i>blkfrog.com</i></div>
+      </a>
+      <a class="site rise" style="--d:.19s" href="https://vadmediagroup.com" target="_blank" rel="noopener">
+        <div class="shot"><img src="../assets/work-vmg.jpg" alt="Vander Media Group website" loading="lazy" decoding="async" style="object-position:left top"></div>
+        <div class="meta"><b>Vander Media Group</b><span>Casa de marketing pra clínicas. Agendamento, vídeo, assistente ao vivo e os números na página.</span><i>vadmediagroup.com</i></div>
+      </a>
+      <a class="site rise" style="--d:.26s" href="https://omicronsnmx.com" target="_blank" rel="noopener">
+        <div class="shot"><img src="../assets/work-omicron.jpg" alt="Omicron website" loading="lazy" decoding="async"></div>
+        <div class="meta"><b>Omicron</b><span>Nutrição esportiva e treino em Tijuana. Feito em espanhol, com assistente no WhatsApp que responde os membros.</span><i>omicronsnmx.com</i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section class="sec" id="how">
+  <div class="shell">
+    <div class="rise">
+      <p class="label plain">Como funciona</p>
+      <h2 class="big">Você vê <em>antes de decidir</em>.</h2>
+    </div>
+    <div class="plates">
+      <article class="plate rise" style="--d:.05s">
+        <span class="n">01</span>
+        <h3>Você conta</h3>
+        <p>Quem você é, o que faz, onde está. Quatro campos ali em cima. Se já tem site, o endereço basta.</p>
+        <p class="s">Dois minutos, sem dever de casa.</p>
+      </article>
+      <article class="plate rise" style="--d:.12s">
+        <span class="n">02</span>
+        <h3>A gente faz primeiro, grátis</h3>
+        <p>Uma primeira versão de verdade do seu site, com seu nome, suas cores e suas palavras, no seu celular. Não é rascunho, não é slide. Sem cobrar.</p>
+        <p class="s">No nosso tempo, no nosso risco.</p>
+      </article>
+      <article class="plate rise" style="--d:.19s">
+        <span class="n">03</span>
+        <h3>Gostou? Entra no ar</h3>
+        <p>US$ 797, e em cinco dias está online no seu domínio. Não gostou? Diz. Não deve nada e ninguém te liga.</p>
+        <p class="s">O acordo é esse.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ O FORMULARIO ============ -->
+<section class="form-wrap" id="form">
+  <div class="shell">
+    <div class="panel rise">
+      <h2>Veja o seu site antes. <span class="em">Grátis.</span></h2>
+      <p class="sub">Quatro campos. A gente faz a primeira versão do seu site de graça e manda pro
+      seu celular. Já tem site? Coloca o endereço que a gente lê ele também. Sem cartão, sem ligação.</p>
+
+      <form id="f" novalidate>
+        <div class="fields">
+          <div class="field">
+            <label for="name">Seu nome</label>
+            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Ana Souza">
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="voce@empresa.com.br">
+          </div>
+          <div class="field">
+            <label for="business">Nome do negócio <small>ou o seu site atual, se tiver</small></label>
+            <input type="text" id="business" name="business" required autocomplete="organization" placeholder="Padaria da Ana, ou padariadaana.com.br">
+          </div>
+          <div class="field">
+            <label for="phone">WhatsApp <small>opcional, é por onde mandamos a prévia</small></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+55 71 99999 0000">
+          </div>
+          <div class="field">
+            <label for="kind">O que você faz</label>
+            <select id="kind" name="kind">
+              <option value="">Escolha um</option>
+              <option>Loja ou e-commerce</option>
+              <option>Restaurante ou hotelaria</option>
+              <option>Saúde, clínica ou bem-estar</option>
+              <option>Serviços, obra ou manutenção</option>
+              <option>Serviços profissionais</option>
+              <option>Imóveis</option>
+              <option>Academia ou estúdio</option>
+              <option>Outra coisa</option>
+            </select>
+          </div>
+        </div>
+        <input type="hidden" name="lang" value="pt">
+        <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="actions">
+          <button class="btn" type="submit" id="go">Quero ver o meu · Grátis</button>
+          <p class="fine">Grátis pra ver. Nada é cobrado sem o seu sim.</p>
+        </div>
+        <p class="msg" id="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ O QUE VEM ============ -->
+<section class="sec" id="what">
+  <div class="shell">
+    <div class="rise">
+      <p class="label plain">O que os US$ 797 compram</p>
+      <h2 class="big">Um site que funciona. <em>Não um projeto</em>.</h2>
+    </div>
+    <div class="two rise">
+      <div>
+        <p>A maioria dos negócios não precisa de um site complicado. Precisa de um que carrega rápido
+        no celular, diz o que você faz, mostra que você existe e coloca você a um toque de distância.
+        É isso que a gente faz, e faz bem.</p>
+        <div class="pay">
+          <p class="k">Pagamento</p>
+          <p><b>US$ 797 à vista</b>, ou <b>US$ 398 agora e US$ 398 quando entrar no ar</b>. Cartão ou transferência.
+          Um acordo de uma página que você lê em um minuto. Sem contrato de cláusulas.</p>
+        </div>
+        <p class="not">Precisa de loja, agendamento ou vários idiomas? É outro trabalho, e a gente orça
+        com honestidade. O site de US$ 797 é exatamente o que está listado aqui.</p>
+      </div>
+      <ul class="list">
+        <li><b>Feito pro celular primeiro,</b> depois computador.</li>
+        <li><b>Formulário que funciona</b> e cai na sua caixa de entrada.</li>
+        <li><b>Google Analytics</b> configurado, pra saber quem chega.</li>
+        <li><b>Seu Perfil da Empresa no Google</b> arrumado, pra aparecer no mapa.</li>
+        <li><b>Hospedagem do primeiro ano,</b> inclusa.</li>
+        <li><b>No ar em cinco dias</b> a partir do seu sim.</li>
+        <li><b>É seu.</b> Arquivos, domínio, acessos. Sem mensalidade refém.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY US: o "we are the guys", em coisas que dao pra conferir ============ -->
+<section class="sec why" id="why">
+  <div class="shell">
+    <div class="rise">
+      <p class="label plain">Por que a gente</p>
+      <h2 class="big">Rápido, feito pro celular, <em>e com a sua cara</em>.</h2>
+    </div>
+    <div class="plates rise">
+      <article class="plate" style="--d:.05s">
+        <span class="n">01</span>
+        <h3>Carrega rápido</h3>
+        <p>Seu cliente está no celular, no 4G, te dando três segundos. A gente constrói pra isso primeiro. Esta página é a prova: cronometra.</p>
+        <p class="s">Velocidade é a primeira impressão.</p>
+      </article>
+      <article class="plate" style="--d:.12s">
+        <span class="n">02</span>
+        <h3>Celular primeiro</h3>
+        <p>Desenhado na tela do celular antes de qualquer computador. Botão que dá pra tocar, texto que dá pra ler, número que liga com um toque.</p>
+        <p class="s">A maioria dos seus visitantes nunca abre um notebook.</p>
+      </article>
+      <article class="plate" style="--d:.19s">
+        <span class="n">03</span>
+        <h3>Feito à mão, não é template</h3>
+        <p>Suas cores, suas fotos, suas palavras. Olha os três sites abaixo: nenhum parece com o outro, porque nenhum negócio parece.</p>
+        <p class="s">Template parece com todo mundo. Você tem que parecer com você.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<!-- ============ A TESE, NO LAGO ============ -->
+<section class="thesis" id="thesis">
+  <img class="poster" src="../assets/lago-poster.webp" alt="" aria-hidden="true">
+  <video id="lago" muted loop playsinline preload="none" poster="../assets/lago-poster.webp" data-src="../assets/lago-loop.mp4" aria-hidden="true"></video>
+  <span class="bug" id="bug" aria-hidden="true"></span>
+  <div class="shell">
+    <div class="inner rise">
+      <p class="say">Você só paga <em>se gostar.</em></p>
+      <p class="after">A gente faz a primeira versão de graça, no nosso tempo. Se não for pra você, não deve
+      nada, ninguém insiste, e a gente guarda no portfólio. A maioria só quer o site no ar. Por isso
+      dá pra trabalhar assim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FECHO ============ -->
+<section class="close" id="ask">
+  <div class="shell">
+    <div class="rise">
+      <h2>Veja o seu primeiro, grátis. <em>Depois decide</em>.</h2>
+      <a class="btn" href="#form">Quero ver o meu · Grátis</a>
+    </div>
+    <footer class="foot">
+      <span><b>Black Frog</b> &middot; <a href="mailto:hello@blkfrog.com">hello@blkfrog.com</a></span>
+      <nav class="social" aria-label="Social"><a href="https://www.instagram.com/blkfrogmarketing/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.75a3.05 3.05 0 1 1 0-6.1 3.05 3.05 0 0 1 0 6.1zM17.5 7.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 2c-2.7 0-3.05.01-4.12.06-1.07.05-1.8.22-2.43.47a4.9 4.9 0 0 0-1.78 1.16A4.9 4.9 0 0 0 2.5 5.47c-.25.64-.42 1.36-.47 2.43C1.98 8.97 1.97 9.31 1.97 12s.01 3.03.06 4.1c.05 1.07.22 1.8.47 2.43a4.9 4.9 0 0 0 1.16 1.78 4.9 4.9 0 0 0 1.78 1.16c.64.25 1.36.42 2.43.47 1.07.05 1.41.06 4.12.06s3.05-.01 4.12-.06c1.07-.05 1.8-.22 2.43-.47a4.9 4.9 0 0 0 1.78-1.16 4.9 4.9 0 0 0 1.16-1.78c.25-.64.42-1.36.47-2.43.05-1.07.06-1.41.06-4.1s-.01-3.03-.06-4.1c-.05-1.07-.22-1.8-.47-2.43a4.9 4.9 0 0 0-1.16-1.78 4.9 4.9 0 0 0-1.78-1.16c-.64-.25-1.36-.42-2.43-.47C15.05 2.01 14.7 2 12 2zm0 1.8c2.65 0 2.97.01 4.02.06.97.04 1.5.2 1.85.34.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.35.3.88.34 1.85.05 1.05.06 1.37.06 4.02s-.01 2.97-.06 4.02c-.04.97-.2 1.5-.34 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.14-.88.3-1.85.34-1.05.05-1.37.06-4.02.06s-2.97-.01-4.02-.06c-.97-.04-1.5-.2-1.85-.34a3.1 3.1 0 0 1-1.15-.75 3.1 3.1 0 0 1-.75-1.15c-.14-.35-.3-.88-.34-1.85C3.79 14.97 3.78 14.65 3.78 12s.01-2.97.06-4.02c.04-.97.2-1.5.34-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.14.88-.3 1.85-.34C9.03 3.81 9.35 3.8 12 3.8z"/></svg></a><a href="https://www.linkedin.com/company/blackfrogmarketing" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://www.facebook.com/blkfrogagency/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a><a href="#" target="_blank" rel="noopener" aria-label="Tiktok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.6 2.6 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.47V9.66a5.7 5.7 0 0 0-.8-.06 5.7 5.7 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.3 4.3 0 0 1-3.26-1.48z"/></svg></a><a href="#" target="_blank" rel="noopener" aria-label="Youtube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg></a></nav>
+      <nav class="legal" aria-label="Legal"><a href="/privacy/">Privacidade</a><a href="/terms/">Termos</a><a href="/privacy/#cookies">Cookies</a><button type="button" data-bfc-open>Preferências de cookies</button></nav>
+      <span>&copy; 2026</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+(function(){
+  var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if('IntersectionObserver' in window && !calm){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); io.unobserve(e.target);} });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.12});
+    document.querySelectorAll('.rise').forEach(function(el){io.observe(el);});
+  } else { document.querySelectorAll('.rise').forEach(function(el){el.classList.add('seen');}); }
+
+  var v=document.getElementById('lago');
+  if(v && 'IntersectionObserver' in window){
+    var vo=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          if(!v.src){ v.src=v.getAttribute('data-src'); }
+          var p=v.play(); if(p&&p.then) p.then(function(){v.classList.add('on');}).catch(function(){}); else v.classList.add('on');
+        } else if(v.src){ v.pause(); }
+      });
+    },{rootMargin:'250px'});
+    vo.observe(v);
+  }
+
+
+  /* --- o motion do site: parado no primeiro quadro; mouse em cima = toca; saiu = volta pro comeco.
+         No toque (sem mouse) toca quando chega no centro da tela. --- */
+  var reel=document.querySelector('.reel'), rv=reel&&reel.querySelector('video');
+  if(rv){
+    var fino=matchMedia('(hover:hover) and (pointer:fine)').matches;
+    if(fino){
+      reel.addEventListener('pointerenter',function(){ try{ rv.currentTime=0; }catch(e){} rv.play().catch(function(){}); });
+      reel.addEventListener('pointerleave',function(){ rv.pause(); rv.currentTime=+rv.dataset.rest||0; });
+    } else if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ try{ rv.currentTime=0; }catch(e){} rv.play().catch(function(){}); } else { rv.pause(); rv.currentTime=+rv.dataset.rest||0; } }); },{rootMargin:'-30% 0px -30% 0px'}).observe(rv);
+    }
+  }
+  var sec=document.getElementById('thesis'), bug=document.getElementById('bug');
+  if(sec && bug && !calm){
+    var x=.18, y=.3, vx=.0016, vy=.0011, mx=-1, my=-1, raf=null, vivo=false;
+    sec.addEventListener('pointermove',function(e){var r=sec.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;my=(e.clientY-r.top)/r.height;});
+    sec.addEventListener('pointerleave',function(){mx=my=-1;});
+    function passo(){
+      if(!vivo){raf=null;return;}
+      vx+=(Math.random()-.5)*.00045; vy+=(Math.random()-.5)*.00045;
+      if(mx>=0){var dx=x-mx,dy=y-my,d=Math.sqrt(dx*dx+dy*dy);if(d<.22&&d>.0001){var f=(.22-d)*.012/d;vx+=dx*f;vy+=dy*f;}}
+      var lim=.0042;vx=Math.max(-lim,Math.min(lim,vx));vy=Math.max(-lim,Math.min(lim,vy));
+      x+=vx;y+=vy;
+      if(x<.04){x=.04;vx=Math.abs(vx)} if(x>.96){x=.96;vx=-Math.abs(vx)}
+      if(y<.12){y=.12;vy=Math.abs(vy)} if(y>.88){y=.88;vy=-Math.abs(vy)}
+      bug.style.transform='translate('+(x*sec.offsetWidth).toFixed(1)+'px,'+(y*sec.offsetHeight).toFixed(1)+'px)';
+      raf=requestAnimationFrame(passo);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){es.forEach(function(e){vivo=e.isIntersecting;if(vivo&&!raf)raf=requestAnimationFrame(passo);});},{threshold:.05}).observe(sec);
+    } else { vivo=true; passo(); }
+  }
+
+  /* --- o pedido de site ("show me mine first") --- */
+  var f=document.getElementById('f'),b=document.getElementById('go'),m=document.getElementById('msg');
+  function say(el,t,err){el.textContent=t;el.className=err?'msg err':'msg';}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var nome=f.name.value.trim(),email=f.email.value.trim(),neg=f.business.value.trim();
+    if(!nome){say(m,'Primeiro o seu nome.',1);f.name.focus();return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){say(m,'Esse e-mail não parece certo.',1);f.email.focus();return;}
+    if(neg.length<2){say(m,'O nome do negócio, ou o seu site atual.',1);f.business.focus();return;}
+    b.disabled=true;say(m,'Enviando...');
+    fetch('../pedido.php',{method:'POST',body:new FormData(f)})
+      .then(function(r){return r.json().catch(function(){return {ok:false};});})
+      .then(function(j){
+        if(j&&j.ok){f.reset();window.fbq&&fbq('track','Lead');say(m,'Recebido. Já estamos nisso. A primeira versão do seu site chega no seu celular ou e-mail.');}
+        else{say(m,'Não deu pra enviar. Escreve pra hello@blkfrog.com',1);b.disabled=false;}
+      })
+      .catch(function(){say(m,'Não deu pra enviar. Escreve pra hello@blkfrog.com',1);b.disabled=false;});
+  });
+
+})();
+</script>
+
+<!-- aviso de cookies (14/09). Pixel/Analytics futuros: window.bfConsent(function(){ ...carrega... }) so roda com "Accept" -->
+<div class="bfc" id="bfc" role="dialog" aria-label="Cookies">
+  <p class="bfc-k">Cookies</p>
+  <p>Usamos o que o site precisa pra funcionar. Com o seu sim, usamos também o Pixel da Meta pra medir nossos anúncios e mostrar pra quem faz sentido. <a href="/privacy/#cookies">Saiba mais</a></p>
+  <div class="bfc-b"><button type="button" class="no" data-bfc="essential">Só essenciais</button><button type="button" class="yes" data-bfc="all">Aceitar</button></div>
+</div>
+<script>
+(function(){
+  var K="bf-consent",el=document.getElementById("bfc"),q=[];
+  function get(){try{return localStorage.getItem(K)}catch(e){return null}}
+  function set(v){try{localStorage.setItem(K,v)}catch(e){}}
+  function run(){q.splice(0).forEach(function(f){try{f()}catch(e){}})}
+  window.bfConsent=function(cb){q.push(cb);if(get()==="all")run()};
+  el.addEventListener("click",function(e){var b=e.target.closest("[data-bfc]");if(!b)return;
+    var v=b.getAttribute("data-bfc");set(v);el.classList.remove("on");if(v==="all")run()});
+  document.addEventListener("click",function(e){if(e.target.closest("[data-bfc-open]")){e.preventDefault();el.classList.add("on")}});
+  if(!get())setTimeout(function(){el.classList.add("on")},1600);
+})();
+</script>
+<script>
+/* Meta Pixel da Black Frog (14/09). So carrega depois do "Accept" no aviso de cookies. */
+var BF_PIXEL="3565658580266138";
+window.bfConsent&&/^\d+$/.test(BF_PIXEL)&&bfConsent(function(){
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+  fbq("init",BF_PIXEL);fbq("track","PageView");
+});
+</script>
+</body>
+</html>
